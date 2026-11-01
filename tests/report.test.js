@@ -76,3 +76,29 @@ test('ニックネームに記号やHTMLが入ってもそのまま文字とし�
   const rep = R.build({ nickname: '<b>{name}</b>', birth: births[0], homePref: '東京都', theme: 'other', answers: answerSets[0] }, texts, new Date(nows[0]));
   assert.ok(rep.title.startsWith('<b>{name}</b>'));
 });
+
+test('戦略: 今月だけ本命星が中宮(転換期)なら「攻め」にせず「中間」', () => {
+  // 2000年生まれ=九紫火星。基準日2026-11-01は 今年=巽宮(拡大)・今月=九紫中宮(転換期)
+  const a = Object.fromEntries(texts.questions.map((q) => [q.id, 4]));
+  const rep = R.build({ nickname: 'T', birth: { y: 2000, m: 6, d: 1, timeKnown: false }, homePref: '東京都', theme: 'other', answers: a }, texts, new Date('2026-11-01T12:00:00+09:00'));
+  assert.equal(rep.data.yearPhase, 'summer');
+  assert.equal(rep.data.monthPhase, 'turning');
+  assert.equal(rep.data.stance, 'balance'); // 点数は 2×2+2=6 だが抑える
+});
+
+test('戦略: 今年本命星が中宮(転換期)なら「攻め」にしない', () => {
+  // 1990年生まれ=一白水星。2026年は一白中宮
+  const a = Object.fromEntries(texts.questions.map((q) => [q.id, 4]));
+  for (const now of ['2026-03-15T12:00:00+09:00', '2026-06-15T12:00:00+09:00', '2026-11-01T12:00:00+09:00']) {
+    const rep = R.build({ nickname: 'T', birth: { y: 1990, m: 7, d: 15, timeKnown: false }, homePref: '東京都', theme: 'other', answers: a }, texts, new Date(now));
+    assert.equal(rep.data.yearPhase, 'turning');
+    assert.notEqual(rep.data.stance, 'attack', now);
+  }
+});
+
+test('戦略: 中宮が絡まなければ点数どおり「攻め」になる', () => {
+  // 2001年生まれ=八白土星。2026-11-01 は 今年=震宮(種まき1)・今月=巽宮(拡大2) → 1×2+2=4 で攻め
+  const a = Object.fromEntries(texts.questions.map((q) => [q.id, 4]));
+  const rep = R.build({ nickname: 'T', birth: { y: 2001, m: 12, d: 22, timeKnown: false }, homePref: '福岡県', theme: 'move', answers: a }, texts, new Date('2026-11-01T12:00:00+09:00'));
+  assert.equal(rep.data.stance, 'attack');
+});

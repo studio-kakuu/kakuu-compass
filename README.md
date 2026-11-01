@@ -9,6 +9,26 @@
 ## 公開前の確認
 **[docs/REVIEW.md](docs/REVIEW.md)** に、全文章パーツ(ID付き)・サンプルレポート3人分・計算方式・テスト結果・判断した点をまとめています。
 
+## 試験運用(限定公開)中の設定 — 正式公開時に外すもの
+今は「URLを知っている人だけが試す」段階のため、検索エンジンに載らない設定を入れています。**正式公開するときは、次の2つを消してください。**
+
+1. `index.html` の上のほうにある次の2行(コメント行と meta タグ)を削除
+   ```html
+   <!-- 試験運用中のみ: 検索エンジンに載せない設定。正式公開時はこの行を削除(README参照) -->
+   <meta name="robots" content="noindex, nofollow">
+   ```
+2. リポジトリ直下の `robots.txt` を削除
+
+消さずに残すもの:
+- `.nojekyll`:GitHub Pages がファイルを加工せず、そのまま配信するための空ファイルです。
+- Content-Security-Policy の meta タグ:外部への送信を防ぐための設定です。
+
+> 注意:`noindex` と `robots.txt` は「検索エンジンに載せない」ための設定で、アクセス制限ではありません。URL を知っていれば誰でも開けます。また、`https://studio-kakuu.github.io/kakuu-compass/robots.txt` のようにサイトの下の階層に置いた robots.txt は、検索エンジンの決まり上は読まれません(読まれるのはドメイン直下の robots.txt だけ)。実際に効くのは `index.html` の meta タグのほうです。
+
+## GitHub Pages の設定
+- `index.html` はリポジトリ直下にあるので、フォルダは **`/ (root)`** を選びます(`/docs` には REVIEW.md しかありません)。
+- CSS・JavaScript・フォント・データはすべて相対パスで読み込むため、`https://studio-kakuu.github.io/kakuu-compass/` のような下の階層でもそのまま動きます。
+
 ## フォルダ構成
 | 場所 | 中身 |
 | --- | --- |

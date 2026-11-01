@@ -6,7 +6,8 @@
   <!-- 外部への通信・外部ファイルの読み込みをブラウザ側で禁止する設定 -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
-  <meta name="robots" content="noindex">
+  <!-- 試験運用中のみ: 検索エンジンに載せない設定。正式公開時はこの行を削除(README参照) -->
+  <meta name="robots" content="noindex, nofollow">
   <title>COMPASS | KAKUU LAB</title>
   <meta name="description" content="西洋占星術・数秘術・九星気学と性格の自己チェックを組み合わせた、無料の戦略プロファイリングツール。入力内容は保存・送信されません。">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">

@@ -81,8 +81,8 @@
     var PHASE_SCORE = { spring: 1, summer: 2, turning: 2, autumn: 1, winter: 0 };
     var stanceScore = PHASE_SCORE[yearPhase] * 2 + PHASE_SCORE[monthPhase];
     var stance = stanceScore >= 4 ? 'attack' : (stanceScore >= 2 ? 'balance' : 'prepare');
-    // 本命星が年盤の中宮(八方塞がり)にある年は、攻めすぎないよう「中間」までに抑える
-    if (yearPalaceId === 'C' && stance === 'attack') stance = 'balance';
+    // 本命星が年盤または月盤の中宮(八方塞がり=転換期)にあるときは、攻めすぎないよう「中間」までに抑える
+    if ((yearPalaceId === 'C' || monthPalaceId === 'C') && stance === 'attack') stance = 'balance';
     var STANCE_NAMES = { attack: '攻め', balance: '攻めと整えの中間', prepare: '整える' };
 
     var name = input.nickname;
