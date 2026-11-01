@@ -245,12 +245,13 @@
 
   /**
    * 季節フェーズ(本サービスの割り当て)
-   * 本命星が入っている宮で、9年(9か月)で巡る運気の流れを4つの季節にまとめる。
-   *   坤宮・震宮 → 種まき(春)   巽宮・中宮 → 拡大(夏)
+   * 本命星が入っている宮で、9年(9か月)で巡る運気の流れを季節にまとめる。
+   *   坤宮・震宮 → 種まき(春)   巽宮 → 拡大(夏)
    *   乾宮・兌宮・離宮 → 収穫(秋) 艮宮・坎宮 → 整備(冬)
+   *   中宮(八方塞がり) → 転換期(足元を固める) ※年・月とも同じ扱い
    */
-  var PHASE_BY_PALACE = { SW: 'spring', E: 'spring', SE: 'summer', C: 'summer', NW: 'autumn', W: 'autumn', S: 'autumn', NE: 'winter', N: 'winter' };
-  var PHASE_NAMES = { spring: '種まき(春)', summer: '拡大(夏)', autumn: '収穫(秋)', winter: '整備(冬)' };
+  var PHASE_BY_PALACE = { SW: 'spring', E: 'spring', SE: 'summer', C: 'turning', NW: 'autumn', W: 'autumn', S: 'autumn', NE: 'winter', N: 'winter' };
+  var PHASE_NAMES = { spring: '種まき(春)', summer: '拡大(夏)', turning: '転換期(足元を固める)', autumn: '収穫(秋)', winter: '整備(冬)' };
 
   function phaseOf(palaceId) { return PHASE_BY_PALACE[palaceId]; }
 

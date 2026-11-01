@@ -146,7 +146,8 @@ test('季節フェーズの割り当て', () => {
   assert.equal(k.phaseOf('SW'), 'spring');
   assert.equal(k.phaseOf('E'), 'spring');
   assert.equal(k.phaseOf('SE'), 'summer');
-  assert.equal(k.phaseOf('C'), 'summer');
+  assert.equal(k.phaseOf('C'), 'turning');
+  assert.equal(k.PHASE_NAMES.turning, '転換期(足元を固める)');
   assert.equal(k.phaseOf('NW'), 'autumn');
   assert.equal(k.phaseOf('W'), 'autumn');
   assert.equal(k.phaseOf('S'), 'autumn');

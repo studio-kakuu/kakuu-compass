@@ -77,7 +77,8 @@
     var monthPalaceId = cur.month.honmeiPalace;
     var yearPhase = kyusei.phaseOf(yearPalaceId);
     var monthPhase = kyusei.phaseOf(monthPalaceId);
-    var PHASE_SCORE = { spring: 1, summer: 2, autumn: 1, winter: 0 };
+    // 転換期(中宮)の点数は従来どおり2。年が中宮のときは下で「攻め」にしない
+    var PHASE_SCORE = { spring: 1, summer: 2, turning: 2, autumn: 1, winter: 0 };
     var stanceScore = PHASE_SCORE[yearPhase] * 2 + PHASE_SCORE[monthPhase];
     var stance = stanceScore >= 4 ? 'attack' : (stanceScore >= 2 ? 'balance' : 'prepare');
     // 本命星が年盤の中宮(八方塞がり)にある年は、攻めすぎないよう「中間」までに抑える
@@ -223,7 +224,7 @@
     else if (stance === 'prepare' && lv('E') === 'high') bfAdj = 'TIM-BF-EHIGH';
     else if (stance === 'prepare' && lv('O') === 'high') bfAdj = 'TIM-BF-OHIGH';
     if (bfAdj) s2.blocks.push({ t: 'p', text: pick(bfAdj, V()) });
-    s2.blocks.push({ t: 'note', text: '季節フェーズは、本命星が年盤・月盤のどの宮にあるかで判定しています(坤・震=種まき/巽・中=拡大/乾・兌・離=収穫/艮・坎=整備)。' });
+    s2.blocks.push({ t: 'note', text: '季節フェーズは、本命星が年盤・月盤のどの宮にあるかで判定しています(坤・震=種まき/巽=拡大/中宮=転換期/乾・兌・離=収穫/艮・坎=整備)。' });
     sections.push(s2);
 
     // ---- ③ 方位 ----
