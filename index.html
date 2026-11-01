@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 外部への通信・外部ファイルの読み込みをブラウザ側で禁止する設定 -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <title>COMPASS | KAKUU LAB</title>
+  <meta name="description" content="西洋占星術・数秘術・九星気学と性格の自己チェックを組み合わせた、無料の戦略プロファイリングツール。入力内容は保存・送信されません。">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="logo" aria-label="KAKUU LAB / COMPASS">
+        <span class="logo-lab">KAKUU LAB</span><span class="logo-slash">/</span><span class="logo-name">COMPASS</span>
+      </div>
+      <ol class="steps" aria-label="進み具合">
+        <li data-step="1" class="is-current"><span>1</span>入力</li>
+        <li data-step="2"><span>2</span>質問</li>
+        <li data-step="3"><span>3</span>レポート</li>
+      </ol>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- STEP 1 -->
+    <section id="step1" class="step" aria-labelledby="step1-title">
+      <div class="hero">
+        <p class="eyebrow">STRATEGY PROFILING</p>
+        <h1 id="step1-title">生まれた日の暦と、<br>あなたの答えで作る<br><em>戦略レポート</em></h1>
+        <p class="lead">西洋占星術・数秘術・九星気学の基礎データをプログラムで計算し、性格の質問10問と組み合わせて、自己分析・タイミング・行動のヒントをまとめます。</p>
+        <p class="privacy-badge">入力内容は保存・送信されません(画面を閉じると消えます)</p>
+      </div>
+
+      <form id="form1" class="card form" novalidate>
+        <div class="field">
+          <label for="nickname">ニックネーム <span class="req">必須</span></label>
+          <input id="nickname" name="nickname" type="text" maxlength="20" autocomplete="off" placeholder="例:ミナト" required>
+          <p class="hint">レポートの中で「〇〇さん」と呼びかけます。本名でなくてかまいません。</p>
+        </div>
+
+        <div class="field">
+          <label for="birthdate">生年月日 <span class="req">必須</span></label>
+          <input id="birthdate" name="birthdate" type="date" min="1900-01-01" required>
+        </div>
+
+        <div class="field">
+          <label for="birthtime">出生時刻 <span class="opt">任意</span></label>
+          <div class="inline">
+            <input id="birthtime" name="birthtime" type="time" disabled>
+            <label class="check"><input id="timeUnknown" type="checkbox" checked> わからない</label>
+          </div>
+          <p class="hint">日本時間として計算します。わからない場合は正午で計算し、その日のうちに星座が変わる天体は両方を表示します。</p>
+        </div>
+
+        <div class="field">
+          <label for="birthPref">出生地の都道府県 <span class="opt">任意</span></label>
+          <select id="birthPref" name="birthPref"><option value="">わからない・答えない</option></select>
+        </div>
+
+        <div class="field">
+          <label for="homePref">現在住んでいる都道府県 <span class="req">必須</span></label>
+          <select id="homePref" name="homePref" required><option value="">選んでください</option></select>
+          <p class="hint">方位を見るときの起点に使います。それより詳しい住所は聞きません。</p>
+        </div>
+
+        <fieldset class="field">
+          <legend>相談テーマ <span class="req">必須</span></legend>
+          <div id="themes" class="chips"></div>
+        </fieldset>
+
+        <p id="error1" class="error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary">次へ:性格の質問(10問)</button>
+      </form>
+    </section>
+
+    <!-- STEP 2 -->
+    <section id="step2" class="step" aria-labelledby="step2-title" hidden>
+      <h2 id="step2-title" class="step-title">性格の質問 10問</h2>
+      <p class="lead small">直感で答えてください。正解はありません。<br>※この10問はKAKUU LABオリジナルの<strong>簡易版の自己チェック</strong>です(学術的な検査ではありません)。</p>
+      <form id="form2" novalidate>
+        <div id="questions"></div>
+        <div class="sticky-bar">
+          <p class="progress"><span id="answered">0</span> / 10 問 回答済み</p>
+          <p id="error2" class="error" role="alert" hidden></p>
+          <div class="btn-row">
+            <button type="button" id="back1" class="btn btn-ghost">戻る</button>
+            <button type="submit" class="btn btn-primary">レポートを見る</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- STEP 3 -->
+    <section id="step3" class="step" aria-labelledby="report-title" hidden>
+      <div id="report"></div>
+      <div class="card ai-box">
+        <h2 class="ai-title">このレポートをAIに相談する</h2>
+        <p>レポートの内容と相談用の文章を、クリップボードにコピーします。お使いのAIチャットに貼り付けて相談できます(このページからは送信しません)。</p>
+        <button type="button" id="copyBtn" class="btn btn-primary">AI相談用にコピーする</button>
+        <p id="copyMsg" class="copy-msg" role="status" aria-live="polite"></p>
+      </div>
+      <div class="btn-row center">
+        <button type="button" id="back2" class="btn btn-ghost">質問に戻る</button>
+        <button type="button" id="restart" class="btn btn-ghost">最初からやり直す(入力を消す)</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclaimer" id="disclaimer"></p>
+      <p class="credits">計算:<a href="vendor/astronomy-engine/LICENSE">astronomy-engine</a>(MIT License)/フォント:Zen Kaku Gothic New・Space Grotesk(<a href="fonts/zen-kaku-gothic-new/OFL.txt">SIL OFL 1.1</a>)/<a href="THIRD_PARTY_NOTICES.md">ライセンス一覧</a></p>
+      <p class="copyright">© KAKUU STUDIO — KAKUU LAB</p>
+    </div>
+  </footer>
+
+  <script src="vendor/astronomy-engine/astronomy.browser.min.js"></script>
+  <script src="data/texts.js"></script>
+  <script src="js/core/astro.js"></script>
+  <script src="js/core/numerology.js"></script>
+  <script src="js/core/kyusei.js"></script>
+  <script src="js/core/geo.js"></script>
+  <script src="js/core/bigfive.js"></script>
+  <script src="js/core/report.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
