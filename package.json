@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test tests/*.test.js",
     "review": "node scripts/build-review.js",
-    "cards": "node scripts/build-cards.js"
+    "cards": "node scripts/build-cards.js",
+    "cards:check": "node scripts/check-cards.js"
   },
   "license": "UNLICENSED"
 }

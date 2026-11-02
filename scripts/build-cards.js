@@ -32,6 +32,7 @@ const { NOW, SAMPLES } = require('./samples.js');
       const rep = window.Compass.report.build({ ...s.input, answers }, TX, new Date(NOW));
       const canvas = document.createElement('canvas');
       await window.Compass.card.draw(canvas, rep.card, TX.card, { includeBirth: false });
+      if (!window.Compass.card.lastCheck.ok) throw new Error('はみ出し: ' + JSON.stringify(window.Compass.card.lastCheck.problems));
       return canvas.toDataURL('image/png');
     }, { s, NOW });
     const file = path.join(outDir, s.file + '.png');

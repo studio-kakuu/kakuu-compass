@@ -126,18 +126,19 @@ test('相性の星(相生・比和)', () => {
   assert.deepEqual(f5.drains.map((s) => s.num), [6, 7]);
 });
 
-test('ラッキーカラー: 今月の最大吉方の星の色 → なければ吉方位 → なければ生気の星', () => {
-  const c7 = k.luckyColor(k.currentFortune(jst('2026-11-02T12:00:00'), 7), 7);
-  assert.ok(['best', 'good', 'supports'].includes(c7.rule));
-  assert.equal(c7.color, k.STAR_COLORS[c7.star.num]);
+test('ラッキーカラー: 〇月の盤の吉方位(指定した方位を優先)の星の色 → なければ生気の星', () => {
   for (let h = 1; h <= 9; h++) {
     const f = k.currentFortune(jst('2026-11-02T12:00:00'), h);
     const c = k.luckyColor(f, h);
-    if (c.rule !== 'supports') {
-      const i = k.PALACES.findIndex((p) => p.id === c.palace.id);
-      assert.ok(f.month.directions[i].good, 'month good');
-      assert.equal(f.year.directions[i].bad.length, 0, 'not year-bad');
+    assert.equal(c.color, k.STAR_COLORS[c.star.num]);
+    const goods = f.month.directions.filter((d) => d.good);
+    if (goods.length) {
+      assert.ok(goods.some((d) => d.palace.id === c.palace.id), 'month good');
+      if (goods.some((d) => d.good === 'best')) assert.equal(c.rule, 'best');
+      const other = goods[goods.length - 1].palace.id;
+      assert.equal(k.luckyColor(f, h, other).palace.id, other); // 指定した方位を優先
     } else {
+      assert.equal(c.rule, 'supports');
       assert.equal(k.relation(c.star.element, k.STARS[h].element), 'supports');
     }
   }

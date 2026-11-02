@@ -73,13 +73,61 @@ test('共有の要約・全文コピーに、初期設定では生年月日を�
   assert.ok(!ai.includes('1990-07-15') && !ai.includes('1+9+9+0'));
 });
 
-test('カード用データ: 吉方位は今月吉・今年も凶でない方位、避けたい方位と重ならない', () => {
+test('カード用データ: 〇月の盤だけで判断。避けたい方位は優先順で最大2つ(3つ以上は「など」)', () => {
+  const PRI = ['gooSatsu', 'ankenSatsu', 'honmeiSatsu', 'honmeiTekiSatsu', 'geppa'];
   for (const y of [1960, 1975, 1985, 1990, 1999, 2001, 2005, 2010, 2020]) {
-    const r = R.build({ ...base, birth: { y, m: 5, d: 10, timeKnown: false }, theme: 'overview' }, texts, NOW);
-    const good = r.card.goodDirs.map((d) => d.id), bad = r.card.badDirs.map((d) => d.id);
-    good.forEach((g) => assert.ok(!bad.includes(g)));
-    if (r.card.needle) assert.equal(r.card.needle, good[0]);
-    assert.ok(r.card.luckyDays.length <= 3);
-    assert.ok(!JSON.stringify({ ...r.card, birthLabel: '' }).includes(String(y) + '.'));
+    for (const now of [NOW, new Date('2026-12-20T12:00:00+09:00'), new Date('2027-03-15T12:00:00+09:00')]) {
+      const r = R.build({ ...base, birth: { y, m: 5, d: 10, timeKnown: false }, theme: 'overview' }, texts, now);
+      const md = r.data.current.month.directions;
+      const good = r.card.goodDirs.map((d) => d.id), bad = r.card.badDirs.map((d) => d.id);
+      // 吉方位 = 月盤の吉方位(年盤は見ない)
+      assert.deepEqual([...good].sort(), md.filter((d) => d.good).map((d) => d.palace.id).sort());
+      // 避けたい方位 = 月盤の凶方位から優先順に最大2つ
+      const monthBad = md.filter((d) => d.bad.length);
+      assert.ok(bad.length <= 2);
+      assert.equal(bad.length, Math.min(2, monthBad.length));
+      assert.equal(r.card.badMore, monthBad.length > 2);
+      const rank = (id) => Math.min(...md.find((d) => d.palace.id === id).bad.map((b) => PRI.indexOf(b)));
+      const shownMax = Math.max(...bad.map(rank));
+      monthBad.filter((d) => !bad.includes(d.palace.id)).forEach((d) => assert.ok(rank(d.palace.id) >= shownMax));
+      good.forEach((g) => assert.ok(!bad.includes(g)));
+      // 針・ラッキーカラー・行動のヒントの方位がそろっている
+      if (r.card.needle) {
+        assert.equal(r.card.needle, good[0]);
+        assert.equal(r.data.luckyColor.palace.id, r.card.needle);
+        if (r.card.actions[2].includes('方面')) assert.ok(r.card.actions[2].startsWith(r.card.goodDirs[0].name + '方面'));
+      } else {
+        assert.equal(r.data.luckyColor.rule, 'supports');
+      }
+      assert.ok(r.card.luckyDays.length <= 3);
+    }
   }
+});
+
+test('ひとこと注意: 同じ月でも本命星が違えば別の文。テーマ・状況でも変わる', () => {
+  const by = {};
+  for (let y = 1981; y <= 1989; y++) { // 本命星が一白〜九紫まで1つずつ
+    const r = R.build({ ...base, birth: { y, m: 5, d: 10, timeKnown: false }, theme: 'career', situation: { S1: 'grow', S2: 'growth' } }, texts, NOW);
+    by[r.data.kyusei.honmei.num] = r.card.caution;
+  }
+  assert.equal(Object.keys(by).length, 9);
+  assert.equal(new Set(Object.values(by)).size, 9);
+  const a = R.build({ ...base, theme: 'money', situation: { S1: 'buy', S2: 'steady' } }, texts, NOW).card.caution;
+  const b = R.build({ ...base, theme: 'love', situation: { S1: 'crush', S2: 'trust' } }, texts, NOW).card.caution;
+  assert.notEqual(a, b);
+  const rep = R.build({ ...base, theme: 'money', situation: { S1: 'buy', S2: 'steady' } }, texts, NOW);
+  assert.ok(R.toText(rep, false).includes('ひとこと注意:' + rep.card.caution));
+});
+
+test('レポート③に、年と月で吉凶が食い違う方位の説明が入る', () => {
+  let found = 0;
+  for (let y = 1981; y <= 1989; y++) {
+    const r = R.build({ ...base, birth: { y, m: 5, d: 10, timeKnown: false }, theme: 'overview' }, texts, NOW);
+    const cur = r.data.current;
+    const mix = cur.month.directions.some((d, i) => (d.good && cur.year.directions[i].bad.length) || (cur.year.directions[i].good && d.bad.length));
+    const txt = R.toText(r, false);
+    const has = texts.parts['DIR-MIXED-MONTH'].v.concat(texts.parts['DIR-MIXED-YEAR'].v).some((v) => txt.includes(v.slice(-20).replace(/\{month\}/g, '11')));
+    if (mix) { found++; assert.ok(has, 'mixed text for ' + y); }
+  }
+  assert.ok(found > 0);
 });

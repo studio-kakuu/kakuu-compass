@@ -70,6 +70,10 @@
 | card.question | あなたの{month}月の指針は? |
 | card.note | 占い×自己チェックにもとづく参考情報です |
 | card.noGood | 近場で過ごすのが◎ |
+| card.friendsSupports | 支えてくれる星 |
+| card.friendsSame | 気が合う星 |
+| card.more | など |
+| card.cautionLabel | 注意 |
 | card.doThereNone | おすすめ |
 | card.noGoodDo | 近所の散歩や、家でゆっくり過ごす時間 |
 | card.noBad | 特になし |
@@ -437,6 +441,10 @@
 | DIR-BAD[2] | 気学で注意したいとされる方位は【{dirs}】です。不安をあおるものではありませんが、選べるなら別の方角を候補にしてもよいでしょう。 |
 | DIR-CENTER[1] | 今年は{name}さんの本命星{star}が盤の中央(中宮)にあります。気学では「八方塞がり」とも呼ばれ、方角よりも足元を整えることが大切とされる巡りです。大きな移動は計画を丁寧に。 |
 | DIR-CENTER[2] | 本命星{star}が今年の盤の中央に入っています。気学ではどの方角にも動きにくい年とされるため、移動の判断はいつも以上に準備を重ねるのがおすすめです。 |
+| DIR-MIXED-MONTH[1] | 【{dirs}】は、{month}月の盤では吉方位ですが、今年の盤では注意したい方位です。気学では、日帰りや短い旅行など月の範囲の移動は月の盤、引越しのように長く影響する移動は年の盤を重く見るのが一般的です。カードの「追い風」は{month}月の盤で出しています。 |
+| DIR-MIXED-MONTH[2] | {month}月の盤では吉、今年の盤では注意、と分かれる方位が【{dirs}】です。短い外出なら{month}月の盤、引越しなど長く影響する移動なら今年の盤を目安にしてください(カードは{month}月の盤で表示しています)。 |
+| DIR-MIXED-YEAR[1] | 反対に【{dirs}】は、今年の盤では吉方位ですが、{month}月の盤では注意したい方位です。引越しなど年単位の計画の候補にはなりますが、{month}月中の短い移動は別の方角を選ぶのも一つの方法です。 |
+| DIR-MIXED-YEAR[2] | 【{dirs}】は今年の盤では吉、{month}月の盤では注意の方位です。長い目で見た候補として残しつつ、{month}月の外出先には別の方角を選ぶのもよいでしょう。 |
 
 ### 1-19. 方位(凶方位の説明)
 
@@ -1160,7 +1168,7 @@
 | DIR-ACT-overview[1] | 散歩や小旅行 |
 | DIR-ACT-overview[2] | 気分転換のお出かけ |
 
-### 1-102. カード:注意の1行(今月の五行別)
+### 1-102. カード:ひとこと注意の後半(まずは全体を見たい・月盤の中心の五行別)
 
 | ID | 文 |
 | --- | --- |
@@ -1181,6 +1189,85 @@
 | --- | --- |
 | MONEY-NOTE[1] | このレポートは、投資や金融商品についての助言ではありません。お金の判断のクセとタイミングを考えるための参考情報です。具体的な商品選びは、信頼できる専門家や公的な情報で確かめてください。 |
 | MONEY-NOTE[2] | ※投資や金融商品の助言ではありません。お金の判断のクセとタイミングを振り返るための参考としてお使いください。具体的な商品については、専門家や公的な情報で確かめてください。 |
+
+### 1-104. カード:ひとこと注意の前半(五行の関係別)
+
+| ID | 文 |
+| --- | --- |
+| CAU-LEAD-supports(条件) | *月盤の中心の星が本命星を生む(生気)。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-supports[1] | 助けが得やすい月こそ、 |
+| CAU-LEAD-supports[2] | 追い風を感じる月こそ、 |
+| CAU-LEAD-supports[3] | 周りが味方になりやすい月こそ、 |
+| CAU-LEAD-same(条件) | *同じ五行(比和)。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-same[1] | 自分らしさが出やすい月こそ、 |
+| CAU-LEAD-same[2] | 得意なことが前に出やすい月こそ、 |
+| CAU-LEAD-same[3] | 気の合う人と固まりやすい月は、 |
+| CAU-LEAD-drains(条件) | *本命星が中心の星を生む(退気)。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-drains[1] | 人のために動きやすい月は、 |
+| CAU-LEAD-drains[2] | 頑張りが外に出やすい月は、 |
+| CAU-LEAD-drains[3] | 与える場面が増えやすい月は、 |
+| CAU-LEAD-pressures(条件) | *中心の星が本命星を剋す。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-pressures[1] | 思うように進みにくい月は、 |
+| CAU-LEAD-pressures[2] | 押され気味に感じやすい月は、 |
+| CAU-LEAD-pressures[3] | ペースが乱れやすい月は、 |
+| CAU-LEAD-controls(条件) | *本命星が中心の星を剋す。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-controls[1] | 主導権をとりやすい月こそ、 |
+| CAU-LEAD-controls[2] | 強気になりやすい月は、 |
+| CAU-LEAD-controls[3] | 決める力が出やすい月こそ、 |
+| CAU-LEAD-center(条件) | *本命星が月盤の中心(転換期)。同じ関係の星どうしでも、本命星の番号順に[1][2][3]を使い分け* |
+| CAU-LEAD-center[1] | 注目されやすい月は、 |
+| CAU-LEAD-center[2] | 足元を固める月は、 |
+| CAU-LEAD-center[3] | 立ち止まりたくなる月は、 |
+
+### 1-105. カード:ひとこと注意の後半(テーマ×状況別)
+
+| ID | 文 |
+| --- | --- |
+| CAU-SIT-career-grow(条件) | *仕事・キャリア/今の場所で伸ばしたい* |
+| CAU-SIT-career-grow[1] | 引き受けすぎに注意 |
+| CAU-SIT-career-grow[2] | 頼まれごとは一度持ち帰る |
+| CAU-SIT-career-change(条件) | *仕事・キャリア/転職したい* |
+| CAU-SIT-career-change[1] | 条件の確認を後回しにしない |
+| CAU-SIT-career-change[2] | 勢いだけで退職を決めない |
+| CAU-SIT-career-indep(条件) | *仕事・キャリア/独立・副業を始めたい* |
+| CAU-SIT-career-indep[1] | お金の見通しを甘く見ない |
+| CAU-SIT-career-indep[2] | 準備の途中で手を広げすぎない |
+| CAU-SIT-money-buy(条件) | *お金の判断/大きな買い物をするか迷っている* |
+| CAU-SIT-money-buy[1] | その場の勢いで契約しない |
+| CAU-SIT-money-buy[2] | 支払いの総額まで確かめる |
+| CAU-SIT-money-save(条件) | *お金の判断/貯め方・家計を見直したい* |
+| CAU-SIT-money-save[1] | 反動のまとめ買いに注意 |
+| CAU-SIT-money-save[2] | 我慢しすぎる計画にしない |
+| CAU-SIT-money-earn(条件) | *お金の判断/収入を増やす方法を考えたい* |
+| CAU-SIT-money-earn[1] | うまい話は一晩おいて確かめる |
+| CAU-SIT-money-earn[2] | 時間の使いすぎに注意 |
+| CAU-SIT-love-partner(条件) | *恋愛・パートナー/パートナーがいる* |
+| CAU-SIT-love-partner[1] | 小さな不満をため込まない |
+| CAU-SIT-love-partner[2] | 言葉足らずのすれ違いに注意 |
+| CAU-SIT-love-crush(条件) | *恋愛・パートナー/気になる人がいる* |
+| CAU-SIT-love-crush[1] | 相手の反応を深読みしすぎない |
+| CAU-SIT-love-crush[2] | 焦って距離を詰めすぎない |
+| CAU-SIT-love-seeking(条件) | *恋愛・パートナー/出会いを探している* |
+| CAU-SIT-love-seeking[1] | 条件だけで人を判断しない |
+| CAU-SIT-love-seeking[2] | 予定を詰めこみすぎない |
+| CAU-SIT-relation-work(条件) | *人間関係/職場の人* |
+| CAU-SIT-relation-work[1] | 感情的なメールは送る前に読み返す |
+| CAU-SIT-relation-work[2] | その場の勢いで引き受けない |
+| CAU-SIT-relation-friend(条件) | *人間関係/友人* |
+| CAU-SIT-relation-friend[1] | 気をつかいすぎて疲れない |
+| CAU-SIT-relation-friend[2] | うわさ話に深入りしない |
+| CAU-SIT-relation-family(条件) | *人間関係/家族* |
+| CAU-SIT-relation-family[1] | 言わなくてもわかる、と思いこまない |
+| CAU-SIT-relation-family[2] | ひとりで抱え込まない |
+| CAU-SIT-move-relocate(条件) | *引越し・旅行・移動/引越し・移住* |
+| CAU-SIT-move-relocate[1] | 契約の細かい条件を読み飛ばさない |
+| CAU-SIT-move-relocate[2] | 下見をせずに決めない |
+| CAU-SIT-move-trip(条件) | *引越し・旅行・移動/旅行・お出かけ* |
+| CAU-SIT-move-trip[1] | 予定を詰めこみすぎない |
+| CAU-SIT-move-trip[2] | 移動の時間に余裕をもつ |
+| CAU-SIT-move-work(条件) | *引越し・旅行・移動/仕事での移動・出張* |
+| CAU-SIT-move-work[1] | 移動の前後に予定を入れすぎない |
+| CAU-SIT-move-work[2] | 出かける前の持ち物確認を習慣に |
 
 ## 2. サンプルレポート(3人分・全文)
 
@@ -1393,9 +1480,13 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 本命殺:自分の本命星がいる方位。自分のペースを保ちにくいとされます。
 - 本命的殺:本命殺の反対側の方位。判断に迷いが出やすいとされます。
 
+【北西】は今年の盤では吉、11月の盤では注意の方位です。長い目で見た候補として残しつつ、11月の外出先には別の方角を選ぶのもよいでしょう。
+
 移動の規模:攻めの時期です。吉方位であれば、少し遠くまで足をのばしてみる価値があります。
 
 仕事の面では、吉方位にある取引先・展示会・勉強会などに足を運ぶ、といった使い方ができます。
+
+> ※カード画像には、11月の盤の吉方位と、11月の盤で特に注意したい方位(五黄殺>暗剣殺>本命殺>本命的殺>月破の順に最大2つ)だけを載せています。今年の盤も含めたすべての方位は、上の表のとおりです。
 
 > ※地域例は都道府県庁所在地どうしの方角と距離(近場:100km未満/中距離:400km未満/遠方:400km以上)で出しています。同じ都道府県の中でも、住んでいる場所から見た方角で考えてください。
 
@@ -1437,6 +1528,8 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
+11月のひとこと注意:追い風を感じる月こそ、お金の見通しを甘く見ない。
+
 #### ⑥ 行動のヒント3つ
 
 相談テーマ「仕事・キャリア」(今の状況:独立・副業を始めたい・収入・条件)と、今の戦略(攻め)に合わせた行動のヒントです。
@@ -1463,7 +1556,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-good[2]` `FRIEND[1]` `INTRO[1]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `CONF-SUNMOON-OUT[2]` `CONF-LEAD-HARMONY[1]` `TIM-YEAR-spring[1]` `TIM-MONTH-summer[2]` `TIM-STANCE-attack[1]` `DIR-INTRO[1]` `DIR-GOOD-BOTH[2]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-SCALE-attack[2]` `DIR-THEME-career[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-REL-drains[2]` `CAU-EL-water[2]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `ACT-S1-career-indep-attack[1]` `ACT-S2-career-income[1]` `ACT-DIR[1]` `QUE-career[1]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-career[2]` `CAU-SHORT-earth[2]`
+`CAU-LEAD-supports[2]` `CAU-SIT-career-indep[1]` `GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-good[2]` `FRIEND[1]` `INTRO[1]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `CONF-SUNMOON-OUT[2]` `CONF-LEAD-HARMONY[1]` `TIM-YEAR-spring[1]` `TIM-MONTH-summer[2]` `TIM-STANCE-attack[1]` `DIR-INTRO[1]` `DIR-GOOD-BOTH[2]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-MIXED-YEAR[2]` `DIR-SCALE-attack[2]` `DIR-THEME-career[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-REL-drains[2]` `CAU-EL-water[2]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `ACT-S1-career-indep-attack[1]` `ACT-S2-career-income[1]` `ACT-DIR[1]` `QUE-career[1]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-career[2]`
 
 </details>
 
@@ -1491,13 +1584,13 @@ https://studio-kakuu.github.io/kakuu-compass/
 ハルさんの11月の指針「収穫と感謝」
 手堅く進めながら、自然な距離の縮め方を探る月。
 
-吉方位:近場で過ごすのが◎
+吉方位:北・南
 ラッキーデー:11/3(火)・11/4(水)・11/12(木)
-ラッキーカラー:白
+ラッキーカラー:緑
 行動のヒント
 1. 相手の話をよく聞き、次に話すきっかけを一つ残しておく
 2. 連絡や約束への小さな「ありがとう」を、こまめに伝える
-3. 大きく動かず、近所で気分を切り替えられる場所を1つ見つける
+3. 北方面(埼玉県・栃木県など)へ、日帰りか1泊の外出の予定を入れてみる
 
 COMPASS(占い×自己チェックの参考情報)
 https://studio-kakuu.github.io/kakuu-compass/
@@ -1529,9 +1622,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 ##### ラッキーカラー
 
-**白**(#F4F1E8)
+**緑**(#3FAE5A)
 
-ハルさんの本命星を生かす六白金星の色、「白」。今月は吉方位が少ないので、色で気分を整えてみてください。
+「緑」。今月の吉方位(北)にいる四緑木星にちなんだ色です。身につけるものに取り入れてみてください。
 
 ##### 力をくれる人
 
@@ -1670,11 +1763,17 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 本命殺:自分の本命星がいる方位。自分のペースを保ちにくいとされます。
 - 本命的殺:本命殺の反対側の方位。判断に迷いが出やすいとされます。
 
+【北・南】は、11月の盤では吉方位ですが、今年の盤では注意したい方位です。気学では、日帰りや短い旅行など月の範囲の移動は月の盤、引越しのように長く影響する移動は年の盤を重く見るのが一般的です。カードの「追い風」は11月の盤で出しています。
+
+【北東・南西・西】は今年の盤では吉、11月の盤では注意の方位です。長い目で見た候補として残しつつ、11月の外出先には別の方角を選ぶのもよいでしょう。
+
 本命星一白水星が今年の盤の中央に入っています。気学ではどの方角にも動きにくい年とされるため、移動の判断はいつも以上に準備を重ねるのがおすすめです。
 
 移動の規模:近場〜中距離を中心に。大きな移動は、準備が整ってからでも遅くありません。
 
 恋愛やパートナーの面では、デートや出かける先を吉方位から選んでみるのも一つの楽しみ方です。
+
+> ※カード画像には、11月の盤の吉方位と、11月の盤で特に注意したい方位(五黄殺>暗剣殺>本命殺>本命的殺>月破の順に最大2つ)だけを載せています。今年の盤も含めたすべての方位は、上の表のとおりです。
 
 > ※地域例は都道府県庁所在地どうしの方角と距離(近場:100km未満/中距離:400km未満/遠方:400km以上)で出しています。同じ都道府県の中でも、住んでいる場所から見た方角で考えてください。
 
@@ -1716,13 +1815,15 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
+11月のひとこと注意:思うように進みにくい月は、焦って距離を詰めすぎない。
+
 #### ⑥ 行動のヒント3つ
 
 相談テーマ「恋愛・パートナー」(今の状況:気になる人がいる・安心・信頼)と、今の戦略(攻めと整えの中間)に合わせた行動のヒントです。
 
 1. 相手の話をよく聞き、次に話すきっかけを一つ残しておく
 2. 連絡や約束への小さな「ありがとう」を、こまめに伝える
-3. 大きく動かず、近所で気分を切り替えられる場所を1つ見つける
+3. 北方面(埼玉県・栃木県など)へ、日帰りか1泊の外出の予定を入れてみる
 
 #### ⑦ 最後の問いかけ
 
@@ -1742,7 +1843,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-supports[1]` `FRIEND-NOSAME[1]` `INTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `CONF-SUNMOON-IN[1]` `TIM-YEAR-turning[1]` `TIM-MONTH-autumn[1]` `TIM-STANCE-balance[1]` `TIM-BF-NHIGH[1]` `DIR-INTRO[1]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-CENTER[2]` `DIR-SCALE-balance[2]` `DIR-THEME-love[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-water[2]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `ACT-S1-love-crush-balance[1]` `ACT-S2-love-trust[1]` `ACT-DIR-NONE[2]` `QUE-love[2]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-love[2]` `CAU-SHORT-earth[2]`
+`CAU-LEAD-pressures[1]` `CAU-SIT-love-crush[2]` `GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-good[2]` `FRIEND-NOSAME[1]` `INTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `CONF-SUNMOON-IN[1]` `TIM-YEAR-turning[1]` `TIM-MONTH-autumn[1]` `TIM-STANCE-balance[1]` `TIM-BF-NHIGH[1]` `DIR-INTRO[1]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-CENTER[2]` `DIR-SCALE-balance[2]` `DIR-THEME-love[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-water[2]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `ACT-S1-love-crush-balance[1]` `ACT-S2-love-trust[1]` `ACT-DIR[1]` `QUE-love[2]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-love[2]`
 
 </details>
 
@@ -1770,13 +1871,13 @@ https://studio-kakuu.github.io/kakuu-compass/
 ミナトさんの11月の指針「静かな地固め」
 手堅く進めながら、新しい拠点の準備を進める月。
 
-吉方位:北西
+吉方位:東・北西
 ラッキーデー:11/10(火)・11/19(木)・11/28(土)
-ラッキーカラー:紫
+ラッキーカラー:白
 行動のヒント
 1. 候補地を3つに絞り、家賃・通勤・暮らしやすさを表にする
 2. 候補の場所を、季節を変えてもう一度見てみる
-3. 大きく動かず、近所で気分を切り替えられる場所を1つ見つける
+3. 東方面(愛媛県・高知県など)へ、日帰りか1泊の外出の予定を入れてみる
 
 COMPASS(占い×自己チェックの参考情報)
 https://studio-kakuu.github.io/kakuu-compass/
@@ -1808,9 +1909,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 ##### ラッキーカラー
 
-**紫**(#9B6BD3)
+**白**(#F4F1E8)
 
-今月の最大吉方(北西)にいる九紫火星の色、「紫」。小物や持ち物に、少し取り入れてみてください。
+「白」。今月の吉方位(東)にいる六白金星にちなんだ色です。身につけるものに取り入れてみてください。
 
 ##### 力をくれる人
 
@@ -1953,9 +2054,15 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 本命殺:自分の本命星がいる方位。自分のペースを保ちにくいとされます。
 - 本命的殺:本命殺の反対側の方位。判断に迷いが出やすいとされます。
 
+【東】は、11月の盤では吉方位ですが、今年の盤では注意したい方位です。気学では、日帰りや短い旅行など月の範囲の移動は月の盤、引越しのように長く影響する移動は年の盤を重く見るのが一般的です。カードの「追い風」は11月の盤で出しています。
+
+【南東・南西】は今年の盤では吉、11月の盤では注意の方位です。長い目で見た候補として残しつつ、11月の外出先には別の方角を選ぶのもよいでしょう。
+
 移動の規模:近場〜中距離を中心に。大きな移動は、準備が整ってからでも遅くありません。
 
 引越しや旅行は、方位より先に、予算・日程・暮らしやすさを確かめることが大切です。そのうえで候補が並んだときに、方位を参考にしてみてください。
+
+> ※カード画像には、11月の盤の吉方位と、11月の盤で特に注意したい方位(五黄殺>暗剣殺>本命殺>本命的殺>月破の順に最大2つ)だけを載せています。今年の盤も含めたすべての方位は、上の表のとおりです。
 
 > ※地域例は都道府県庁所在地どうしの方角と距離(近場:100km未満/中距離:400km未満/遠方:400km以上)で出しています。同じ都道府県の中でも、住んでいる場所から見た方角で考えてください。
 
@@ -1997,13 +2104,15 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
+11月のひとこと注意:注目されやすい月は、契約の細かい条件を読み飛ばさない。
+
 #### ⑥ 行動のヒント3つ
 
 相談テーマ「引越し・旅行・移動」(今の状況:引越し・移住・半年〜1年くらい先)と、今の戦略(攻めと整えの中間)に合わせた行動のヒントです。
 
 1. 候補地を3つに絞り、家賃・通勤・暮らしやすさを表にする
 2. 候補の場所を、季節を変えてもう一度見てみる
-3. 大きく動かず、近所で気分を切り替えられる場所を1つ見つける
+3. 東方面(愛媛県・高知県など)へ、日帰りか1泊の外出の予定を入れてみる
 
 #### ⑦ 最後の問いかけ
 
@@ -2023,7 +2132,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-best[1]` `FRIEND[1]` `INTRO[3]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `CONF-EARTH-FREE[1]` `CONF-PLAN-MOOD[1]` `TIM-YEAR-spring[1]` `TIM-MONTH-turning[2]` `TIM-STANCE-balance[1]` `DIR-INTRO[1]` `DIR-GOOD-BOTH[2]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-SCALE-balance[2]` `DIR-THEME-move[2]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-REL-controls[1]` `CAU-EL-water[2]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `ACT-S1-move-relocate-balance[1]` `ACT-S2-move-later[1]` `ACT-DIR-NONE[2]` `QUE-move[3]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-move[1]` `CAU-SHORT-earth[2]`
+`CAU-LEAD-center[1]` `CAU-SIT-move-relocate[1]` `GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `COLOR-good[2]` `FRIEND[1]` `INTRO[3]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `CONF-EARTH-FREE[1]` `CONF-PLAN-MOOD[1]` `TIM-YEAR-spring[1]` `TIM-MONTH-turning[2]` `TIM-STANCE-balance[1]` `DIR-INTRO[1]` `DIR-GOOD-BOTH[2]` `DIR-GOOD-YEAR[2]` `DIR-GOOD-MONTH[1]` `DIR-BAD[2]` `DIR-BADNAME-gooSatsu[1]` `DIR-BADNAME-ankenSatsu[1]` `DIR-BADNAME-saiha[1]` `DIR-BADNAME-geppa[1]` `DIR-BADNAME-honmeiSatsu[1]` `DIR-BADNAME-honmeiTekiSatsu[1]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-SCALE-balance[2]` `DIR-THEME-move[2]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `CAU-INTRO[1]` `CAU-REL-controls[1]` `CAU-EL-water[2]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `ACT-S1-move-relocate-balance[1]` `ACT-S2-move-later[1]` `ACT-DIR[1]` `QUE-move[3]` `OUTRO[2]` `AI-PROMPT[1]` `DIR-ACT-move[1]`
 
 </details>
 
@@ -2122,7 +2231,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 ### 3-8. ラッキーカラー
 - 九星の伝統的な色(星の名前に入っている色)を使います。
-- 選び方:①今月の「最大吉方」(今年も凶方位でない方位)にいる星の色 → ②なければ今月の吉方位(同条件)にいる星の色 → ③それもなければ、本命星を生む星(生気の星)の色。
+- 選び方(カードと同じく〇月の盤だけで判断):①カードの金色の針が指す方位(〇月の吉方位)にいる星の色 → ②針がなければ〇月の吉方位にいる星の色(最大吉方>生気>比和>退気)→ ③〇月に吉方位がなければ、本命星を生む星(生気の星)の色。
 
 | 星 | 色 | 画面・カードの色見本 |
 | --- | --- | --- |
@@ -2161,7 +2270,10 @@ https://studio-kakuu.github.io/kakuu-compass/
 - **AIに相談する(コピー)**:相談用の文章+全文(全文と同じく生年月日は初期設定で伏せる)。
 - **共有する**:スマホの共有メニュー(Web Share API)に、要約(指針・吉方位・ラッキーデー・ラッキーカラー・行動のヒント・ツールのURL)を渡します。使えない環境では要約をコピーします。
 - **カード画像を保存**:1080×1920のPNGをブラウザ内のCanvasで描きます(外部ライブラリ・外部通信なし、同梱フォントの読み込みを待ってから描画)。画像を共有メニューで送れる端末では共有メニュー、それ以外はダウンロード。
-- 文字の大きさ:いちばん小さい注意書きが22px、ほとんどは24〜36px、指針の名前は最大104px。長い文字は自動で縮小・折り返しし、それでも下の注意書きに重なる場合は余白を詰めた配置で描き直します。
+- **カードの方位は〇月の盤だけで判断**します。「追い風」の吉方位=〇月の盤の吉方位、「気をつけること」の避けたい方位=〇月の盤の凶方位のうち優先順(五黄殺>暗剣殺>本命殺>本命的殺>月破)で最大2つ(3つ以上は「など」)。方位図の印も、カードに書いた方位だけに付けます。今年の盤も含めた全部の一覧と、年と月で吉凶が食い違う方位の説明はレポート③にあります。
+- **カードの「注意」**:〇月の盤の中心の星と本命星の五行の関係(前半)+相談テーマ×状況の答え(後半)。同じ月でも本命星が違えば別の文になります(4章#30)。
+- 文字の大きさ:いちばん小さい注意書きが22px、ほとんどは24〜36px、指針の名前は最大104px。左右のカードは中身に合わせて高さをそろえて伸ばし、長い文字は自動で縮小・折り返しします。それでも下の注意書きに重なる場合は余白を詰めた配置で描き直します。
+- はみ出しの自動チェック:`npm run cards:check` で、全テーマ×状況の答え×本命星×3つの月(長いニックネーム・生年月日ありを含む)と、わざと長くした文章で約1,200枚を描き、文字や色の丸が左右のカードの枠・外枠からはみ出していないか、下の注意書きに重なっていないかを確認します(現在 0件)。
 - カードのURLは、画面から作るときは実際に開いているページのURL、サンプル画像では `https://studio-kakuu.github.io/kakuu-compass/` です。
 
 ### 3-12. 出典・確認に使った資料
@@ -2193,7 +2305,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 
 ### 3-13. テスト結果(このファイルの生成時に自動実行)
 
-**合計 65 件中 65 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
+**合計 67 件中 67 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
 
 | 結果 | テスト内容 |
 | --- | --- |
@@ -2217,14 +2329,16 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | ✅ | ラッキーデー: 生気(力をもらえる日)が優先される |
 | ✅ | ラッキーデー: 月末で残りが10日未満なら翌月末まで |
 | ✅ | 相性の星(相生・比和) |
-| ✅ | ラッキーカラー: 今月の最大吉方の星の色 → なければ吉方位 → なければ生気の星 |
+| ✅ | ラッキーカラー: 〇月の盤の吉方位(指定した方位を優先)の星の色 → なければ生気の星 |
 | ✅ | 相談テーマは6つ。「まずは全体を見たい」が初期選択で、状況の質問なし |
 | ✅ | 各テーマに選択式の質問が2問(各3択)あり、対応する文章パーツがそろっている |
 | ✅ | 状況の回答で、行動のヒントと指針の説明が変わる |
 | ✅ | 指針の名前は今月のフェーズ、説明の前半は戦略から選ばれる |
 | ✅ | お金のテーマは投資の助言をしない(注意書きつき・投資を勧める言葉なし) |
 | ✅ | 共有の要約・全文コピーに、初期設定では生年月日を載せない |
-| ✅ | カード用データ: 吉方位は今月吉・今年も凶でない方位、避けたい方位と重ならない |
+| ✅ | カード用データ: 〇月の盤だけで判断。避けたい方位は優先順で最大2つ(3つ以上は「など」) |
+| ✅ | ひとこと注意: 同じ月でも本命星が違えば別の文。テーマ・状況でも変わる |
+| ✅ | レポート③に、年と月で吉凶が食い違う方位の説明が入る |
 | ✅ | 都道府県データは47件 |
 | ✅ | 東京都から見た方角と距離 |
 | ✅ | 性格スコア: 逆転項目の計算 |
@@ -2288,11 +2402,13 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | 19 | 日盤の閏 | 「冬至・夏至に最も近い甲子日」で切り替え、間隔が240日になるときだけ30日前の甲午日に切り替え(陽遁=七赤・陰遁=三碧から)。期間は必ず180日か210日。2026年の切り替え日は公開情報と一致。次に閏が入るのは2031年12月20日(陽遁、七赤から)の計算 | 閏の扱いは流派・暦によって違うことがあります。気になる場合は手持ちの暦で2031〜2032年の日盤を確認してください |
 | 20 | ラッキーデーの選び方 | 日の星が本命星を生む日(生気)>同じ五行の日(比和)>本命星が生む日(退気)の順で最大3日。五黄の日、本命星と同じ星の日、本命星が暗剣殺・日破に入る日は除外 | 生気の日だけにする、などに変更可能 |
 | 21 | ラッキーデーの期間 | 今日〜今月末。今月の残りが10日未満(=21日以降)なら翌月末まで | 日数の基準は変更可能 |
-| 22 | ラッキーカラーの選び方 | 今月の最大吉方(今年も凶方位でない方位)の星の色 → なければ今月の吉方位の星の色 → なければ本命星を生む星の色。色は星の名前の色(一白=白、二黒=黒、三碧=青、四緑=緑、五黄=黄、六白=白、七赤=赤、八白=白、九紫=紫) | 六白を「白・金」にするなど、色の対応は `js/core/kyusei.js` の STAR_COLORS で変更可能 |
+| 22 | ラッキーカラーの選び方 | カードと同じく〇月の盤だけで判断。金色の針が指す方位(〇月の吉方位)にいる星の色 → 針がなければ〇月の吉方位にいる星の色(最大吉方>生気>比和>退気)→ 〇月に吉方位がなければ本命星を生む星の色。色は星の名前の色(一白=白、二黒=黒、三碧=青、四緑=緑、五黄=黄、六白=白、七赤=赤、八白=白、九紫=紫) | 六白を「白・金」にするなど、色の対応は `js/core/kyusei.js` の STAR_COLORS で変更可能 |
 | 23 | 力をくれる人 | 本命星を生む星(支えてくれる星)、同じ五行の星(気が合う星)、本命星が生む星(力を貸せる星)を表示。五黄土星も土の星として含める | — |
-| 24 | カードの吉方位・避けたい方位 | 吉方位=今月の吉方位のうち今年も凶方位でないもの(最大吉方を先に)。避けたい方位=今年か今月のどちらかで凶方位。金色の針は先頭の吉方位を指す。吉方位がない月は「近場で過ごすのが◎」と表示し、針は出さない | 今年の吉方位も含めるなどに変更可能 |
+| 24 | カードの吉方位・避けたい方位 | **カードは〇月の盤だけで判断**(今年の凶方位との重なりは見ない)。吉方位=〇月の盤の吉方位(最大吉方を先に)。避けたい方位=〇月の盤の凶方位から、五黄殺>暗剣殺>本命殺>本命的殺>月破の順で**最大2つ**、3つ以上あるときは末尾に「など」。金色の針・行動のヒント3つ目の方位・ラッキーカラーは同じ方位にそろえる(地域例がある方位を優先)。吉方位がない月は「近場で過ごすのが◎」と表示し、針は出さない。今年の盤も含めた全部の一覧と、年と月で吉凶が食い違う方位の説明(`DIR-MIXED-MONTH` / `DIR-MIXED-YEAR`)はレポート③に残す | — |
 | 25 | 方位図の向き | ご指定どおり上が北・下が南(地図と同じ)。気学の本では上が南の盤も多いが、今回は地図に合わせた | — |
 | 26 | 生年月日の扱い(共有) | 「生年月日も載せる」にチェックがないときは、共有の要約・カード画像・全文コピー・AI相談用コピーのどれにも生年月日を入れない。全文コピーでは、数秘術の計算式と「気学上の生まれ年・月」も「(省略)」にする(生年月日が逆算できるため) | — |
 | 27 | 「共有する」が使えない環境 | Web Share API がなければ(パソコンのブラウザなど)、要約をクリップボードにコピーする。カード画像は共有メニューで画像を送れない環境ではPNGをダウンロード | — |
 | 28 | お金のテーマ | 投資や金融商品の助言はしない。お金のテーマのときは「⑥ 行動のヒント」に注意書きを出し、「銘柄・株を・仮想通貨・FX・利回り」などの言葉が文章にないことをテストで確認 | — |
 | 29 | 「その他」「大きな決断」テーマの文章 | テーマ変更で使わなくなったため削除。「その他」の行動・問いかけの文章は「まずは全体を見たい」に引き継いだ | — |
+| 30 | カードの「注意」(〇月のひとこと注意) | 前半=〇月の盤の中心の星と本命星の五行の関係(`CAU-LEAD-関係`、各3通り)。同じ関係になる星が複数あるときは本命星の番号順に[1][2][3]を使い分けるので、同じ月でも本命星が違えば別の文になる。後半=相談テーマ×状況の質問1の答え(`CAU-SIT-…`)、「まずは全体を見たい」は中心の星の五行(`CAU-SHORT-…`)。同じ文をレポート⑤にも「〇月のひとこと注意」として載せる | — |
+| 31 | カードのはみ出し対策 | 左右のカードは中身の高さを先に測り、左右そろえて枠を伸ばす。文字は縮小・折り返し(最小22px)、最後の行が1〜2文字だけになるときは一段小さくする。それでも下の注意書きに重なるときは余白を詰めた配置で描き直す(4段階)。`npm run cards:check` で約1,200枚を描き、枠からのはみ出し・注意書きへの重なりがないことを自動で確認 | — |

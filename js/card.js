@@ -50,7 +50,9 @@
     for (; s >= minSize; s -= 2) {
       ctx.font = font(s, weight, fam);
       lines = wrap(ctx, text, maxW);
-      if (lines.length <= maxLines) return { lines: lines, size: s, height: lines.length * s * lh };
+      // 最後の行が1〜2文字だけになるときは、もう一段小さくして1行に収まらないか試す(最小サイズでは諦める)
+      var widow = lines.length > 1 && lines[lines.length - 1].length <= 2 && s - 2 >= minSize;
+      if (lines.length <= maxLines && !widow) return { lines: lines, size: s, height: lines.length * s * lh };
     }
     s = minSize;
     ctx.font = font(s, weight, fam);
@@ -61,14 +63,33 @@
     return { lines: lines, size: s, height: lines.length * s * lh };
   }
 
+  // ---- はみ出しチェック用の記録 ----
+  // DRY=true のときは描かずに大きさだけ測る(カードの高さを中身に合わせるため)
+  var DRY = false, GROUP = 'page', BOXES = [];
+  function rec(x, y, w, h) { if (!DRY) BOXES.push({ x: x, y: y, w: w, h: h, group: GROUP }); }
+
   function drawLines(ctx, fit, x, y, color, weight, fam, align, lh) {
     lh = lh || 1.45;
     ctx.font = font(fit.size, weight, fam);
     ctx.fillStyle = color;
     ctx.textAlign = align || 'left';
     ctx.textBaseline = 'alphabetic';
-    fit.lines.forEach(function (l, i) { ctx.fillText(l, x, y + fit.size + i * fit.size * lh - fit.size * 0.18); });
+    var maxW = 0;
+    fit.lines.forEach(function (l, i) {
+      maxW = Math.max(maxW, ctx.measureText(l).width);
+      if (!DRY) ctx.fillText(l, x, y + fit.size + i * fit.size * lh - fit.size * 0.18);
+    });
+    var bx = align === 'center' ? x - maxW / 2 : (align === 'right' ? x - maxW : x);
+    rec(bx, y, maxW, fit.height);
     return fit.height;
+  }
+
+  /** ラベル(1行・太字) */
+  function label(ctx, text, x, y, color) {
+    ctx.font = font(24, 700); ctx.fillStyle = color; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (!DRY) ctx.fillText(text, x, y + 24);
+    rec(x, y, ctx.measureText(text).width, 30);
+    return 34;
   }
 
   /** 1行に収める(縮小、それでも無理なら…) */
@@ -90,6 +111,8 @@
 
   /** 方位図(上が北・下が南) */
   function compass(ctx, cx, cy, r, marks, markColor, needle) {
+    rec(cx - r - 56, cy - r - 50, (r + 56) * 2, (r + 50) * 2);
+    if (DRY) return;
     ctx.save();
     ctx.strokeStyle = C.dim;
     ctx.lineWidth = 2;
@@ -151,7 +174,8 @@
     ctx.fillStyle = color;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(text, x, y + 30);
+    if (!DRY) ctx.fillText(text, x, y + 30);
+    rec(x, y, ctx.measureText(text).width, 40);
     return 46;
   }
 
@@ -184,22 +208,43 @@
       canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext('2d');
       // 文章が長くて下の注意書きに重なりそうなら、余白を詰めた配置(compact)で描き直す
-      for (var mode = 0; mode <= 2; mode++) {
+      var end, mode;
+      for (mode = 0; mode <= 3; mode++) {
         ctx.clearRect(0, 0, W, H);
-        var end = paint(ctx, card, T, opts, mode);
+        BOXES = []; PANELS = {};
+        end = paint(ctx, card, T, opts, mode);
         if (end <= FOOTER_TOP - 14) break;
       }
+      api.lastCheck = checkLayout(end, Math.min(mode, 3));
       return canvas;
     });
   }
 
   var FOOTER_TOP = 1752;
+  var PANELS = {};
+
+  /** 描いたものが枠からはみ出していないかを調べる(テスト用。結果は Compass.card.lastCheck) */
+  function checkLayout(end, mode) {
+    var problems = [];
+    var frame = { x: 32, y: 32, w: W - 64, h: H - 64 };
+    function inside(b, r, tol) {
+      return b.x >= r.x - tol && b.y >= r.y - tol && b.x + b.w <= r.x + r.w + tol && b.y + b.h <= r.y + r.h + tol;
+    }
+    BOXES.forEach(function (b) {
+      if (!inside(b, frame, 0)) problems.push({ where: 'frame', box: b });
+      if (PANELS[b.group] && !inside(b, PANELS[b.group], 0)) problems.push({ where: 'panel-' + b.group, box: b });
+      if (b.group === 'page' && b.y < FOOTER_TOP && b.y + b.h > FOOTER_TOP - 4) problems.push({ where: 'footer', box: b });
+    });
+    if (end > FOOTER_TOP - 4) problems.push({ where: 'footer', end: end });
+    return { ok: problems.length === 0, problems: problems, mode: mode, boxes: BOXES.length };
+  }
   function paint(ctx, card, T, opts, mode) {
     mode = mode || 0;
     var L = [
-      { ch: 600, cr: 80, cyo: 190, gap: 36, act: 28, nameSize: 104 },
-      { ch: 560, cr: 72, cyo: 178, gap: 28, act: 26, nameSize: 96 },
-      { ch: 530, cr: 66, cyo: 168, gap: 22, act: 24, nameSize: 88 }
+      { ch: 600, cr: 80, cyo: 190, gap: 36, act: 28, actLines: 2, descLines: 2, nameSize: 104 },
+      { ch: 560, cr: 72, cyo: 178, gap: 28, act: 26, actLines: 2, descLines: 2, nameSize: 96 },
+      { ch: 530, cr: 66, cyo: 168, gap: 22, act: 24, actLines: 2, descLines: 2, nameSize: 88 },
+      { ch: 500, cr: 60, cyo: 160, gap: 18, act: 24, actLines: 1, descLines: 1, nameSize: 80 } // 文章がとても長いときの最終手段
     ][mode];
     // 背景・光・円の模様・枠
     ctx.fillStyle = C.bg;
@@ -261,51 +306,67 @@
     y += drawLines(ctx, gname, W / 2, y, C.lime, 700, JA, 'center', 1.2) + 6;
 
     // 説明(金色)
-    var desc = fitLines(ctx, card.guideDesc, IW - 40, 36, 28, 2, 500, JA, 1.45);
+    var desc = fitLines(ctx, card.guideDesc, IW - 40, 36, 26, L.descLines, 500, JA, 1.45);
     y += drawLines(ctx, desc, W / 2, y, C.gold, 400, JA, 'center', 1.45);
 
-    // 2列のカード
+    // 2列のカード(先に中身の高さを測り、左右そろえて枠の高さを決める)
     var top = y + 32;
-    var cw = (IW - 28) / 2, ch = L.ch;
+    var cw = (IW - 28) / 2;
     var lx0 = X, rx0 = X + cw + 28;
-    [[lx0, C.lime], [rx0, C.orange]].forEach(function (a) {
+    var pad = 30, tw = cw - pad * 2;
+
+    function leftCol() {
+      GROUP = 'L';
+      sectionTitle(ctx, T.tailwind, lx0 + pad, top + 26, C.lime);
+      compass(ctx, lx0 + cw / 2, top + L.cyo, L.cr, card.goodDirs.map(function (d) { return d.id; }), C.lime, card.needle);
+      var ly = top + L.cyo + L.cr + 62;
+      ly += label(ctx, T.goodDirs, lx0 + pad, ly, C.lime);
+      var hasGood = card.goodDirs.length > 0;
+      var gtxt = hasGood ? card.goodDirs.map(function (d) { return d.name; }).join('・') : T.noGood;
+      ly += drawLines(ctx, fitLines(ctx, gtxt, tw, 34, 24, 2, 700, JA, 1.3), lx0 + pad, ly, C.white, 700, JA, 'left', 1.3) + 12;
+      ly += label(ctx, hasGood ? T.doThere : T.doThereNone, lx0 + pad, ly, C.lime);
+      ly += drawLines(ctx, fitLines(ctx, hasGood ? card.doThere : T.noGoodDo, tw, 28, 24, 3, 400, JA, 1.4), lx0 + pad, ly, C.white, 400, JA, 'left', 1.4) + 12;
+      ly += label(ctx, T.color, lx0 + pad, ly, C.lime) + 2;
+      // 色の丸 + 色の名前
+      var nameFit = fitOne(ctx, card.color.name, tw - 50, 30, 24, 700);
+      if (!DRY) {
+        ctx.fillStyle = card.color.hex;
+        ctx.beginPath(); ctx.arc(lx0 + pad + 18, ly + 18, 18, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2; ctx.stroke();
+      }
+      rec(lx0 + pad - 1, ly - 1, 38, 38);
+      drawLines(ctx, nameFit, lx0 + pad + 50, ly + 2, C.white, 700, JA, 'left', 1.2);
+      ly += 38;
+      GROUP = 'page';
+      return ly;
+    }
+
+    function rightCol() {
+      GROUP = 'R';
+      sectionTitle(ctx, T.caution, rx0 + pad, top + 26, C.orange);
+      compass(ctx, rx0 + cw / 2, top + L.cyo, L.cr, card.badDirs.map(function (d) { return d.id; }), C.orange, null);
+      var ry = top + L.cyo + L.cr + 62;
+      ry += label(ctx, T.badDirs, rx0 + pad, ry, C.orange);
+      var btxt = card.badDirs.length ? card.badDirs.map(function (d) { return d.name; }).join('・') + (card.badMore ? T.more : '') : T.noBad;
+      ry += drawLines(ctx, fitLines(ctx, btxt, tw, 32, 24, 2, 700, JA, 1.3), rx0 + pad, ry, C.white, 700, JA, 'left', 1.3) + 12;
+      ry += label(ctx, T.cautionLabel, rx0 + pad, ry, C.orange);
+      ry += drawLines(ctx, fitLines(ctx, card.caution, tw, 28, 24, 4, 400, JA, 1.4), rx0 + pad, ry, C.white, 400, JA, 'left', 1.4);
+      GROUP = 'page';
+      return ry;
+    }
+
+    DRY = true;
+    var bottom = Math.max(leftCol(), rightCol());
+    DRY = false;
+    var ch = Math.max(L.ch, bottom - top + 30);
+    [[lx0, C.lime, 'L'], [rx0, C.orange, 'R']].forEach(function (a) {
       roundRect(ctx, a[0], top, cw, ch, 28);
       ctx.fillStyle = C.panel; ctx.fill();
       ctx.strokeStyle = a[1]; ctx.lineWidth = 3; ctx.stroke();
+      PANELS[a[2]] = { x: a[0] + 3, y: top + 3, w: cw - 6, h: ch - 6 };
     });
-    var pad = 30, tw = cw - pad * 2;
-
-    // 左: 追い風
-    sectionTitle(ctx, T.tailwind, lx0 + pad, top + 26, C.lime);
-    compass(ctx, lx0 + cw / 2, top + L.cyo, L.cr, card.goodDirs.map(function (d) { return d.id; }), C.lime, card.needle);
-    var ly = top + L.cyo + L.cr + 62;
-    ctx.font = font(24, 700); ctx.fillStyle = C.lime; ctx.textAlign = 'left';
-    ctx.fillText(T.goodDirs, lx0 + pad, ly + 24); ly += 34;
-    var gtxt = card.goodDirs.length ? card.goodDirs.map(function (d) { return d.name; }).join('・') : T.noGood;
-    ly += drawLines(ctx, fitLines(ctx, gtxt, tw, 34, 26, 2, 700, JA, 1.3), lx0 + pad, ly, C.white, 700, JA, 'left', 1.3) + 12;
-    ctx.font = font(24, 700); ctx.fillStyle = C.lime;
-    var hasGood = card.goodDirs.length > 0;
-    ctx.fillText(hasGood ? T.doThere : T.doThereNone, lx0 + pad, ly + 24); ly += 34;
-    ly += drawLines(ctx, fitLines(ctx, hasGood ? card.doThere : T.noGoodDo, tw, 28, 24, 2, 400, JA, 1.4), lx0 + pad, ly, C.white, 400, JA, 'left', 1.4) + 12;
-    ctx.font = font(24, 700); ctx.fillStyle = C.lime;
-    ctx.fillText(T.color, lx0 + pad, ly + 24); ly += 36;
-    ctx.fillStyle = card.color.hex;
-    ctx.beginPath(); ctx.arc(lx0 + pad + 18, ly + 18, 18, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.font = font(30, 700); ctx.fillStyle = C.white; ctx.textAlign = 'left';
-    ctx.fillText(card.color.name, lx0 + pad + 50, ly + 29);
-
-    // 右: 気をつけること
-    sectionTitle(ctx, T.caution, rx0 + pad, top + 26, C.orange);
-    compass(ctx, rx0 + cw / 2, top + L.cyo, L.cr, card.badDirs.map(function (d) { return d.id; }), C.orange, null);
-    var ry = top + L.cyo + L.cr + 62;
-    ctx.font = font(24, 700); ctx.fillStyle = C.orange; ctx.textAlign = 'left';
-    ctx.fillText(T.badDirs, rx0 + pad, ry + 24); ry += 34;
-    var btxt = card.badDirs.length ? card.badDirs.map(function (d) { return d.name; }).join('・') : T.noBad;
-    ry += drawLines(ctx, fitLines(ctx, btxt, tw, 32, 24, 3, 700, JA, 1.3), rx0 + pad, ry, C.white, 700, JA, 'left', 1.3) + 12;
-    ctx.font = font(24, 700); ctx.fillStyle = C.orange;
-    ctx.fillText('注意', rx0 + pad, ry + 24); ry += 34;
-    drawLines(ctx, fitLines(ctx, card.caution, tw, 28, 24, 3, 400, JA, 1.4), rx0 + pad, ry, C.white, 400, JA, 'left', 1.4);
+    leftCol();
+    rightCol();
 
     y = top + ch + L.gap;
 
@@ -338,15 +399,23 @@
       ctx.font = font(24, 700, EN); ctx.fillStyle = C.bg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(String(i + 1), X + 20, y + 23);
       ctx.textBaseline = 'alphabetic';
-      var f = fitLines(ctx, a, IW - 60, L.act, 24, 2, 400, JA, 1.4);
+      var f = fitLines(ctx, a, IW - 60, L.act, 22, L.actLines, 400, JA, 1.4);
       y += Math.max(drawLines(ctx, f, X + 60, y, C.white, 400, JA, 'left', 1.4), 44) + 10;
     });
     y += L.gap - 10;
 
     // 力をくれる人
     y += sectionTitle(ctx, T.friends, X, y, C.gold) + 4;
-    var ftxt = '支えてくれる星:' + card.friends.supports.join('・') + '/気が合う星:' + card.friends.same.join('・');
-    y += drawLines(ctx, fitLines(ctx, ftxt, IW, 28, 24, 2, 400, JA, 1.4), X, y, C.white, 400, JA, 'left', 1.4) + 2;
+    ctx.font = font(26, 700);
+    var lw = Math.max(ctx.measureText(T.friendsSupports).width, ctx.measureText(T.friendsSame).width);
+    [[T.friendsSupports, card.friends.supports], [T.friendsSame, card.friends.same]].forEach(function (row) {
+      ctx.font = font(26, 700);
+      if (!DRY) { ctx.fillStyle = C.gold; ctx.textAlign = 'left'; ctx.fillText(row[0], X, y + 28); }
+      rec(X, y, lw, 34);
+      var nf = fitOne(ctx, row[1].join('・'), IW - lw - 20, 28, 22, 400);
+      drawLines(ctx, nf, X + lw + 20, y + 2, C.white, 400, JA, 'left', 1.2);
+      y += 42;
+    });
     y += drawLines(ctx, fitOne(ctx, T.friendsNote, IW, 26, 22, 400), X, y, C.lime, 400, JA, 'left', 1.2);
 
     // 最下部(位置は固定)
@@ -359,5 +428,6 @@
   }
 
   root.Compass = root.Compass || {};
-  root.Compass.card = { draw: draw, WIDTH: W, HEIGHT: H };
+  var api = { draw: draw, WIDTH: W, HEIGHT: H, lastCheck: null };
+  root.Compass.card = api;
 })(typeof self !== 'undefined' ? self : this);

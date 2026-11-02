@@ -84,7 +84,6 @@
     var sitLabel = hasSit ? sitAns.map(function (a) { return a.opt.label; }).join('・') : '';
     var lucky = kyusei.luckyDays(now, honmei, 3);
     var friends = kyusei.friendStars(honmei);
-    var lcolor = kyusei.luckyColor(cur, honmei);
     var targetMonth = cur.target.calendarMonth;
 
     var yearPalaceId = cur.year.honmeiPalace;
@@ -117,11 +116,36 @@
     function dayLabel(d) { return d.m + '/' + d.d + '(' + WD[d.dow] + ')'; }
     var monthRange = fmtMD(cur.monthStart) + '〜' + fmtMD(cur.monthEnd) + 'ごろ';
 
-    // ---- 方位(今月の指針・カード用): 今月の吉方位のうち、今年の凶方位でないもの ----
+    // ---- 方位(〇月の指針・カード用): 〇月の盤だけで判断する ----
+    // 吉方位 = 月盤の吉方位(最大吉方 > 生気 > 比和 > 退気 の順)。今年の凶方位との重なりはレポート③で説明する
     var REL_ORDER = { supports: 3, same: 2, drains: 1 };
-    var monthGood = cur.month.directions.filter(function (d, i) { return d.good && !cur.year.directions[i].bad.length; })
+    var monthGood = cur.month.directions.filter(function (d) { return d.good; })
       .sort(function (a, b) { return (a.good === 'best' ? 0 : 1) - (b.good === 'best' ? 0 : 1) || (REL_ORDER[b.relation] - REL_ORDER[a.relation]); });
-    var avoid = kyusei.PALACES.filter(function (p, i) { return cur.year.directions[i].bad.length || cur.month.directions[i].bad.length; });
+    // 金色の針・行動のヒントの方位・ラッキーカラーは同じ方位にそろえる(地域例がある方位を優先)
+    var needleDir = monthGood.filter(function (d) { return regions[d.palace.id].length; })[0] || monthGood[0] || null;
+    var lcolor = kyusei.luckyColor(cur, honmei, needleDir ? needleDir.palace.id : null);
+    // 避けたい方位 = 月盤の凶方位。優先順 五黄殺 > 暗剣殺 > 本命殺 > 本命的殺 > 月破 で最大2つ(3つ以上は「など」)
+    var BAD_PRIORITY = ['gooSatsu', 'ankenSatsu', 'honmeiSatsu', 'honmeiTekiSatsu', 'geppa'];
+    var monthBad = cur.month.directions.filter(function (d) { return d.bad.length; }).map(function (d) {
+      return { palace: d.palace, rank: Math.min.apply(null, d.bad.map(function (b) { return BAD_PRIORITY.indexOf(b); })) };
+    }).sort(function (a, b) { return a.rank - b.rank || kyusei.PALACES.indexOf(a.palace) - kyusei.PALACES.indexOf(b.palace); });
+    var avoid = monthBad.slice(0, 2).map(function (x) { return x.palace; });
+
+    // ---- 〇月のひとこと注意(カードの「注意」) ----
+    // 前半: 月盤の中心の星と本命星の五行の関係。言い回しは「同じ関係になる星の中で何番目か」で選ぶので、
+    //       同じ月でも本命星が違えば別の文になる。
+    // 後半: 相談テーマ×状況の質問1の答え(「まずは全体を見たい」は月盤の中心の星の五行)
+    var mcStar = cur.month.centerStar;
+    var cauRel = mcStar.num === honmei ? 'center' : kyusei.relation(mcStar.element, ks.honmei.element);
+    var sameRelStars = [];
+    for (var sn = 1; sn <= 9; sn++) {
+      var r0 = sn === mcStar.num ? 'center' : kyusei.relation(mcStar.element, kyusei.STARS[sn].element);
+      if (r0 === cauRel) sameRelStars.push(sn);
+    }
+    var leadArr = P['CAU-LEAD-' + cauRel].v;
+    var leadIdx = sameRelStars.indexOf(honmei) % leadArr.length;
+    used.push('CAU-LEAD-' + cauRel + '[' + (leadIdx + 1) + ']');
+    var cardCaution = fill(leadArr[leadIdx], V()) + pick(hasSit ? 'CAU-SIT-' + th + '-' + sitAns[0].opt.id : 'CAU-SHORT-' + mcStar.element, V());
 
     // ---- 今月の指針 ----
     var guideName = pick('GUIDE-NAME-' + monthPhase, V());
@@ -324,9 +348,19 @@
       var order = ['gooSatsu', 'ankenSatsu', 'saiha', 'geppa', 'honmeiSatsu', 'honmeiTekiSatsu'];
       s3.blocks.push({ t: 'list', items: order.filter(function (b) { return badTypes.indexOf(b) !== -1; }).map(function (b) { return pick('DIR-BADNAME-' + b); }) });
     }
+    // 年と月で吉凶が食い違う方位の説明
+    var mixM = [], mixY = [];
+    kyusei.PALACES.forEach(function (p, i) {
+      var yd = cur.year.directions[i], md = cur.month.directions[i];
+      if (md.good && yd.bad.length) mixM.push(p);
+      if (yd.good && md.bad.length) mixY.push(p);
+    });
+    if (mixM.length) s3.blocks.push({ t: 'p', text: pick('DIR-MIXED-MONTH', V({ dirs: names(mixM) })) });
+    if (mixY.length) s3.blocks.push({ t: 'p', text: pick('DIR-MIXED-YEAR', V({ dirs: names(mixY) })) });
     if (yearPalaceId === 'C') s3.blocks.push({ t: 'p', text: pick('DIR-CENTER', V()) });
     s3.blocks.push({ t: 'p', text: pick('DIR-SCALE-' + stance, V()) });
     s3.blocks.push({ t: 'p', text: pick('DIR-THEME-' + themeObj.id, V()) });
+    s3.blocks.push({ t: 'note', text: 'カード画像には、' + targetMonth + '月の盤の吉方位と、' + targetMonth + '月の盤で特に注意したい方位(五黄殺>暗剣殺>本命殺>本命的殺>月破の順に最大2つ)だけを載せています。今年の盤も含めたすべての方位は、上の表のとおりです。' });
     s3.blocks.push({ t: 'note', text: '地域例は都道府県庁所在地どうしの方角と距離(近場:100km未満/中距離:400km未満/遠方:400km以上)で出しています。同じ都道府県の中でも、住んでいる場所から見た方角で考えてください。' });
     sections.push(s3);
 
@@ -381,6 +415,7 @@
     else s5.blocks.push({ t: 'p', text: pick('CAU-REL-' + mRel, V({ period: '今月', center: mc.name, centerEl: EL[mc.element] })) });
     if (mc.element !== yc.element) s5.blocks.push({ t: 'p', text: pick('CAU-EL-' + mc.element, V()) });
     else s5.blocks.push({ t: 'p', text: '今月も今年と同じ「' + EL[mc.element] + '」の空気です。上の注意を、今月は特に意識してみてください。' });
+    s5.blocks.push({ t: 'p', text: targetMonth + '月のひとこと注意:' + cardCaution + '。', key: 'caution' });
     sections.push(s5);
 
     // ---- ⑥ 行動のヒント ----
@@ -394,7 +429,7 @@
       acts = [pick(pool[start], V()), pick(pool[(start + 1 + (hash(seed + 'act2') % 3)) % 4], V())];
     }
     // 方位のアクション: 今月の指針と同じ方位(今月吉・今年も凶でない)のうち、地域例がある方位
-    var actDir = monthGood.filter(function (d) { return regions[d.palace.id].length; })[0];
+    var actDir = needleDir && regions[needleDir.palace.id].length ? needleDir : null;
     var SCALE_WORD = { attack: '日帰り〜泊まりがけ', balance: '日帰りか1泊', prepare: '近場・日帰り' };
     if (actDir) {
       acts.push(pick('ACT-DIR', V({ dir: actDir.palace.name, regions: regions[actDir.palace.id].slice(0, 2).map(function (x) { return x.name; }).join('・'), scale: SCALE_WORD[stance] })));
@@ -416,19 +451,20 @@
 
     // ---- 共有・カード用のデータ ----
     var cardT = texts.card;
-    var needle = monthGood[0] ? monthGood[0].palace.id : null;
+    var needle = needleDir ? needleDir.palace.id : null;
     var card = {
       month: targetMonth,
       yearMonth: cur.target.calendarYear + '.' + (targetMonth < 10 ? '0' : '') + targetMonth,
       lead: fill(cardT.lead, { name: name, month: targetMonth }),
       guideName: guideName,
       guideDesc: guideDesc,
-      goodDirs: monthGood.map(function (d) { return { id: d.palace.id, name: d.palace.name }; }),
+      goodDirs: (needleDir ? [needleDir] : []).concat(monthGood.filter(function (d) { return d !== needleDir; })).map(function (d) { return { id: d.palace.id, name: d.palace.name }; }),
       needle: needle,
       doThere: pick('DIR-ACT-' + th, V()),
       color: lcolor.color,
       badDirs: avoid.map(function (p) { return { id: p.id, name: p.name }; }),
-      caution: pick('CAU-SHORT-' + cur.month.centerStar.element, V()),
+      badMore: monthBad.length > 2,
+      caution: cardCaution,
       luckyDays: lucky.days.map(function (d) { return dayLabel(d.date); }),
       actions: acts,
       friends: { supports: friends.supports.map(function (x) { return x.name; }), same: (sameOthers.length ? sameOthers : [ks.honmei]).map(function (x) { return x.name; }) },

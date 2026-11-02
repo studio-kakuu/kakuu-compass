@@ -383,20 +383,18 @@
   };
 
   /**
-   * ラッキーカラー
-   * 1) 今月の盤で「最大吉方」(年盤でも凶方位でない方位)にいる星の色
-   * 2) なければ、今月の吉方位(同条件)にいる星の色(生気>比和>退気の順)
-   * 3) それもなければ、本命星を生む星(生気の星)のうち数字の小さい星の色
+   * ラッキーカラー(カードと同じく「〇月の盤」だけで判断する)
+   * 1) preferId(カードの金色の針が指す方位)が今月の吉方位なら、そこにいる星の色
+   * 2) なければ、今月の吉方位にいる星の色(最大吉方 > 生気 > 比和 > 退気 の順)
+   * 3) 今月に吉方位がなければ、本命星を生む星(生気の星)のうち数字の小さい星の色
    */
-  function luckyColor(fortune, honmei) {
+  function luckyColor(fortune, honmei, preferId) {
     var rank = { supports: 3, same: 2, drains: 1 };
-    var cands = fortune.month.directions.filter(function (d, i) {
-      return d.good && !fortune.year.directions[i].bad.length;
-    }).sort(function (a, b) { return (rank[b.relation] || 0) - (rank[a.relation] || 0); });
-    if (cands.length) {
-      var d = cands[0];
-      return { star: d.star, color: STAR_COLORS[d.star.num], rule: d.good === 'best' ? 'best' : 'good', palace: d.palace };
-    }
+    var cands = fortune.month.directions.filter(function (d) { return d.good; })
+      .sort(function (a, b) { return ((a.good === 'best' ? 0 : 1) - (b.good === 'best' ? 0 : 1)) || ((rank[b.relation] || 0) - (rank[a.relation] || 0)); });
+    var pref = cands.filter(function (d) { return d.palace.id === preferId; })[0];
+    var d = pref || cands[0];
+    if (d) return { star: d.star, color: STAR_COLORS[d.star.num], rule: d.good === 'best' ? 'best' : 'good', palace: d.palace };
     var fs = friendStars(honmei).supports.filter(function (s) { return s.num !== 5; });
     var st = fs[0] || STARS[honmei];
     return { star: st, color: STAR_COLORS[st.num], rule: 'supports', palace: null };
