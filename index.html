@@ -75,6 +75,8 @@
           <div id="themes" class="chips"></div>
         </fieldset>
 
+        <div id="situation" class="situation" aria-live="polite"></div>
+
         <p id="error1" class="error" role="alert" hidden></p>
         <button type="submit" class="btn btn-primary">次へ:性格の質問(10問)</button>
       </form>
@@ -100,12 +102,24 @@
     <!-- STEP 3 -->
     <section id="step3" class="step" aria-labelledby="report-title" hidden>
       <div id="report"></div>
-      <div class="card ai-box">
-        <h2 class="ai-title">このレポートをAIに相談する</h2>
-        <p>レポートの内容と相談用の文章を、クリップボードにコピーします。お使いのAIチャットに貼り付けて相談できます(このページからは送信しません)。</p>
-        <button type="button" id="copyBtn" class="btn btn-primary">AI相談用にコピーする</button>
+      <section class="card share-box" aria-labelledby="share-title">
+        <h2 id="share-title" class="ai-title">保存・共有する</h2>
+        <p class="hint">どのボタンも、このページから外部へ送信はしません(コピー・保存・お使いの端末の共有メニューを開くだけです)。</p>
+        <label class="check share-check"><input id="includeBirth" type="checkbox"> 生年月日も載せる</label>
+        <p class="hint">チェックを入れないと、共有の文章・カード画像・コピーする全文に生年月日は入りません。</p>
+        <div class="share-grid">
+          <button type="button" id="shareBtn" class="btn btn-primary">共有する</button>
+          <button type="button" id="cardBtn" class="btn btn-primary">カード画像を保存</button>
+          <button type="button" id="copyAllBtn" class="btn btn-ghost">全文をコピー</button>
+          <button type="button" id="copyBtn" class="btn btn-ghost">AIに相談する(コピー)</button>
+        </div>
         <p id="copyMsg" class="copy-msg" role="status" aria-live="polite"></p>
-      </div>
+        <div id="cardPreview" class="card-preview" hidden>
+          <p class="hint">カード画像のプレビュー(1080×1920)</p>
+          <canvas id="cardCanvas" width="1080" height="1920" aria-label="共有用カード画像"></canvas>
+        </div>
+        <p class="hint">「AIに相談する」は、レポート全文に相談用の文章をつけてコピーします。お使いのAIチャットに貼り付けて相談できます。</p>
+      </section>
       <div class="btn-row center">
         <button type="button" id="back2" class="btn btn-ghost">質問に戻る</button>
         <button type="button" id="restart" class="btn btn-ghost">最初からやり直す(入力を消す)</button>
@@ -129,6 +143,7 @@
   <script src="js/core/geo.js"></script>
   <script src="js/core/bigfive.js"></script>
   <script src="js/core/report.js"></script>
+  <script src="js/card.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

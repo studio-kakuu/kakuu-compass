@@ -43,13 +43,14 @@
   var LP_STEADY = [2, 4, 6, 8, 22];
 
   /**
-   * @param {object} input {nickname, birth:{y,m,d,hh,mm,timeKnown}, birthPref, homePref, theme, answers}
+   * @param {object} input {nickname, birth:{y,m,d,hh,mm,timeKnown}, birthPref, homePref, theme, situation:{S1,S2}, answers}
    * @param {object} texts COMPASS_TEXTS
    * @param {Date} now 基準日時
    */
   function build(input, texts, now) {
     var P = texts.parts;
-    var seed = [input.nickname, input.birth.y, input.birth.m, input.birth.d, input.birth.hh, input.birth.mm, input.theme].join('|');
+    var sit = input.situation || {};
+    var seed = [input.nickname, input.birth.y, input.birth.m, input.birth.d, input.birth.hh, input.birth.mm, input.theme, sit.S1 || '', sit.S2 || ''].join('|');
     var used = []; // 使った文章パーツのID(レビュー用)
 
     function pick(id, vars, field) {
@@ -71,7 +72,20 @@
     var bf = bigfive.score(texts.questions, input.answers);
     var cur = kyusei.currentFortune(now, honmei);
     var regions = geo.regionsByPalace(input.homePref);
-    var themeObj = texts.themes.filter(function (t) { return t.id === input.theme; })[0] || texts.themes[texts.themes.length - 1];
+    var themeObj = texts.themes.filter(function (t) { return t.id === input.theme; })[0] || texts.themes.filter(function (t) { return t.default; })[0];
+    var th = themeObj.id;
+    // テーマ別「今の状況」の回答(該当する選択肢がないときは「まずは全体を見たい」と同じ扱い)
+    var sitQs = (texts.situations && texts.situations[th]) || [];
+    var sitAns = sitQs.map(function (q) {
+      var opt = q.options.filter(function (o) { return o.id === sit[q.id]; })[0];
+      return opt ? { q: q, opt: opt } : null;
+    });
+    var hasSit = sitQs.length > 0 && sitAns.every(Boolean);
+    var sitLabel = hasSit ? sitAns.map(function (a) { return a.opt.label; }).join('・') : '';
+    var lucky = kyusei.luckyDays(now, honmei, 3);
+    var friends = kyusei.friendStars(honmei);
+    var lcolor = kyusei.luckyColor(cur, honmei);
+    var targetMonth = cur.target.calendarMonth;
 
     var yearPalaceId = cur.year.honmeiPalace;
     var monthPalaceId = cur.month.honmeiPalace;
@@ -92,13 +106,50 @@
     var baseVars = {
       name: name, sun: sunLabel, moon: moonLabel, lp: lpLabel,
       star: ks.honmei.name, getsu: ks.getsumei.name, getsuKw: P['STAR-' + ks.getsumei.num].kw,
-      home: input.homePref, theme: themeObj.name,
+      home: input.homePref, theme: themeObj.name, month: targetMonth,
       selfEl: kyusei.ELEMENT_NAMES[ks.honmei.element]
     };
     function V(extra) { var o = {}; for (var k in baseVars) o[k] = baseVars[k]; for (var e in (extra || {})) o[e] = extra[e]; return o; }
 
     var sections = [];
     var T = texts.sectionTitles, F = texts.frameworks;
+    var WD = ['日', '月', '火', '水', '木', '金', '土'];
+    function dayLabel(d) { return d.m + '/' + d.d + '(' + WD[d.dow] + ')'; }
+    var monthRange = fmtMD(cur.monthStart) + '〜' + fmtMD(cur.monthEnd) + 'ごろ';
+
+    // ---- 方位(今月の指針・カード用): 今月の吉方位のうち、今年の凶方位でないもの ----
+    var REL_ORDER = { supports: 3, same: 2, drains: 1 };
+    var monthGood = cur.month.directions.filter(function (d, i) { return d.good && !cur.year.directions[i].bad.length; })
+      .sort(function (a, b) { return (a.good === 'best' ? 0 : 1) - (b.good === 'best' ? 0 : 1) || (REL_ORDER[b.relation] - REL_ORDER[a.relation]); });
+    var avoid = kyusei.PALACES.filter(function (p, i) { return cur.year.directions[i].bad.length || cur.month.directions[i].bad.length; });
+
+    // ---- 今月の指針 ----
+    var guideName = pick('GUIDE-NAME-' + monthPhase, V());
+    var tailId = hasSit ? 'GUIDE-TAIL-' + th + '-' + sitAns[0].opt.id : 'GUIDE-TAIL-overview';
+    var guideDesc = pick('GUIDE-LEAD-' + stance, V()) + pick(tailId, V());
+    var sg = { id: 'guide', title: fill(T.guide, { month: targetMonth }), blocks: [] };
+    sg.blocks.push({ t: 'p', text: pick('GUIDE-INTRO', V()) });
+    sg.blocks.push({ t: 'guide', name: guideName, text: guideDesc });
+    if (cur.target.beforeSetsu) {
+      sg.blocks.push({ t: 'note', text: pick('GUIDE-SWITCH', V({ setsu: kyusei.SETSU[cur.monthIndex - 1].name, setsuDate: fmtMD(cur.monthStart) })) });
+    }
+    sg.blocks.push({ t: 'h', text: 'ラッキーデー' });
+    var range = fmtMD(new Date(Date.UTC(lucky.start.y, lucky.start.m - 1, lucky.start.d))) + '〜' + fmtMD(new Date(Date.UTC(lucky.end.y, lucky.end.m - 1, lucky.end.d)));
+    if (lucky.days.length) {
+      sg.blocks.push({ t: 'p', text: pick('LUCKY-INTRO', V({ range: range })) });
+      sg.blocks.push({ t: 'list', items: lucky.days.map(function (d) { return dayLabel(d.date) + ' ' + d.star.name + 'の日:' + pick('LABEL-REL-' + d.relation); }) });
+    } else {
+      sg.blocks.push({ t: 'p', text: pick('LUCKY-NONE', V({ range: range })) });
+    }
+    sg.blocks.push({ t: 'h', text: 'ラッキーカラー' });
+    var colorVars = V({ star: lcolor.star.name, color: lcolor.color.name, dir: lcolor.palace ? lcolor.palace.name : '' });
+    sg.blocks.push({ t: 'color', name: lcolor.color.name, hex: lcolor.color.hex, text: pick('COLOR-' + lcolor.rule, colorVars) });
+    sg.blocks.push({ t: 'h', text: '力をくれる人' });
+    var fnames = function (arr) { return arr.map(function (x) { return x.name; }).join('・'); };
+    var sameOthers = friends.same.filter(function (x) { return x.num !== honmei; });
+    var friendVars = V({ supports: fnames(friends.supports), same: fnames(sameOthers), drains: fnames(friends.drains) });
+    sg.blocks.push({ t: 'p', text: pick(sameOthers.length ? 'FRIEND' : 'FRIEND-NOSAME', friendVars) });
+    sections.push(sg);
 
     // ---- 0. 基礎データ ----
     var s0 = { id: 's0', title: T.s0, blocks: [] };
@@ -115,7 +166,7 @@
 
     s0.blocks.push({ t: 'h', text: '数秘術', framework: F.numerology });
     s0.blocks.push({
-      t: 'table', head: ['項目', '数', '計算'],
+      t: 'table', head: ['項目', '数', '計算'], birthCols: [2],
       rows: [
         ['ライフパスナンバー', lpLabel + (lp.master ? '(マスターナンバー)' : ''), lp.digits.split('').join('+') + ' = ' + lp.steps.join(' → ')],
         ['バースデーナンバー', String(bd.value) + (bd.master ? '(マスターナンバー)' : ''), bd.steps.join(' → ')]
@@ -124,14 +175,14 @@
 
     s0.blocks.push({ t: 'h', text: '九星気学', framework: F.kyusei });
     s0.blocks.push({
-      t: 'table', head: ['項目', '星', '補足'],
+      t: 'table', head: ['項目', '星', '補足'], birthCols: [2],
       rows: [
         ['本命星', ks.honmei.name, '気学上の生まれ年:' + ks.kigakuYear + '年(立春が年の始まり)'],
         ['月命星', ks.getsumei.name, '気学上の生まれ月:' + ks.monthBranch + '月(節入りが月の始まり)']
       ]
     });
     if (ks.boundary) {
-      s0.blocks.push({ t: 'note', text: '生まれた日が' + ks.boundary.name + '(' + fmtYMDHM(ks.boundary.date) + ' 日本時間)の当日です。出生時刻が不明のため節入り後として計算しました。節入りより前の生まれなら、本命星は' + ks.boundary.alt.honmei.name + '・月命星は' + ks.boundary.alt.getsumei.name + 'になります。' });
+      s0.blocks.push({ t: 'note', birthInfo: true, text: '生まれた日が' + ks.boundary.name + '(' + fmtYMDHM(ks.boundary.date) + ' 日本時間)の当日です。出生時刻が不明のため節入り後として計算しました。節入りより前の生まれなら、本命星は' + ks.boundary.alt.honmei.name + '・月命星は' + ks.boundary.alt.getsumei.name + 'になります。' });
     }
 
     s0.blocks.push({ t: 'h', text: '性格の5因子', framework: F.bigfive });
@@ -143,6 +194,7 @@
       })
     });
 
+    s0.blocks.push({ t: 'note', text: '相談テーマ:' + themeObj.name + (hasSit ? '(' + sitAns.map(function (a) { return a.q.text.replace(/[??]$/, '') + ':' + a.opt.label; }).join('/') + ')' : '') });
     s0.blocks.push({ t: 'note', text: '方位の起点:' + input.homePref + '(都道府県庁所在地の座標)/基準日:' + fmtYMD(now) });
     sections.push(s0);
 
@@ -205,10 +257,9 @@
       var p = kyusei.palaceInfo(pid);
       return '本命星が' + boardName + 'の' + p.gua + '(' + p.name + ')にある巡り';
     }
-    var monthRange = fmtMD(cur.monthStart) + '〜' + fmtMD(cur.monthEnd) + 'ごろ';
     var yP = kyusei.palaceInfo(yearPalaceId), mP = kyusei.palaceInfo(monthPalaceId);
     s2.blocks.push({
-      t: 'table', head: ['', '今年(' + cur.kigakuYear + '年立春〜)', '今月(' + monthRange + ')'],
+      t: 'table', head: ['', '今年(' + cur.kigakuYear + '年立春〜)', targetMonth + '月(' + monthRange + ')'],
       rows: [
         ['フェーズ', kyusei.PHASE_NAMES[yearPhase], kyusei.PHASE_NAMES[monthPhase]],
         ['盤の中心の星', cur.year.centerStar.name, cur.month.centerStar.name],
@@ -245,7 +296,7 @@
     var rows = kyusei.PALACES.map(function (p, i) {
       return [p.name, cur.year.directions[i].star.short + ' ' + mark(cur.year.directions[i]), cur.month.directions[i].star.short + ' ' + mark(cur.month.directions[i])];
     });
-    s3.blocks.push({ t: 'table', cls: 'dir', head: ['方位', '今年', '今月'], rows: rows });
+    s3.blocks.push({ t: 'table', cls: 'dir', head: ['方位', '今年', targetMonth + '月'], rows: rows });
     s3.blocks.push({ t: 'h', text: input.homePref + 'から見た地域例' });
     s3.blocks.push({ t: 'list', items: kyusei.PALACES.map(function (p) { return p.name + ':' + regionText(p.id); }) });
     var both = [], yOnly = [], mOnly = [];
@@ -281,20 +332,22 @@
 
     // ---- ④ 認知バイアス ----
     var s4 = { id: 's4', title: T.s4, blocks: [] };
-    var th = themeObj.id;
     var FN = {}; bigfive.FACTORS.forEach(function (f) { FN[f.id] = f.name; });
     function r(f) { return FN[f] + 'が' + bigfive.LEVEL_NAMES[lv(f)] + '(回答)'; }
+    var tr = '相談テーマが' + themeObj.name;
+    var s1id = hasSit ? sitAns[0].opt.id : '', s2id = hasSit ? sitAns[1].opt.id : '';
+    var sr = function (i) { return '「' + sitAns[i].opt.label + '」と回答'; };
     var biasRules = [
       { id: 'BIAS-CONFIRM', base: 1, add: [[lv('O') === 'low', 2, r('O')], [lv('A') === 'low', 1, r('A')]] },
-      { id: 'BIAS-PLANNING', base: 0, add: [[lv('C') === 'low', 2, r('C')], [stance === 'attack', 1, '今が攻めやすい時期'], [lv('E') === 'high', 1, r('E')]] },
-      { id: 'BIAS-LOSS', base: 0, add: [[lv('N') === 'high', 2, r('N')], [stance === 'prepare', 1, '今が整える時期'], [th === 'decision' || th === 'career', 1, '相談テーマが' + themeObj.name]] },
-      { id: 'BIAS-CONFORM', base: 0, add: [[lv('A') === 'high', 2, r('A')], [th === 'relation', 1, '相談テーマが' + themeObj.name]] },
-      { id: 'BIAS-SUNK', base: 0, add: [[lv('C') === 'high', 2, r('C')], [th === 'career', 1, '相談テーマが' + themeObj.name], [yearPhase === 'autumn', 1, '今年が収穫の時期']] },
-      { id: 'BIAS-STATUSQUO', base: 0, add: [[lv('O') === 'low', 2, r('O')], [th === 'move' || th === 'decision', 1.5, '相談テーマが' + themeObj.name]] },
+      { id: 'BIAS-PLANNING', base: 0, add: [[lv('C') === 'low', 2, r('C')], [stance === 'attack', 1, '今が攻めやすい時期'], [lv('E') === 'high', 1, r('E')], [s2id === 'impulse', 1.5, hasSit && sr(1)]] },
+      { id: 'BIAS-LOSS', base: 0, add: [[lv('N') === 'high', 2, r('N')], [stance === 'prepare', 1, '今が整える時期'], [th === 'money' || th === 'career', 1, tr], [s2id === 'hesitate', 1.5, hasSit && sr(1)]] },
+      { id: 'BIAS-CONFORM', base: 0, add: [[lv('A') === 'high', 2, r('A')], [th === 'relation' || th === 'love', 1, tr]] },
+      { id: 'BIAS-SUNK', base: 0, add: [[lv('C') === 'high', 2, r('C')], [th === 'career' || th === 'money', 1, tr], [yearPhase === 'autumn', 1, '今年が収穫の時期']] },
+      { id: 'BIAS-STATUSQUO', base: 0, add: [[lv('O') === 'low', 2, r('O')], [th === 'move', 1.5, tr], [s1id === 'change' || s1id === 'indep' || s1id === 'relocate', 1, hasSit && sr(0)]] },
       { id: 'BIAS-OVERCONF', base: 0, add: [[lv('N') === 'low', 2, r('N')], [lv('E') === 'high', 1, r('E')]] },
       { id: 'BIAS-NEGATIVE', base: 0, add: [[lv('N') === 'high', 2, r('N')], [lv('E') === 'low', 1, r('E')]] },
-      { id: 'BIAS-AVAIL', base: 0.5, add: [[th === 'decision' || th === 'move', 1.5, '相談テーマが' + themeObj.name]] },
-      { id: 'BIAS-SPOTLIGHT', base: 0, add: [[th === 'relation', 1.5, '相談テーマが' + themeObj.name], [lv('N') === 'high', 1, r('N')], [lv('E') === 'low', 1, r('E')]] }
+      { id: 'BIAS-AVAIL', base: 0.5, add: [[th === 'money' || th === 'move', 1.5, tr]] },
+      { id: 'BIAS-SPOTLIGHT', base: 0, add: [[th === 'relation' || th === 'love', 1.5, tr], [s1id === 'seeking', 1, hasSit && sr(0)], [lv('N') === 'high', 1, r('N')], [lv('E') === 'low', 1, r('E')]] }
     ];
     var scored = biasRules.map(function (b) {
       var s = b.base, reasons = [];
@@ -323,33 +376,34 @@
     if (yc.num === honmei) s5.blocks.push({ t: 'p', text: pick('CAU-CENTER', V({ period: '今年' })) });
     else s5.blocks.push({ t: 'p', text: pick('CAU-REL-' + yRel, V({ period: '今年', center: yc.name, centerEl: EL[yc.element] })) });
     s5.blocks.push({ t: 'p', text: pick('CAU-EL-' + yc.element, V()) });
-    s5.blocks.push({ t: 'h', text: '今月(' + mc.name + '・' + EL[mc.element] + ')' });
+    s5.blocks.push({ t: 'h', text: targetMonth + '月(' + mc.name + '・' + EL[mc.element] + ')' });
     if (mc.num === honmei) s5.blocks.push({ t: 'p', text: pick('CAU-CENTER', V({ period: '今月' })) });
     else s5.blocks.push({ t: 'p', text: pick('CAU-REL-' + mRel, V({ period: '今月', center: mc.name, centerEl: EL[mc.element] })) });
     if (mc.element !== yc.element) s5.blocks.push({ t: 'p', text: pick('CAU-EL-' + mc.element, V()) });
     else s5.blocks.push({ t: 'p', text: '今月も今年と同じ「' + EL[mc.element] + '」の空気です。上の注意を、今月は特に意識してみてください。' });
     sections.push(s5);
 
-    // ---- ⑥ アクション ----
+    // ---- ⑥ 行動のヒント ----
     var s6 = { id: 's6', title: T.s6, blocks: [] };
-    var pool = [1, 2, 3, 4].map(function (n) { return 'ACT-' + th + '-' + stance + '-' + n; });
-    var start = hash(seed + 'act') % 4;
-    var acts = [pick(pool[start], V()), pick(pool[(start + 1 + (hash(seed + 'act2') % 3)) % 4], V())];
-    var bestP = both[0] || mOnly[0] || yOnly[0];
-    var bestDirs = cur.year.directions.concat(cur.month.directions).filter(function (d) { return d.good === 'best'; }).map(function (d) { return d.palace.id; });
-    [both, mOnly, yOnly].some(function (arr) {
-      var b = arr.filter(function (p) { return bestDirs.indexOf(p.id) !== -1 && regions[p.id].length; })[0];
-      if (b) { bestP = b; return true; }
-      return false;
-    });
-    if (bestP && regions[bestP.id].length) {
-      var SCALE_WORD = { attack: '日帰り〜泊まりがけ', balance: '日帰りか1泊', prepare: '近場・日帰り' };
-      acts.push(pick('ACT-DIR', V({ dir: bestP.name, regions: regions[bestP.id].slice(0, 2).map(function (x) { return x.name; }).join('・'), scale: SCALE_WORD[stance] })));
+    var acts;
+    if (hasSit) {
+      acts = [pick('ACT-S1-' + th + '-' + sitAns[0].opt.id + '-' + stance, V()), pick('ACT-S2-' + th + '-' + sitAns[1].opt.id, V())];
+    } else {
+      var pool = [1, 2, 3, 4].map(function (n) { return 'ACT-overview-' + stance + '-' + n; });
+      var start = hash(seed + 'act') % 4;
+      acts = [pick(pool[start], V()), pick(pool[(start + 1 + (hash(seed + 'act2') % 3)) % 4], V())];
+    }
+    // 方位のアクション: 今月の指針と同じ方位(今月吉・今年も凶でない)のうち、地域例がある方位
+    var actDir = monthGood.filter(function (d) { return regions[d.palace.id].length; })[0];
+    var SCALE_WORD = { attack: '日帰り〜泊まりがけ', balance: '日帰りか1泊', prepare: '近場・日帰り' };
+    if (actDir) {
+      acts.push(pick('ACT-DIR', V({ dir: actDir.palace.name, regions: regions[actDir.palace.id].slice(0, 2).map(function (x) { return x.name; }).join('・'), scale: SCALE_WORD[stance] })));
     } else {
       acts.push(pick('ACT-DIR-NONE', V()));
     }
-    s6.blocks.push({ t: 'p', text: '相談テーマ「' + themeObj.name + '」と、今の戦略(' + STANCE_NAMES[stance] + ')に合わせた行動の例です。' });
+    s6.blocks.push({ t: 'p', text: '相談テーマ「' + themeObj.name + '」' + (hasSit ? '(今の状況:' + sitLabel + ')' : '') + 'と、今の戦略(' + STANCE_NAMES[stance] + ')に合わせた行動のヒントです。' });
     s6.blocks.push({ t: 'olist', items: acts });
+    if (th === 'money') s6.blocks.push({ t: 'note', text: pick('MONEY-NOTE', V()) });
     sections.push(s6);
 
     // ---- ⑦ 問いかけ ----
@@ -358,21 +412,51 @@
     s7.blocks.push({ t: 'p', text: pick('OUTRO', V()) });
     sections.push(s7);
 
-    var aiPrompt = pick('AI-PROMPT', V());
+    var aiPrompt = pick('AI-PROMPT', V({ situation: hasSit ? '(今の状況:' + sitLabel + ')' : '' }));
+
+    // ---- 共有・カード用のデータ ----
+    var cardT = texts.card;
+    var needle = monthGood[0] ? monthGood[0].palace.id : null;
+    var card = {
+      month: targetMonth,
+      yearMonth: cur.target.calendarYear + '.' + (targetMonth < 10 ? '0' : '') + targetMonth,
+      lead: fill(cardT.lead, { name: name, month: targetMonth }),
+      guideName: guideName,
+      guideDesc: guideDesc,
+      goodDirs: monthGood.map(function (d) { return { id: d.palace.id, name: d.palace.name }; }),
+      needle: needle,
+      doThere: pick('DIR-ACT-' + th, V()),
+      color: lcolor.color,
+      badDirs: avoid.map(function (p) { return { id: p.id, name: p.name }; }),
+      caution: pick('CAU-SHORT-' + cur.month.centerStar.element, V()),
+      luckyDays: lucky.days.map(function (d) { return dayLabel(d.date); }),
+      actions: acts,
+      friends: { supports: friends.supports.map(function (x) { return x.name; }), same: (sameOthers.length ? sameOthers : [ks.honmei]).map(function (x) { return x.name; }) },
+      question: fill(cardT.question, { month: targetMonth }),
+      url: texts.toolUrl,
+      note: cardT.note,
+      birthLabel: fill(cardT.birth, { birth: input.birth.y + '.' + (input.birth.m < 10 ? '0' : '') + input.birth.m + '.' + (input.birth.d < 10 ? '0' : '') + input.birth.d })
+    };
 
     return {
       title: name + 'さんの戦略プロファイリングレポート',
+      nickname: name,
+      birthText: input.birth.y + '-' + (input.birth.m < 10 ? '0' : '') + input.birth.m + '-' + (input.birth.d < 10 ? '0' : '') + input.birth.d,
+      card: card,
       generatedFor: fmtYMD(now),
       sections: sections,
       aiPrompt: aiPrompt,
       disclaimer: texts.disclaimer,
       usedParts: used,
-      data: { planets: planets, lifePath: lp, birthday: bd, kyusei: ks, bigfive: bf, current: cur, stance: stance, yearPhase: yearPhase, monthPhase: monthPhase }
+      data: { planets: planets, lifePath: lp, birthday: bd, kyusei: ks, bigfive: bf, current: cur, stance: stance, yearPhase: yearPhase, monthPhase: monthPhase, lucky: lucky, friends: friends, luckyColor: lcolor, situation: hasSit ? sitAns.map(function (a) { return a.opt.id; }) : [], guide: { name: guideName, desc: guideDesc } }
     };
   }
 
   // ---- 書き出し ----
-  function blockToText(b, md) {
+  // opts.hideBirth: 生年月日がわかる部分(数秘術の計算式・気学上の生まれ年など)を伏せる
+  function blockToText(b, md, opts) {
+    opts = opts || {};
+    if (opts.hideBirth && b.birthInfo) return null;
     switch (b.t) {
       case 'p': return b.text;
       case 'note': return md ? '> ※' + b.text : '※' + b.text;
@@ -381,13 +465,18 @@
       case 'olist': return b.items.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n');
       case 'card': return (md ? '**' + b.title + '**\n\n' : '◆' + b.title + '\n') + b.text + (b.sub ? (md ? '\n\n' : '\n') + b.sub : '');
       case 'question': return (md ? '> **' : 'Q. ') + b.text + (md ? '**' : '');
+      case 'guide': return (md ? '> ### 「' + b.name + '」\n>\n> ' : '「' + b.name + '」\n') + b.text;
+      case 'color': return (md ? '**' + b.name + '**(' + b.hex + ')\n\n' : '') + b.text;
       case 'table':
+        var rows = b.rows.map(function (r) {
+          return r.map(function (c, i) { return opts.hideBirth && b.birthCols && b.birthCols.indexOf(i) !== -1 ? '(省略)' : c; });
+        });
         if (md) {
           var esc = function (s) { return String(s).replace(/\|/g, '\\|'); };
           return '| ' + b.head.map(esc).join(' | ') + ' |\n|' + b.head.map(function () { return ' --- '; }).join('|') + '|\n' +
-            b.rows.map(function (r) { return '| ' + r.map(esc).join(' | ') + ' |'; }).join('\n');
+            rows.map(function (r) { return '| ' + r.map(esc).join(' | ') + ' |'; }).join('\n');
         }
-        return b.rows.map(function (r) { return r.filter(function (x) { return x !== ''; }).join(' / '); }).join('\n');
+        return rows.map(function (r) { return r.filter(function (x) { return x !== ''; }).join(' / '); }).join('\n');
       case 'bars':
         return b.items.map(function (x) {
           var n = Math.round(x.value * 2) / 2;
@@ -399,19 +488,40 @@
     }
   }
 
-  function toText(rep, md) {
+  function toText(rep, md, opts) {
+    opts = opts || {};
     var out = [(md ? '**' : '【') + rep.title + (md ? '**(基準日:' + rep.generatedFor + ')' : '】') + (md ? '' : '\n基準日:' + rep.generatedFor)];
+    if (!opts.hideBirth && !md) out.push('生年月日:' + rep.birthText);
     rep.sections.forEach(function (s) {
       out.push((md ? '#### ' : '\n――――――――――\n') + s.title);
-      s.blocks.forEach(function (b) { out.push(blockToText(b, md)); });
+      s.blocks.forEach(function (b) { var t = blockToText(b, md, opts); if (t !== null) out.push(t); });
     });
     out.push(md ? '> ' + rep.disclaimer : '\n' + rep.disclaimer);
     return out.join(md ? '\n\n' : '\n');
   }
 
-  function clipboardText(rep) {
-    return rep.aiPrompt + '\n\n==========\n' + toText(rep, false);
+  /** AI相談用: 相談文 + 全文 */
+  function clipboardText(rep, opts) {
+    return rep.aiPrompt + '\n\n==========\n' + toText(rep, false, opts || { hideBirth: true });
   }
 
-  return { build: build, toText: toText, clipboardText: clipboardText, fill: fill, hash: hash };
+  /** 共有用の要約(指針・吉方位・ラッキーデー・行動のヒント・URL) */
+  function summaryText(rep, texts, opts) {
+    opts = opts || {};
+    var S = texts.share, c = rep.card;
+    var lines = [fill(S.head, { name: rep.nickname, month: c.month, guide: c.guideName }), c.guideDesc];
+    if (opts.includeBirth) lines.push(fill(S.birth, { birth: rep.birthText }));
+    lines.push('');
+    lines.push(fill(S.good, { dirs: c.goodDirs.length ? c.goodDirs.map(function (d) { return d.name; }).join('・') : texts.card.noGood }));
+    lines.push(fill(S.days, { days: c.luckyDays.length ? c.luckyDays.join('・') : texts.card.noDays }));
+    lines.push(fill(S.color, { color: c.color.name }));
+    lines.push(S.actions);
+    c.actions.forEach(function (a, i) { lines.push((i + 1) + '. ' + a); });
+    lines.push('');
+    lines.push(S.footer);
+    lines.push(opts.url || c.url);
+    return lines.join('\n');
+  }
+
+  return { build: build, toText: toText, clipboardText: clipboardText, summaryText: summaryText, fill: fill, hash: hash };
 });

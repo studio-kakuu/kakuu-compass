@@ -173,3 +173,27 @@ td:first-child { white-space: nowrap; font-weight: 700; }
   body { background: #fff; color: #000; }
   .r-section { border-color: #ccc; background: #fff; }
 }
+
+/* ---- 追加: テーマの補足・状況の質問 ---- */
+.chip span small { display: block; font-size: 14px; color: var(--muted); font-weight: 500; line-height: 1.4; }
+.chip input:checked + span small { color: #2a2a2a; }
+.situation { margin: 0 0 8px; }
+.situation-lead { font-weight: 700; color: var(--lime); margin: 0 0 12px; }
+.situation .field legend .req { margin-left: 8px; }
+
+/* ---- 追加: 指針・ラッキーカラー ---- */
+.guide-box { border: 1px solid #6b5a2c; background: radial-gradient(ellipse at top, rgba(233, 196, 106, 0.14), rgba(233, 196, 106, 0) 70%); border-radius: 14px; padding: 20px 16px; margin: 0 0 16px; text-align: center; }
+.guide-name { font-size: 30px; font-weight: 700; color: var(--lime); margin: 0 0 6px !important; line-height: 1.4; }
+.guide-text { color: #E9C46A; margin: 0 !important; font-size: 17px; }
+.color-row { display: flex; gap: 12px; align-items: flex-start; margin: 0 0 14px; }
+.color-row p { margin: 0; }
+.color-dot { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.8); margin-top: 2px; }
+
+/* ---- 追加: 保存・共有 ---- */
+.share-box { border-color: var(--lime-dim); }
+.share-check { margin: 8px 0 4px !important; }
+.share-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 4px; }
+.share-grid .btn { width: 100%; min-width: 0; padding: 12px 10px; font-size: 16px; }
+.card-preview { margin: 12px 0; }
+.card-preview canvas { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; border-radius: 10px; border: 1px solid var(--line); }
+@media (max-width: 360px) { .share-grid { grid-template-columns: 1fr; } }

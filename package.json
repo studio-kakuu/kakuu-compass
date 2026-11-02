@@ -5,7 +5,8 @@
   "description": "KAKUU LAB / COMPASS - 静的サイト。依存パッケージなし(テストは Node.js 標準のテスト機能を使用)",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "review": "node scripts/build-review.js"
+    "review": "node scripts/build-review.js",
+    "cards": "node scripts/build-cards.js"
   },
   "license": "UNLICENSED"
 }

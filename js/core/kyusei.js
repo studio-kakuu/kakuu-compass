@@ -222,9 +222,27 @@
     };
   }
 
-  /** 今日(またはテスト用の日時)の年盤・月盤と、本命星から見た方位 */
+  /**
+   * 「〇月の指針」の対象になる瞬間
+   * 各カレンダー月には「節」がちょうど1つある(立春は2月、小寒は1月…、4〜8日ごろ)。
+   * 「M月」= M月の節入りから始まる気学の月、とする。
+   * 例) 11月2日に見る → 11月の節(立冬 11/7ごろ)前なので、11/7から始まる月を「11月」として見る。
+   *     11月20日に見る → すでに立冬後なので、そのまま。
+   * 年盤もこの瞬間で決める(2月1日なら、2/4ごろの立春から始まる新しい年)。
+   */
+  function targetMoment(now) {
+    var p = jstParts(now);
+    var setsu = p.m === 1 ? setsuDate(p.y - 1, 12) : setsuDate(p.y, p.m - 1);
+    if (now.getTime() < setsu.getTime()) {
+      return { date: new Date(setsu.getTime() + 60000), calendarMonth: p.m, calendarYear: p.y, beforeSetsu: true, setsu: setsu };
+    }
+    return { date: now, calendarMonth: p.m, calendarYear: p.y, beforeSetsu: false, setsu: setsu };
+  }
+
+  /** 今日(またはテスト用の日時)の年盤・月盤と、本命星から見た方位(対象月は targetMoment で決める) */
   function currentFortune(now, honmei) {
-    var per = periodAt(now);
+    var tm = targetMoment(now);
+    var per = periodAt(tm.date);
     var yStar = yearStarOf(per.year);
     var mStar = monthStarOf(yStar, per.monthIndex);
     var yBranch = BRANCHES[(((per.year - 4) % 12) + 12) % 12];
@@ -234,6 +252,8 @@
     var nextIdx = per.monthIndex === 12 ? 1 : per.monthIndex + 1;
     var nextYear = per.monthIndex === 12 ? per.year + 1 : per.year;
     return {
+      asOf: now,
+      target: tm,
       kigakuYear: per.year,
       monthIndex: per.monthIndex,
       monthStart: setsuDate(per.year, per.monthIndex),
@@ -241,6 +261,145 @@
       year: year,
       month: month
     };
+  }
+
+  // ===================== 日盤(日家九星) =====================
+  /*
+   * - 日の干支: 2026-06-19 を甲子(干支番号0)として60日周期で数える(日本時間の日付)。
+   * - 陽遁: 冬至に最も近い甲子日から。甲子日を一白とし、1日ごとに 1→2→…→9→1 と進む。
+   * - 陰遁: 夏至に最も近い甲子日から。甲子日を九紫とし、1日ごとに 9→8→…→1→9 と戻る。
+   * - 閏: 上の決め方だと切り替えの間隔が240日になる場合がある。そのときは
+   *   切り替えを30日早い甲午日にし、陽遁は七赤、陰遁は三碧から始める
+   *   (こうすると次の甲子日が一白/九紫になり、流れがつながる)。
+   *   結果として、遁の期間はいつも180日または210日になる。
+   */
+  var DAY_MS = 86400000;
+  function dayNumber(y, m, d) { return Math.floor(Date.UTC(y, m - 1, d) / DAY_MS); }
+  function dayNumberOfDate(date) { return Math.floor((date.getTime() + 9 * 3600 * 1000) / DAY_MS); }
+  function dateOfDayNumber(dn) { var j = new Date(dn * DAY_MS); return { y: j.getUTCFullYear(), m: j.getUTCMonth() + 1, d: j.getUTCDate(), dow: j.getUTCDay() }; }
+  var KOSHI_REF = dayNumber(2026, 6, 19);
+  function kanshiIndex(dn) { return (((dn - KOSHI_REF) % 60) + 60) % 60; }
+  function dayBranch(dn) { return BRANCHES[kanshiIndex(dn) % 12]; }
+
+  var solsticeCache = {};
+  function solstices(year) {
+    if (!solsticeCache[year]) {
+      solsticeCache[year] = [
+        { kind: 'yin', time: astro.searchSunLongitude(90, astro.jstToDate(year, 6, 1), 40) },
+        { kind: 'yang', time: astro.searchSunLongitude(270, astro.jstToDate(year, 12, 1), 40) }
+      ];
+    }
+    return solsticeCache[year];
+  }
+
+  /** 至(夏至・冬至)に最も近い甲子日の日番号 */
+  function nearestKoshi(time) {
+    var t = (time.getTime() + 9 * 3600 * 1000) / DAY_MS; // 日本時間の通日(小数)
+    var base = Math.floor(t);
+    var before = base - kanshiIndex(base);
+    var after = before + 60;
+    return (Math.abs(before + 0.5 - t) <= Math.abs(after + 0.5 - t)) ? before : after;
+  }
+
+  /** dn を含む前後の、陽遁・陰遁の切り替え点(閏を反映済み) */
+  function switchPoints(y) {
+    var list = [];
+    for (var yy = y - 3; yy <= y + 1; yy++) {
+      solstices(yy).forEach(function (s) { list.push({ kind: s.kind, solstice: s.time, nominal: nearestKoshi(s.time) }); });
+    }
+    list.sort(function (a, b) { return a.nominal - b.nominal; });
+    list.forEach(function (sp, i) {
+      sp.day = sp.nominal;
+      sp.leap = false;
+      if (i > 0 && sp.nominal - list[i - 1].nominal === 240) { sp.day = sp.nominal - 30; sp.leap = true; }
+      sp.startStar = sp.kind === 'yang' ? (sp.leap ? 7 : 1) : (sp.leap ? 3 : 9);
+    });
+    return list;
+  }
+
+  function dayStar(dn) {
+    var y = dateOfDayNumber(dn).y;
+    var pts = switchPoints(y);
+    var cur = null;
+    for (var i = 0; i < pts.length; i++) if (pts[i].day <= dn) cur = pts[i];
+    var k = dn - cur.day;
+    var star = cur.kind === 'yang' ? wrap9(cur.startStar + k) : wrap9(cur.startStar - k);
+    return { star: star, kind: cur.kind, since: cur.day, leap: cur.leap, branch: dayBranch(dn) };
+  }
+
+  /**
+   * ラッキーデー(本命星と相性のよい日)
+   * 期間: 今日〜今月末。今月の残りが10日未満なら来月末まで。
+   * 候補: 日の九星が本命星と 相生(生気=日の星が自分を生む > 退気=自分が日の星を生む) または 比和。
+   *       吉方位と同じ考え方で、五黄の日・本命星と同じ星の日(本命星が中宮)は除く。
+   * 除外: その日の盤で本命星が「暗剣殺」または「日破」の位置に入る日。
+   * 順位: 生気 > 比和 > 退気、同じ順位なら早い日。最大3日を日付順に返す。
+   */
+  var REL_RANK = { supports: 3, same: 2, drains: 1 };
+  function luckyDays(now, honmei, max) {
+    max = max || 3;
+    var start = dayNumberOfDate(now);
+    var p = jstParts(now);
+    var endOfMonth = dayNumber(p.y, p.m + 1, 1) - 1;
+    var end = endOfMonth;
+    var extended = false;
+    if (endOfMonth - start + 1 < 10) { end = dayNumber(p.y, p.m + 2, 1) - 1; extended = true; }
+    var selfEl = STARS[honmei].element;
+    var cands = [];
+    for (var dn = start; dn <= end; dn++) {
+      var ds = dayStar(dn);
+      if (ds.star === 5 || ds.star === honmei) continue;
+      var rel = relation(STARS[ds.star].element, selfEl);
+      if (!REL_RANK[rel]) continue;
+      var board = makeBoard(ds.star);
+      var hp = palaceOfStar(board, honmei);
+      var anken = OPPOSITE[palaceOfStar(board, 5)];
+      var nippa = OPPOSITE[BRANCH_PALACE[ds.branch]];
+      if (hp === anken || hp === nippa) continue;
+      cands.push({ dn: dn, date: dateOfDayNumber(dn), star: STARS[ds.star], relation: rel, rank: REL_RANK[rel], branch: ds.branch });
+    }
+    var picked = cands.slice().sort(function (a, b) { return (b.rank - a.rank) || (a.dn - b.dn); }).slice(0, max);
+    picked.sort(function (a, b) { return a.dn - b.dn; });
+    return { days: picked, start: dateOfDayNumber(start), end: dateOfDayNumber(end), extended: extended, candidates: cands.length };
+  }
+
+  // ===================== 相性の星・ラッキーカラー =====================
+  /** 本命星と相生・比和の星 */
+  function friendStars(honmei) {
+    var selfEl = STARS[honmei].element;
+    var out = { supports: [], same: [], drains: [] };
+    for (var n = 1; n <= 9; n++) {
+      var rel = relation(STARS[n].element, selfEl);
+      if (out[rel]) out[rel].push(STARS[n]);
+    }
+    return out;
+  }
+
+  // 九星の伝統的な色(星の名前に入っている色)
+  var STAR_COLORS = {
+    1: { name: '白', hex: '#F4F1E8' }, 2: { name: '黒', hex: '#3A3A3A' }, 3: { name: '青', hex: '#3C8DD8' },
+    4: { name: '緑', hex: '#3FAE5A' }, 5: { name: '黄', hex: '#F2C94C' }, 6: { name: '白', hex: '#F4F1E8' },
+    7: { name: '赤', hex: '#D94B4B' }, 8: { name: '白', hex: '#F4F1E8' }, 9: { name: '紫', hex: '#9B6BD3' }
+  };
+
+  /**
+   * ラッキーカラー
+   * 1) 今月の盤で「最大吉方」(年盤でも凶方位でない方位)にいる星の色
+   * 2) なければ、今月の吉方位(同条件)にいる星の色(生気>比和>退気の順)
+   * 3) それもなければ、本命星を生む星(生気の星)のうち数字の小さい星の色
+   */
+  function luckyColor(fortune, honmei) {
+    var rank = { supports: 3, same: 2, drains: 1 };
+    var cands = fortune.month.directions.filter(function (d, i) {
+      return d.good && !fortune.year.directions[i].bad.length;
+    }).sort(function (a, b) { return (rank[b.relation] || 0) - (rank[a.relation] || 0); });
+    if (cands.length) {
+      var d = cands[0];
+      return { star: d.star, color: STAR_COLORS[d.star.num], rule: d.good === 'best' ? 'best' : 'good', palace: d.palace };
+    }
+    var fs = friendStars(honmei).supports.filter(function (s) { return s.num !== 5; });
+    var st = fs[0] || STARS[honmei];
+    return { star: st, color: STAR_COLORS[st.num], rule: 'supports', palace: null };
   }
 
   /**
@@ -294,6 +453,18 @@
     relation: relation,
     evaluateBoard: evaluateBoard,
     currentFortune: currentFortune,
+    targetMoment: targetMoment,
+    dayNumber: dayNumber,
+    dayNumberOfDate: dayNumberOfDate,
+    dateOfDayNumber: dateOfDayNumber,
+    kanshiIndex: kanshiIndex,
+    switchPoints: switchPoints,
+    dayStar: dayStar,
+    luckyDays: luckyDays,
+    friendStars: friendStars,
+    STAR_COLORS: STAR_COLORS,
+    luckyColor: luckyColor,
+    BRANCH_PALACE: BRANCH_PALACE,
     phaseOf: phaseOf,
     palaceInfo: palaceInfo,
     palaceOfBearing: palaceOfBearing

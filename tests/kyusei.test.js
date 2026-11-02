@@ -134,12 +134,36 @@ test('方位の区分(東西南北30°・四隅60°)', () => {
   assert.equal(k.palaceOfBearing(285), 'NW');
 });
 
-test('今日の年盤・月盤(基準日 2026-11-01)', () => {
-  const c = k.currentFortune(jst('2026-11-01T12:00:00'), 1);
+test('「M月」はM月の節入りから始まる月(11/2に見ると、11/7の立冬から始まる亥月)', () => {
+  const c = k.currentFortune(jst('2026-11-02T12:00:00'), 1);
+  assert.equal(c.target.calendarMonth, 11);
+  assert.equal(c.target.beforeSetsu, true);
   assert.equal(c.kigakuYear, 2026);
   assert.equal(c.year.centerStar.num, 1);
-  assert.equal(c.month.centerStar.num, 9); // 戌月
+  assert.equal(c.monthIndex, 10);           // 亥月
+  assert.equal(c.month.centerStar.num, 8);   // 一白年の亥月 = 八白
   assert.equal(c.year.honmeiPalace, 'C');
+  const after = k.currentFortune(jst('2026-11-20T12:00:00'), 1);
+  assert.equal(after.target.beforeSetsu, false);
+  assert.equal(after.monthIndex, 10);
+  const oct = k.currentFortune(jst('2026-10-20T12:00:00'), 1);
+  assert.equal(oct.monthIndex, 9);           // 戌月(寒露 10/8〜)
+  assert.equal(oct.month.centerStar.num, 9);
+});
+
+test('2月1日(立春前)に見ると、立春から始まる新しい年・寅月になる', () => {
+  const c = k.currentFortune(jst('2027-02-01T12:00:00'), 1);
+  assert.equal(c.kigakuYear, 2027);
+  assert.equal(c.year.centerStar.num, 9); // 2027年=九紫中宮
+  assert.equal(c.monthIndex, 1);          // 寅月
+  assert.equal(c.target.calendarMonth, 2);
+});
+
+test('1月(小寒は1月5日ごろ)は前年の年盤の丑月', () => {
+  const c = k.currentFortune(jst('2027-01-20T12:00:00'), 1);
+  assert.equal(c.kigakuYear, 2026);
+  assert.equal(c.monthIndex, 12);
+  assert.equal(c.target.calendarMonth, 1);
 });
 
 test('季節フェーズの割り当て', () => {

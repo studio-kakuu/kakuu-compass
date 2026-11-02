@@ -36,10 +36,12 @@
 | `css/` | デザイン(`style.css`)・フォント定義(`fonts.css`) |
 | `data/texts.js` | **レポートの文章パーツ・質問文**(文章だけ直すときはここ) |
 | `js/core/` | 計算(`astro.js` 西洋占星術 / `numerology.js` 数秘術 / `kyusei.js` 九星気学 / `geo.js` 都道府県と方位 / `bigfive.js` 性格 / `report.js` レポート組み立て) |
-| `js/app.js` | 画面の動き |
+| `js/app.js` | 画面の動き(入力・質問・レポート表示・コピー/共有) |
+| `js/card.js` | 共有用カード画像(1080×1920)の描画 |
 | `vendor/`, `fonts/` | 同梱ライブラリ・フォント |
 | `tests/` | 自動テスト |
 | `scripts/build-review.js` | `docs/REVIEW.md` を作るスクリプト |
+| `scripts/build-cards.js` / `scripts/samples.js` | サンプルのカード画像を作るスクリプト / サンプル3人分の入力 |
 
 ## 手元で動かす
 `index.html` をブラウザで直接開くだけで動きます。
@@ -50,4 +52,9 @@ npm test
 ```
 ```bash
 npm run review
+```
+
+サンプル3人分のカード画像(`docs/cards/`)の再生成(Playwright が必要):
+```bash
+npm run cards
 ```

@@ -33,10 +33,16 @@
       var inp = document.createElement('input');
       inp.type = 'radio'; inp.name = 'theme'; inp.value = t.id;
       if (i === 0) inp.required = true;
+      if (t.default) inp.checked = true;
       lab.appendChild(inp);
-      lab.appendChild(el('span', null, t.name));
+      var sp = el('span', null, t.name);
+      if (t.note) sp.appendChild(el('small', null, t.note));
+      lab.appendChild(sp);
       $('themes').appendChild(lab);
     });
+    $('themes').addEventListener('change', renderSituation);
+    $('form1').addEventListener('change', function () { $('error1').hidden = true; });
+    renderSituation();
 
     $('timeUnknown').addEventListener('change', function () {
       $('birthtime').disabled = this.checked;
@@ -50,10 +56,44 @@
     $('back1').addEventListener('click', function () { show(1); });
     $('back2').addEventListener('click', function () { show(2); });
     $('restart').addEventListener('click', restart);
-    $('copyBtn').addEventListener('click', copyReport);
+    $('copyBtn').addEventListener('click', function () { copyText(C.report.clipboardText(state.report, { hideBirth: !birthOn() }), 'コピーしました。AIチャットの入力欄に貼り付けてください。'); });
+    $('copyAllBtn').addEventListener('click', function () { copyText(C.report.toText(state.report, false, { hideBirth: !birthOn() }), 'レポートの全文をコピーしました。'); });
+    $('shareBtn').addEventListener('click', shareSummary);
+    $('cardBtn').addEventListener('click', saveCard);
+    $('includeBirth').addEventListener('change', function () { if (!$('cardPreview').hidden) drawCard(); });
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  // ---------- テーマ別「今の状況」の質問 ----------
+  function currentTheme() {
+    var t = document.querySelector('input[name="theme"]:checked');
+    return t ? t.value : null;
+  }
+  function renderSituation() {
+    var box = $('situation');
+    box.textContent = '';
+    var qs = (TX.situations && TX.situations[currentTheme()]) || [];
+    if (!qs.length) return;
+    box.appendChild(el('p', 'situation-lead', '「' + TX.themes.filter(function (t) { return t.id === currentTheme(); })[0].name + '」について、今の状況を教えてください'));
+    qs.forEach(function (q) {
+      var fs = el('fieldset', 'field');
+      var lg = el('legend', null, q.text);
+      lg.appendChild(el('span', 'req', '必須'));
+      fs.appendChild(lg);
+      var chips = el('div', 'chips');
+      q.options.forEach(function (o) {
+        var lab = el('label', 'chip');
+        var inp = document.createElement('input');
+        inp.type = 'radio'; inp.name = 'sit-' + q.id; inp.value = o.id;
+        lab.appendChild(inp);
+        lab.appendChild(el('span', null, o.label));
+        chips.appendChild(lab);
+      });
+      fs.appendChild(chips);
+      box.appendChild(fs);
+    });
+  }
 
   function buildQuestions() {
     var box = $('questions');
@@ -136,12 +176,20 @@
     }
     if (!home) return showError('error1', '現在住んでいる都道府県を選んでください。');
     if (!themeEl) return showError('error1', '相談テーマを選んでください。');
+    var situation = {};
+    var sitQs = (TX.situations && TX.situations[themeEl.value]) || [];
+    for (var i = 0; i < sitQs.length; i++) {
+      var sel = document.querySelector('input[name="sit-' + sitQs[i].id + '"]:checked');
+      if (!sel) return showError('error1', '「' + sitQs[i].text + '」を選んでください。');
+      situation[sitQs[i].id] = sel.value;
+    }
     state.input = {
       nickname: nickname,
       birth: { y: y, m: mo, d: d, hh: hh, mm: mm, timeKnown: !timeUnknown },
       birthPref: $('birthPref').value || null,
       homePref: home,
-      theme: themeEl.value
+      theme: themeEl.value,
+      situation: situation
     };
     show(2);
   }
@@ -208,6 +256,20 @@
         if (b.sub) e.appendChild(el('p', 'sub', b.sub));
         return e;
       case 'question': return el('p', 'question', b.text);
+      case 'guide':
+        e = el('div', 'guide-box');
+        e.appendChild(el('p', 'guide-name', '「' + b.name + '」'));
+        e.appendChild(el('p', 'guide-text', b.text));
+        return e;
+      case 'color':
+        e = el('div', 'color-row');
+        var dot = el('span', 'color-dot');
+        dot.style.backgroundColor = b.hex;
+        dot.setAttribute('aria-hidden', 'true');
+        e.appendChild(dot);
+        var cp = el('p', null, b.text);
+        e.appendChild(cp);
+        return e;
       case 'table':
         var wrap = el('div', 'table-wrap');
         var tb = el('table');
@@ -254,12 +316,13 @@
     }
   }
 
-  // ---------- コピー ----------
-  function copyReport() {
+  // ---------- コピー・共有・カード ----------
+  function birthOn() { return $('includeBirth').checked; }
+  function msg(text) { $('copyMsg').textContent = text; }
+
+  function copyText(text, okMsg) {
     if (!state.report) return;
-    var text = C.report.clipboardText(state.report);
-    var msg = $('copyMsg');
-    function ok() { msg.textContent = 'コピーしました。AIチャットの入力欄に貼り付けてください。'; }
+    function ok() { msg(okMsg); }
     function fallback() {
       var ta = document.createElement('textarea');
       ta.value = text;
@@ -270,13 +333,72 @@
       var done = false;
       try { done = document.execCommand('copy'); } catch (e) { done = false; }
       document.body.removeChild(ta);
-      if (done) ok(); else msg.textContent = 'コピーできませんでした。お手数ですが、レポートを選択してコピーしてください。';
+      if (done) ok(); else msg('コピーできませんでした。お手数ですが、レポートを選択してコピーしてください。');
     }
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text).then(ok, fallback);
     } else {
       fallback();
     }
+  }
+
+  function toolUrl() {
+    var l = window.location;
+    if (/^https?:$/.test(l.protocol)) return l.origin + l.pathname;
+    return TX.toolUrl;
+  }
+
+  function shareSummary() {
+    if (!state.report) return;
+    var text = C.report.summaryText(state.report, TX, { includeBirth: birthOn(), url: toolUrl() });
+    if (navigator.share) {
+      navigator.share({ title: TX.share.title, text: text }).then(function () {
+        msg('共有メニューを開きました。');
+      }, function (err) {
+        if (err && err.name === 'AbortError') { msg(''); return; }
+        copyText(text, '共有メニューが使えなかったため、要約をコピーしました。');
+      });
+    } else {
+      copyText(text, 'この環境では共有メニューが使えないため、要約をコピーしました。LINEやメールに貼り付けて送れます。');
+    }
+  }
+
+  function drawCard() {
+    var card = Object.assign({}, state.report.card, { url: toolUrl() });
+    $('cardPreview').hidden = false;
+    return C.card.draw($('cardCanvas'), card, TX.card, { includeBirth: birthOn() });
+  }
+
+  function saveCard() {
+    if (!state.report) return;
+    msg('カード画像を作っています…');
+    drawCard().then(function (canvas) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { msg('画像を作れませんでした。'); return; }
+        var name = 'compass-' + state.report.card.yearMonth.replace('.', '-') + '.png';
+        var file = (typeof File === 'function') ? new File([blob], name, { type: 'image/png' }) : null;
+        if (file && navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+          navigator.share({ files: [file], title: TX.share.title }).then(function () {
+            msg('共有メニューを開きました。');
+          }, function (err) {
+            if (err && err.name === 'AbortError') { msg(''); return; }
+            download(canvas, name);
+          });
+        } else {
+          download(canvas, name);
+        }
+      }, 'image/png');
+    });
+  }
+
+  function download(canvas, name) {
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    msg('カード画像を保存しました(' + name + ')。');
   }
 
   function restart() {
@@ -287,6 +409,9 @@
     $('answered').textContent = '0';
     $('report').textContent = '';
     $('copyMsg').textContent = '';
+    $('includeBirth').checked = false;
+    $('cardPreview').hidden = true;
+    renderSituation();
     var qs = document.querySelectorAll('.q');
     for (var i = 0; i < qs.length; i++) { qs[i].classList.remove('is-answered'); qs[i].querySelector('.selected-label').textContent = ''; }
     show(1);
