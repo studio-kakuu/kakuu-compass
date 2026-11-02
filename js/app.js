@@ -9,7 +9,7 @@
   var $ = function (id) { return document.getElementById(id); };
 
   // 入力・答えは画面を開いている間のメモリ(この変数)だけに置く。localStorage・cookie などには保存しない
-  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1 };
+  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {} };
 
   // ---------- 初期化 ----------
   function el(tag, cls, text) {
@@ -42,6 +42,11 @@
       $('themes').appendChild(lab);
     });
     $('themes').addEventListener('change', renderSituation);
+    // テーマごとの「今の状況」の答えを覚えておく(画面を開いている間のメモリだけ)
+    $('situation').addEventListener('change', function (e) {
+      var m = /^sit-(\w+)$/.exec(e.target.name || '');
+      if (m) rememberSituation(currentTheme(), m[1], e.target.value);
+    });
     $('form1').addEventListener('change', function () { $('error1').hidden = true; });
     renderSituation();
 
@@ -100,6 +105,110 @@
       fs.appendChild(chips);
       box.appendChild(fs);
     });
+    // 前にこのテーマで選んだ答えがあれば、選んだ状態にもどす
+    var mem = state.sitMemory[currentTheme()] || {};
+    Object.keys(mem).forEach(function (qid) {
+      var inp = box.querySelector('input[name="sit-' + qid + '"][value="' + mem[qid] + '"]');
+      if (inp) inp.checked = true;
+    });
+  }
+
+  function rememberSituation(theme, qid, value) {
+    if (!theme) return;
+    state.sitMemory[theme] = state.sitMemory[theme] || {};
+    state.sitMemory[theme][qid] = value;
+  }
+
+  // ---------- レポートの最後:「相談テーマを変えて見る」 ----------
+  function renderThemeSwitch(currentThemeId) {
+    var sec = el('section', 'r-section r-themeswitch');
+    sec.id = 'r-themeswitch';
+    sec.setAttribute('aria-labelledby', 'tsw-title');
+    var h = el('h3', null, '相談テーマを変えて見る');
+    h.id = 'tsw-title';
+    sec.appendChild(h);
+    sec.appendChild(el('p', 'hint', 'ニックネーム・生年月日・都道府県・質問の答えはそのままに、相談テーマと今の状況の答えだけを変えてレポートを作り直します。'));
+    var fs = el('fieldset', 'field tsw-themes');
+    fs.appendChild(el('legend', 'sr-only', '相談テーマ'));
+    var chips = el('div', 'chips');
+    TX.themes.forEach(function (t) {
+      var lab = el('label', 'chip');
+      var inp = document.createElement('input');
+      inp.type = 'radio'; inp.name = 'tsw-theme'; inp.value = t.id;
+      if (t.id === currentThemeId) inp.checked = true;
+      lab.appendChild(inp);
+      var sp = el('span', null, t.name);
+      if (t.id === currentThemeId) sp.appendChild(el('small', null, 'いま表示中'));
+      lab.appendChild(sp);
+      chips.appendChild(lab);
+    });
+    fs.appendChild(chips);
+    sec.appendChild(fs);
+    var sitBox = el('div', 'tsw-sit');
+    sitBox.setAttribute('aria-live', 'polite');
+    sec.appendChild(sitBox);
+    var err = el('p', 'error');
+    err.setAttribute('role', 'alert');
+    err.hidden = true;
+    sec.appendChild(err);
+    var btn = el('button', 'btn btn-primary tsw-btn', 'このテーマでレポートを作り直す');
+    btn.type = 'button';
+    sec.appendChild(btn);
+
+    function selectedTheme() { var c = sec.querySelector('input[name="tsw-theme"]:checked'); return c ? c.value : currentThemeId; }
+    function drawSit() {
+      sitBox.textContent = '';
+      err.hidden = true;
+      var th = selectedTheme();
+      var qs = TX.situations[th] || [];
+      if (!qs.length) { sitBox.appendChild(el('p', 'hint', 'このテーマは、今の状況の質問はありません。')); return; }
+      var mem = state.sitMemory[th] || {};
+      qs.forEach(function (q) {
+        var f = el('fieldset', 'field');
+        f.id = 'tsw-q-' + q.id;
+        var lg = el('legend', null, q.text);
+        lg.appendChild(el('span', 'req', '必須'));
+        f.appendChild(lg);
+        var ch = el('div', 'chips');
+        q.options.forEach(function (o) {
+          var lab = el('label', 'chip');
+          var inp = document.createElement('input');
+          inp.type = 'radio'; inp.name = 'tsw-' + q.id; inp.value = o.id;
+          if (mem[q.id] === o.id) inp.checked = true;
+          lab.appendChild(inp);
+          lab.appendChild(el('span', null, o.label));
+          ch.appendChild(lab);
+        });
+        f.appendChild(ch);
+        sitBox.appendChild(f);
+      });
+    }
+    fs.addEventListener('change', drawSit);
+    sitBox.addEventListener('change', function (e) {
+      err.hidden = true;
+      var m = /^tsw-(\w+)$/.exec(e.target.name || '');
+      if (m) rememberSituation(selectedTheme(), m[1], e.target.value);
+    });
+    btn.addEventListener('click', function () {
+      var th = selectedTheme();
+      var qs = TX.situations[th] || [];
+      for (var i = 0; i < qs.length; i++) {
+        if (!sitBox.querySelector('input[name="tsw-' + qs[i].id + '"]:checked')) {
+          err.textContent = '「' + qs[i].text + '」を選んでください。';
+          err.hidden = false;
+          var f = $('tsw-q-' + qs[i].id);
+          if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+      }
+      // 入力画面のテーマと状況の答えも新しいテーマに合わせてから、いつもの作り直しの流れへ
+      var tInp = document.querySelector('#themes input[value="' + th + '"]');
+      if (tInp) tInp.checked = true;
+      renderSituation();
+      rebuild();
+    });
+    drawSit();
+    return sec;
   }
 
   function buildQuestions() {
@@ -380,6 +489,7 @@
       }
       root.appendChild(sec);
     });
+    root.appendChild(renderThemeSwitch(state.input ? state.input.theme : null));
 
     // 付録(折りたたみ)
     var app = $('reportAppendix');
@@ -637,7 +747,7 @@
   }
 
   function restart() {
-    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1 };
+    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {} };
     $('reportAppendix').textContent = '';
     $('form1').reset();
     $('form2').reset();

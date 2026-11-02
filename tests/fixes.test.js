@@ -164,3 +164,21 @@ test('冷めるきっかけ:人物像では言い直しをせず、アクセル�
   }
   assert.ok(!Object.keys(P).some((id) => /^COOL-/.test(id) && P[id].fix));
 });
+
+test('根拠ラベル:本文(0〜5章)・全文コピーの本文部分・AI相談用・共有の要約に出さない(付録の「根拠の詳細」は残す)', () => {
+  for (const t of texts.themes) for (const sit of combos(t.id).slice(0, 3)) {
+    const r = build({ theme: t.id, situation: sit });
+    r.sections.forEach((s) => assert.ok(!s.blocks.some((b) => b.t === 'label'), s.id));
+    // 目次にある付録の名前「根拠の詳細」だけは残してよい
+    const noLabel = (x) => !/根拠/.test(x.replace(/根拠の詳細/g, ''));
+    assert.ok(noLabel(bodyOf(r)), t.id);
+    assert.ok(noLabel(R.toText(r, false, { noAppendix: true })), t.id);
+    assert.ok(noLabel(R.summaryText(r, texts, {})), t.id);
+    const ai = R.clipboardText(r);
+    const mainPart = ai.slice(0, ai.indexOf('――――――――――\n' + r.appendixTitle));
+    assert.ok(mainPart.length > 1000 && noLabel(mainPart), t.id);
+    // 付録は残る
+    assert.ok(r.appendix.some((s) => s.id === 'app-basis' && s.title === '根拠の詳細'));
+    assert.ok(ai.includes('根拠の詳細'));
+  }
+});

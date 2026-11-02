@@ -273,3 +273,12 @@ html { scroll-behavior: smooth; }
 .stale-note { border: 2px solid #F2A65A; background: rgba(242, 166, 90, 0.08); border-radius: 14px; padding: 16px; margin: 24px 0 0; }
 .stale-note p { margin: 0 0 12px; }
 .stale-note .btn { width: 100%; }
+
+/* ---- レポートの最後:相談テーマを変えて見る ---- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.r-themeswitch { border-color: var(--lime-dim); }
+.tsw-themes { border: 0; padding: 0; margin: 0 0 12px; }
+.tsw-sit .field { border: 0; padding: 0; margin: 0 0 14px; }
+.tsw-sit legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
+.tsw-sit legend .req { margin-left: 8px; }
+.tsw-btn { width: 100%; margin-top: 4px; }

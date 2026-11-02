@@ -377,6 +377,9 @@
 
 | ID | 文 |
 | --- | --- |
+| PERSONA-COOL-LEAD(条件) | *やる気が冷めやすい場面の文の前に置くつなぎの文* |
+| PERSONA-COOL-LEAD[1] | 答えてもらった「やる気が冷めやすい場面」も、この人物像とつながっていそうです。 |
+| PERSONA-COOL-LEAD[2] | やる気が冷めやすい場面にも、{name}さんの強みの裏側が関係していそうです。 |
 | COOLWHY-denied-drive(条件) | *頭ごなしに否定されたとき×アクセル=推進力* |
 | COOLWHY-denied-drive[1] | 動きながら形にしていく推進力の強い人ほど、走り出した直後の一言に勢いをそがれやすく、頭ごなしに否定されると一気に足が止まってしまうのかもしれません。 |
 | COOLWHY-denied-caution(条件) | *頭ごなしに否定されたとき×アクセル=慎重さ* |
@@ -1824,8 +1827,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 二黒土星・五黄土星・八白土星の人は、アオイさんに力をくれやすい星とされます。六白金星の人とは似た感覚で話しやすく、一白水星の人にはアオイさんが力を貸せる場面がありそうです。友だちの星も調べてみて。
 
-<sub>根拠:九星気学(11月の盤・本命星)</sub>
-
 #### 2. あなたの人物像(アクセルとブレーキ)
 
 アオイさんの回答と生まれの暦のデータを、4つの軸(推進力⇔慎重さ/外向⇔内向/安定⇔変化/共感⇔独立)にまとめ、人物像を1本のストーリーにしました。
@@ -1837,13 +1838,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 安定 □□□■□ 変化(やや変化寄り)
 - 独立 □□■□□ 共感(ほぼ中間)
 
-<sub>根拠:Big Five(回答)60%+西洋占星術・数秘術・九星気学 40%(変換表は付録)</sub>
-
 ##### アクセル(強み):外向
 
 アクセルは「外向」。声をかける、場を盛り上げる、人と人をつなぐ、といった動きが自然にできます。アオイさんは人と関わるほど調子が上がりやすいタイプです。
-
-<sub>アクセルの根拠:Big Five(外向性の高さ)・西洋占星術(太陽:水瓶座)・九星気学(七赤金星)</sub>
 
 うまくいったときは「勢いで飛び込んだとき」と答えたアオイさん。考えすぎる前に小さく動き出すと、本来の力が出やすいようです。
 
@@ -1851,11 +1848,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 一方で、ブレーキとして気をつけたいのは「変化の求めすぎ」。新しいことに目移りして、続けてきたことが途中で止まりやすい面があります。
 
-<sub>ブレーキの根拠:Big Five(開放性の高さ)・西洋占星術(太陽:水瓶座)</sub>
+やる気が冷めやすい場面にも、アオイさんの強みの裏側が関係していそうです。
 
 人と一緒に盛り上がる中で動けるぶん、何のためかが共有されないまま進むと、熱が冷めるのも早くなりやすいのかもしれません。また、人からの反応を力に変えるタイプなので、まわりの手ごたえが返ってこない時期は、エネルギーが目減りしやすいのかもしれません。
-
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(外向)</sub>
 
 強みと盲点はコインの表と裏です。どちらもアオイさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -1871,8 +1866,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 人と関わる力があるアオイさんは、「仕事・キャリア」でも誰かに話すことで考えがまとまりやすいタイプです。相談相手を頼ってみてください。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -1880,8 +1873,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は、外に向けて動きやすい「拡大」の流れ(月の盤で本命星が南東にある巡り)です。
 
 仕事・キャリアの勝ち筋は、温めている考えを外に出すこと。提案・応募・相談など、相手の反応が返ってくる行動を、期限を決めて一つ実行してみてください。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -1917,8 +1908,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「勢い型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -1938,8 +1927,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月で、お金を払ってくれる人を一人見つけることを目標に、小さな商品やサービスを試す
 - 勢いが落ちたときのために、「再開の合図」(好きな音楽や場所など)を決めておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -1947,8 +1934,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「学ぶ」向き。気になっていた本や講座に手をつける。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)への人に会う打ち合わせに使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への勉強会や視察に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -1963,8 +1948,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
 
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
-
 #### 4. 気をつけること:11月(11/7〜12/6)
 
 11月(11/7〜12/6)の盤の中心にある星と、アオイさんの本命星(七赤金星・金)の五行の関係から、この期間に意識したいことを生活の言葉に置きかえました。
@@ -1976,8 +1959,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
 ひとこと注意:追い風を感じる月こそ、お金の見通しを甘く見ない。
-
-<sub>根拠:九星気学(11月の盤・五行)・相談テーマ</sub>
 
 #### 5. 最後の問いかけ
 
@@ -2114,7 +2095,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-supports[2]` `CAU-SIT-career-indep[1]` `GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `ACT-S2-career-income[1]` `ACT-S1-career-indep-attack[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-extro[2]` `SUCCESS-leap[1]` `BRAKE-change[1]` `COOLWHY-purpose-extro[1]` `COOLWHY-noresult-extro[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-career-indep[1]` `VALUE-career-income[1]` `READ-AXIS-extro[2]` `TIM-MONTH-summer[2]` `WIN-career-attack[1]` `TRAP-INTRO[1]` `TRAP-change[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `COOL-purpose[1]` `COOL-noresult[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-leap[2]` `PLAN-MONTH-leap[2]` `PLAN-3M-career-indep[1]` `PLAN-KEEP-leap[1]` `DIR-ACT-career[1]` `DIR-ACT-career[2]` `LUCKY-USE-career[6]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-attack[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `QUE-career[1]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-YEAR[2]` `INTRO[1]` `AI-PROMPT[1]`
+`CAU-LEAD-supports[2]` `CAU-SIT-career-indep[1]` `GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `ACT-S2-career-income[1]` `ACT-S1-career-indep-attack[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-extro[2]` `SUCCESS-leap[1]` `BRAKE-change[1]` `PERSONA-COOL-LEAD[2]` `COOLWHY-purpose-extro[1]` `COOLWHY-noresult-extro[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-career-indep[1]` `VALUE-career-income[1]` `READ-AXIS-extro[2]` `TIM-MONTH-summer[2]` `WIN-career-attack[1]` `TRAP-INTRO[1]` `TRAP-change[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `COOL-purpose[1]` `COOL-noresult[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-leap[2]` `PLAN-MONTH-leap[2]` `PLAN-3M-career-indep[1]` `PLAN-KEEP-leap[1]` `DIR-ACT-career[1]` `DIR-ACT-career[2]` `LUCKY-USE-career[6]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-attack[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `QUE-career[1]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-YEAR[2]` `INTRO[1]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2211,8 +2192,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 六白金星・七赤金星の人は、ハルさんに力をくれやすい星とされます。同じ一白水星の人とは似た感覚で話しやすく、三碧木星・四緑木星の人にはハルさんが力を貸せる場面がありそうです。友だちの星も調べてみて。
 
-<sub>根拠:九星気学(11月の盤・本命星)</sub>
-
 #### 2. あなたの人物像(アクセルとブレーキ)
 
 ハルさんの回答と生まれの暦のデータを、4つの軸(推進力⇔慎重さ/外向⇔内向/安定⇔変化/共感⇔独立)にまとめ、人物像を1本のストーリーにしました。
@@ -2224,13 +2203,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 安定 □□■□□ 変化(ほぼ中間)
 - 独立 □□□■□ 共感(やや共感寄り)
 
-<sub>根拠:Big Five(回答)60%+西洋占星術・数秘術・九星気学 40%(変換表は付録)</sub>
-
 ##### アクセル(強み):共感
 
 アクセルは「共感」。言葉にされない気持ちにも気づき、相手に合わせた伝え方ができます。ハルさんは人と人の間をつなぐ役回りで力を発揮しやすいでしょう。
-
-<sub>アクセルの根拠:Big Five(協調性の高さ)・西洋占星術(太陽:蟹座)</sub>
 
 「準備を重ねたとき」にうまくいった経験があるハルさんは、計画を先に作ることが自信のもとになりやすいタイプです。
 
@@ -2238,11 +2213,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 一方で、ブレーキとして気をつけたいのは「内向の出すぎ」。ひとりで考え込むうちに、助けを求めるタイミングが遅れやすい面があります。
 
-<sub>ブレーキの根拠:Big Five(外向性の低さ)・西洋占星術(太陽:蟹座)・九星気学(一白水星)</sub>
+やる気が冷めやすい場面にも、ハルさんの強みの裏側が関係していそうです。
 
 共感の力が強いぶん、言葉の温度や相手の敬意にも敏感なので、頭ごなしの否定で一気に気持ちが止まりやすいのかもしれません。また、相手の負担を思いやる気持ちが強いぶん、自分の困りごとは言い出しにくく、ひとりで抱え込みやすいのかもしれません。
-
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(共感)</sub>
 
 強みと盲点はコインの表と裏です。どちらもハルさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -2258,8 +2231,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 共感力のあるハルさんは、「恋愛・パートナー」でも、人の気持ちに気づけることが大きな強みになります。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「転換期」の流れ。その中で、ハルさんの11月の戦略は「攻めと整えの中間」です。本命星が盤の中央に入る時期なので、攻めすぎず、足元を固めながら進めるのがよさそうです。
@@ -2269,8 +2240,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 恋愛・パートナーの勝ち筋は、相手のペースを大事にしながら、自分の気持ちも少しずつ伝えること。会話の中に小さな本音を混ぜてみてください。
 
 回答からは、慎重に考えやすい傾向も見えます。動きやすい時期でも、不安が強いときは「最悪の場合どうするか」を先に書き出してから動くと落ち着きます。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -2306,8 +2275,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「準備型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -2327,8 +2294,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月後に、相手との関係をどうしたいかを、あらためて自分に問いかけてみる
 - 計画表を1枚にまとめ、毎週同じ曜日に確認する
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -2336,8 +2301,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/3(火) 七赤の日(力をもらいやすい日):「人と会う」向き。会う約束やお出かけの予定を入れる。
 - 11/4(水) 六白の日(力をもらいやすい日):「始める」向き。二人で(または自分で)新しいことを始める。
 - 11/12(木) 七赤の日(力をもらいやすい日):「北へのお出かけ」向き。北(埼玉・栃木方面)への気分転換のお出かけに使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -2352,8 +2315,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
 
-<sub>根拠:九星気学(11月の盤)・東京都からの方角</sub>
-
 #### 4. 気をつけること:11月(11/7〜12/6)
 
 11月(11/7〜12/6)の盤の中心にある星と、ハルさんの本命星(一白水星・水)の五行の関係から、この期間に意識したいことを生活の言葉に置きかえました。
@@ -2365,8 +2326,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
 ひとこと注意:思うように進みにくい月は、焦って距離を詰めすぎない。
-
-<sub>根拠:九星気学(11月の盤・五行)・相談テーマ</sub>
 
 #### 5. 最後の問いかけ
 
@@ -2507,7 +2466,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-pressures[1]` `CAU-SIT-love-crush[2]` `GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `ACT-S2-love-trust[1]` `ACT-S1-love-crush-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND-NOSAME[1]` `PERSONA-OPEN[2]` `ACCEL-empathy[2]` `SUCCESS-prepare[2]` `BRAKE-intro[1]` `COOLWHY-denied-empathy[1]` `COOLWHY-alone-empathy[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-love-crush[2]` `VALUE-love-trust[2]` `READ-AXIS-empathy[2]` `TIM-MONTH-autumn[1]` `WIN-love-balance[1]` `TIM-BF-NHIGH[1]` `TRAP-INTRO[1]` `TRAP-intro[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `COOL-denied[2]` `COOL-alone[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-prepare[1]` `PLAN-MONTH-prepare[1]` `PLAN-3M-love-crush[2]` `PLAN-KEEP-prepare[2]` `DIR-ACT-love[2]` `DIR-ACT-love[3]` `LUCKY-USE-love[2]` `LUCKY-USE-love[4]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `QUE-love[2]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `TIM-YEAR-turning[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-CENTER[2]` `INTRO[2]` `AI-PROMPT[1]`
+`CAU-LEAD-pressures[1]` `CAU-SIT-love-crush[2]` `GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `ACT-S2-love-trust[1]` `ACT-S1-love-crush-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND-NOSAME[1]` `PERSONA-OPEN[2]` `ACCEL-empathy[2]` `SUCCESS-prepare[2]` `BRAKE-intro[1]` `PERSONA-COOL-LEAD[2]` `COOLWHY-denied-empathy[1]` `COOLWHY-alone-empathy[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-love-crush[2]` `VALUE-love-trust[2]` `READ-AXIS-empathy[2]` `TIM-MONTH-autumn[1]` `WIN-love-balance[1]` `TIM-BF-NHIGH[1]` `TRAP-INTRO[1]` `TRAP-intro[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `COOL-denied[2]` `COOL-alone[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-prepare[1]` `PLAN-MONTH-prepare[1]` `PLAN-3M-love-crush[2]` `PLAN-KEEP-prepare[2]` `DIR-ACT-love[2]` `DIR-ACT-love[3]` `LUCKY-USE-love[2]` `LUCKY-USE-love[4]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `QUE-love[2]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `TIM-YEAR-turning[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-CENTER[2]` `INTRO[2]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2604,8 +2563,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 九紫火星の人は、ミナトさんに力をくれやすい星とされます。二黒土星・五黄土星の人とは似た感覚で話しやすく、六白金星・七赤金星の人にはミナトさんが力を貸せる場面がありそうです。友だちの星も調べてみて。
 
-<sub>根拠:九星気学(11月の盤・本命星)</sub>
-
 #### 2. あなたの人物像(アクセルとブレーキ)
 
 ミナトさんの回答と生まれの暦のデータを、4つの軸(推進力⇔慎重さ/外向⇔内向/安定⇔変化/共感⇔独立)にまとめ、人物像を1本のストーリーにしました。
@@ -2617,13 +2574,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 安定 □□□■□ 変化(やや変化寄り)
 - 独立 □□■□□ 共感(ほぼ中間)
 
-<sub>根拠:Big Five(回答)60%+西洋占星術・数秘術・九星気学 40%(変換表は付録)</sub>
-
 ##### アクセル(強み):変化
 
 アクセルは「変化」。慣れた道にこだわらず、試しながら工夫できる柔らかさがあります。ミナトさんは新しい環境や役割に飛び込むときほど、持ち味が出やすいでしょう。
-
-<sub>アクセルの根拠:Big Five(開放性の高さ・勤勉性の低さ)</sub>
 
 うまくいったときは「納得できる目的があったとき」と答えたミナトさん。「何のために」が腹に落ちていると、粘り強く進めるようです。
 
@@ -2631,11 +2584,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 一方で、ブレーキとして気をつけたいのは「推進力の出すぎ」。勢いがつくと確認を飛ばしたり、周りを置いていったりしやすい面があります。
 
-<sub>ブレーキの根拠:Big Five(神経症傾向の低さ・外向性の高さ)・数秘術(ライフパス1)・九星気学(八白土星)</sub>
+やる気が冷めやすい場面にも、ミナトさんの強みの裏側が関係していそうです。
 
 変化を楽しむ力が強いぶん、同じことの繰り返しは人一倍退屈に感じやすく、気持ちが冷めるのも早いのかもしれません。
-
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(変化)</sub>
 
 強みと盲点はコインの表と裏です。どちらもミナトさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -2651,8 +2602,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 変化に強いミナトさんは、「引越し・旅行・移動」でも、いつもと違うやり方を試すことで道が見えやすくなります。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、ミナトさんの11月の戦略は「攻めと整えの中間」です。本命星が盤の中央に入る時期なので、攻めすぎず、足元を固めながら進めるのがよさそうです。
@@ -2660,8 +2609,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は、足元を固める「転換期」の流れ(月の盤の中央)です。予定を詰めこまず、見直しに時間を使ってみてください。
 
 11月の勝ち筋は「小さく動いて確かめる」。大きな移動の前に、短い外出で感覚をつかんでおきましょう。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -2693,8 +2640,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「目的型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -2714,8 +2659,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月で候補地を一つに絞れるよう、比べる項目をそろえて情報を集める
 - 月に一度「何のためにやっているか」を見直し、合わなくなった予定を減らす
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -2723,8 +2666,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/10(火) 九紫の日(力をもらいやすい日):「東へのお出かけ」向き。東(愛媛・高知方面)への候補地の散策に使う(3-6の方角)。
 - 11/19(木) 九紫の日(力をもらいやすい日):「北西へのお出かけ」向き。北西(福岡県の中の北西側)への下見や小旅行に使う(3-6の方角)。
 - 11/28(土) 九紫の日(力をもらいやすい日):「下見」向き。候補の場所や行き先を、実際に見に行く。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -2739,8 +2680,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
 
-<sub>根拠:九星気学(11月の盤)・福岡県からの方角</sub>
-
 #### 4. 気をつけること:11月(11/7〜12/6)
 
 11月(11/7〜12/6)の盤の中心にある星と、ミナトさんの本命星(八白土星・土)の五行の関係から、この期間に意識したいことを生活の言葉に置きかえました。
@@ -2752,8 +2691,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 「土」の空気:物事を抱え込みやすく、変化が遅く感じられやすい傾向。頼まれごとにはその場で即答しない、不要な物を少しずつ手放す、食事や睡眠のリズムを整える。この3つを心がけてみてください。
 
 ひとこと注意:注目されやすい月は、契約の細かい条件を読み飛ばさない。
-
-<sub>根拠:九星気学(11月の盤・五行)・相談テーマ</sub>
 
 #### 5. 最後の問いかけ
 
@@ -2892,7 +2829,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-center[1]` `CAU-SIT-move-relocate[1]` `GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `ACT-S2-move-later[1]` `ACT-S1-move-relocate-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-change[2]` `SUCCESS-purpose[1]` `BRAKE-drive[1]` `COOLWHY-routine-change[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-move-relocate[1]` `VALUE-move-later[1]` `READ-AXIS-change[2]` `TIM-MONTH-turning[2]` `WIN-move-balance[2]` `TRAP-INTRO[1]` `TRAP-drive[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `COOL-routine[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-purpose[2]` `PLAN-MONTH-purpose[2]` `PLAN-3M-move-relocate[1]` `PLAN-KEEP-purpose[1]` `DIR-ACT-move[3]` `DIR-ACT-move[1]` `LUCKY-USE-move[1]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `QUE-move[3]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `INTRO[3]` `AI-PROMPT[1]`
+`CAU-LEAD-center[1]` `CAU-SIT-move-relocate[1]` `GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `ACT-S2-move-later[1]` `ACT-S1-move-relocate-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-change[2]` `SUCCESS-purpose[1]` `BRAKE-drive[1]` `PERSONA-COOL-LEAD[2]` `COOLWHY-routine-change[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-move-relocate[1]` `VALUE-move-later[1]` `READ-AXIS-change[2]` `TIM-MONTH-turning[2]` `WIN-move-balance[2]` `TRAP-INTRO[1]` `TRAP-drive[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `COOL-routine[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-purpose[2]` `PLAN-MONTH-purpose[2]` `PLAN-3M-move-relocate[1]` `PLAN-KEEP-purpose[1]` `DIR-ACT-move[3]` `DIR-ACT-move[1]` `LUCKY-USE-move[1]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `QUE-move[3]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `INTRO[3]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2900,7 +2837,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 同じ人(サンプル1のアオイさんの生年月日・性格の回答・追加の質問)で、相談テーマと状況の答えだけを変えたときの3章です。
 
-<details><summary>仕事・キャリア(転職したい・働き方・時間のゆとり) … 本文に占める3章の割合 53%</summary>
+<details><summary>仕事・キャリア(転職したい・働き方・時間のゆとり) … 本文に占める3章の割合 54%</summary>
 
 #### 3. テーマ別の作戦:仕事・キャリア
 
@@ -2914,8 +2851,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 「仕事・キャリア」のテーマでは、アオイさんの外向きの力が、人や情報との出会いを運んできそうです。話してみることから道が開けやすいでしょう。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -2923,8 +2858,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は「拡大」の流れ(月の盤で本命星が南東にある巡り)。発信や提案など、外に向けた動きが反応を得やすい時期とされます。
 
 11月の勝ち筋は「先に動いて、反応から学ぶ」こと。完璧な準備を待つより、まず形にして見せることがチャンスにつながりやすい時期です。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -2960,8 +2893,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:このレポートで印象に残った部分は、身近な人に「自分ってこういうところある?」と聞いて確かめてみましょう。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 アオイさんの「勢い型」の進め方を活かして、今週・11月中・3か月先までの行動を並べました。
@@ -2981,8 +2912,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月後に「応募するか・今の場所に残るか」を決める日を、先にカレンダーに入れておく
 - 熱が冷めても戻ってこられるよう、続ける量を最小にしておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 日ごとの九星(日盤)から、アオイさんの本命星と相性のよい日を選び、その日に向いていることを添えました(今日から11月の盤の終わりまで:11/2〜12/6)。
@@ -2990,8 +2919,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「学ぶ」向き。気になっていた本や講座に手をつける。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)への勉強会や視察に使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への情報集めの外出に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3006,11 +2933,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 住まいを移すような大きな移動は、月の盤だけでなく年の盤も目安にします。付録の「方位の全一覧」を参考にしてください。
 
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
-
 </details>
 
-<details><summary>お金の判断(貯め方・家計を見直したい・迷って決められないことが多い) … 本文に占める3章の割合 55%</summary>
+<details><summary>お金の判断(貯め方・家計を見直したい・迷って決められないことが多い) … 本文に占める3章の割合 56%</summary>
 
 #### 3. テーマ別の作戦:お金の判断
 
@@ -3024,8 +2949,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 「お金の判断」のテーマでは、アオイさんの外向きの力が、人や情報との出会いを運んできそうです。話してみることから道が開けやすいでしょう。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -3033,8 +2956,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は「拡大」の流れ(月の盤で本命星が南東にある巡り)。発信や提案など、外に向けた動きが反応を得やすい時期とされます。
 
 11月の勝ち筋は「基準を決めて、決めきる」こと。勢いではなく、自分で決めた条件に照らして判断してみてください。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -3070,8 +2991,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:このレポートで印象に残った部分は、身近な人に「自分ってこういうところある?」と聞いて確かめてみましょう。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 アオイさんの「勢い型」の進め方を活かして、今週・11月中・3か月先までの行動を並べました。
@@ -3093,8 +3012,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 > ※このレポートは、投資や金融商品についての助言ではありません。お金の判断のクセとタイミングを考えるための参考情報です。具体的な商品選びは、信頼できる専門家や公的な情報で確かめてください。
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 日ごとの九星(日盤)から、アオイさんの本命星と相性のよい日を選び、その日に向いていることを添えました(今日から11月の盤の終わりまで:11/2〜12/6)。
@@ -3102,8 +3019,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「仕組みづくり」向き。給料日に先取りで貯金する仕組みを一つ決める。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)へのじっくり考えるための外出に使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への買い物の下見や比較に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3118,11 +3033,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 住まいを移すような大きな移動は、月の盤だけでなく年の盤も目安にします。付録の「方位の全一覧」を参考にしてください。
 
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
-
 </details>
 
-<details><summary>恋愛・パートナー(パートナーがいる・将来のこと) … 本文に占める3章の割合 53%</summary>
+<details><summary>恋愛・パートナー(パートナーがいる・将来のこと) … 本文に占める3章の割合 54%</summary>
 
 #### 3. テーマ別の作戦:恋愛・パートナー
 
@@ -3136,8 +3049,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 人と関わる力があるアオイさんは、「恋愛・パートナー」でも誰かに話すことで考えがまとまりやすいタイプです。相談相手を頼ってみてください。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -3145,8 +3056,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は、外に向けて動きやすい「拡大」の流れ(月の盤で本命星が南東にある巡り)です。
 
 恋愛・パートナーの勝ち筋は、自分から一歩動くこと。誘う、話しかける、気持ちを伝えるなど、相手に届く行動を一つ選んでみてください。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -3182,8 +3091,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「勢い型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -3203,8 +3110,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月の間に、二人で新しく楽しめることを一つ見つける
 - 勢いが落ちたときのために、「再開の合図」(好きな音楽や場所など)を決めておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -3212,8 +3117,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「ゆっくり話す」向き。落ち着いて話せる時間をつくる。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)への気分転換のお出かけに使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への大切な人とのお茶に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3228,11 +3131,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
 
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
-
 </details>
 
-<details><summary>人間関係(家族・ぎくしゃくを直したい) … 本文に占める3章の割合 53%</summary>
+<details><summary>人間関係(家族・ぎくしゃくを直したい) … 本文に占める3章の割合 54%</summary>
 
 #### 3. テーマ別の作戦:人間関係
 
@@ -3246,8 +3147,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 人と関わる力があるアオイさんは、「人間関係」でも誰かに話すことで考えがまとまりやすいタイプです。相談相手を頼ってみてください。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -3255,8 +3154,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は、外に向けて動きやすい「拡大」の流れ(月の盤で本命星が南東にある巡り)です。
 
 人間関係の勝ち筋は、自分から声をかけること。連絡する、誘う、感謝を伝えるなど、関係を前に進める行動を一つ実行してみてください。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -3292,8 +3189,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「勢い型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -3313,8 +3208,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月かけて、家族の中で引き受けすぎていることを一つ手放す
 - 勢いが落ちたときのために、「再開の合図」(好きな音楽や場所など)を決めておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -3322,8 +3215,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「誘う」向き。自分から声をかけて、小さな集まりを開く。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)へのお茶の約束に使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への気の合う人との外出に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3338,11 +3229,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
 
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
-
 </details>
 
-<details><summary>引越し・旅行・移動(旅行・お出かけ・1〜3か月以内) … 本文に占める3章の割合 53%</summary>
+<details><summary>引越し・旅行・移動(旅行・お出かけ・1〜3か月以内) … 本文に占める3章の割合 54%</summary>
 
 #### 3. テーマ別の作戦:引越し・旅行・移動
 
@@ -3356,8 +3245,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 人と関わる力があるアオイさんは、「引越し・旅行・移動」でも誰かに話すことで考えがまとまりやすいタイプです。相談相手を頼ってみてください。
 
-<sub>根拠:今の状況の回答・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
@@ -3365,8 +3252,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 11月(11/7〜12/6)は、外に向けて動きやすい「拡大」の流れ(月の盤で本命星が南東にある巡り)です。
 
 11月の勝ち筋は「行ってみて決める」こと。資料だけで考えるより、その場の空気を確かめるほうが答えに近づきやすい時期です。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -3401,8 +3286,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 あいまいで一般的な性格の説明を、自分にぴったりだと感じてしまう心理のこと。占いや性格診断を読むときには、誰にでも起こりやすいとされます。
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
-
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
 
 ##### 3-4 行動プラン
 
@@ -3423,8 +3306,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月の間に、行ってみたかった場所へ一度は出かける
 - 勢いが落ちたときのために、「再開の合図」(好きな音楽や場所など)を決めておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -3432,8 +3313,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「相談」向き。移動先に詳しい人に話を聞く。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)への日帰りのお出かけに使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への候補地の散策に使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3447,8 +3326,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 移動の規模:攻めの流れです。吉方位であれば、少し遠くまで足をのばしてみる価値があります。
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
-
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
 
 </details>
 
@@ -3464,15 +3341,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 人と関わる力があるアオイさんは、ふだんの暮らしの中でも、誰かに話すことで考えがまとまりやすいタイプです。相談相手を頼ってみてください。
 
-<sub>根拠:九星気学(11月の盤)・人物像</sub>
-
 ##### 3-2 11月の勝ち筋
 
 今年(2026/2/4〜2027/2/3)は「種まき」の流れ。その中で、アオイさんの11月の戦略は「攻め」です。
 
 11月の勝ち筋は「一つに絞って、一歩目を出す」こと。やりたいことの中から、いちばん心が動くものを選んでみてください。
-
-<sub>根拠:九星気学(年の盤・11月の盤)・Big Five</sub>
 
 ##### 3-3 落とし穴と対策
 
@@ -3508,8 +3381,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。
 
-<sub>根拠:Big Five・今の状況とやる気についての回答</sub>
-
 ##### 3-4 行動プラン
 
 うまくいったときの型(「勢い型」)に合わせて、今週・11月中・3か月の3段階で行動プランを組みました。
@@ -3529,8 +3400,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 3か月後に「始めてよかった」と言えることを一つつくる
 - 勢いが落ちたときのために、「再開の合図」(好きな音楽や場所など)を決めておく
 
-<sub>根拠:今の状況の回答・うまくいった型・11月の戦略</sub>
-
 ##### 3-5 ラッキーデーの使いどころ
 
 11/2〜12/6(今日から11月の盤の終わりまで)の中で、本命星と相性のよい日と、その日に向いていることです。予定を決めるときの参考にしてみてください。
@@ -3538,8 +3407,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 - 11/2(月) 八白の日(力をもらいやすい日):「感謝」向き。身近な人にありがとうを伝える。
 - 11/8(日) 二黒の日(力をもらいやすい日):「東へのお出かけ」向き。東(奈良・三重方面)への気分転換のお出かけに使う(3-6の方角)。
 - 11/11(水) 八白の日(力をもらいやすい日):「西へのお出かけ」向き。西(兵庫・岡山方面)への気になる場所めぐりに使う(3-6の方角)。
-
-<sub>根拠:九星気学(日盤)・相談テーマ</sub>
 
 ##### 3-6 方角の使い方
 
@@ -3553,8 +3420,6 @@ https://studio-kakuu.github.io/kakuu-compass/
 移動の規模:攻めの流れです。吉方位であれば、少し遠くまで足をのばしてみる価値があります。
 
 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。
-
-<sub>根拠:九星気学(11月の盤)・大阪府からの方角</sub>
 
 </details>
 
@@ -3786,7 +3651,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 
 ### 3-13. テスト結果(このファイルの生成時に自動実行)
 
-**合計 91 件中 91 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
+**合計 92 件中 92 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
 
 | 結果 | テスト内容 |
 | --- | --- |
@@ -3829,6 +3694,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | ✅ | 7: 人物像の軸は本文では数字を使わず、言葉+5段階の目盛り。数字は付録の計算表だけ |
 | ✅ | 8: 盲点の見出しと本文の言い方がそろっている |
 | ✅ | 冷めるきっかけ:人物像では言い直しをせず、アクセルとつなげた「なぜ」を1つにつき1文(最大2文) |
+| ✅ | 根拠ラベル:本文(0〜5章)・全文コピーの本文部分・AI相談用・共有の要約に出さない(付録の「根拠の詳細」は残す) |
 | ✅ | 都道府県データは47件 |
 | ✅ | 東京都から見た方角と距離 |
 | ✅ | 性格スコア: 逆転項目の計算 |
@@ -3866,7 +3732,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | ✅ | B1: 4軸の計算(Big Five 60%・占い 40%)、アクセル=最大の偏り、ブレーキ=2番目 |
 | ✅ | B1/B3: 冷めるきっかけは人物像と落とし穴に、うまくいった型は人物像と行動プランに反映 |
 | ✅ | B3: 冷めるきっかけは最大2つまで使う |
-| ✅ | B1: 流派ごとの解説は付録に移し、本文には根拠ラベルだけ |
+| ✅ | B1: 流派ごとの解説は付録に移し、本文には根拠ラベルも出さない |
 | ✅ | B2: 方角は1方位1行(どこへ・何をしに・いつ)。用語の定義文は本文になく用語集にある |
 | ✅ | B4: 「3. テーマ別の作戦」が本文(0〜5章)の文字数の50%以上(6テーマ×状況の全組み合わせ) |
 | ✅ | B4: 「まずは全体を見たい」は3章を「全体の作戦」として同じ構成で作る |
@@ -3932,3 +3798,5 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | 44 | 上のステップ表示での移動 | 「1 入力」「2 質問」「3 レポート」は本物のボタン。2は入力を一度終えたあと、3はレポートを一度作ったあとだけ押せる(押せないものは薄い点線の枠)。今いるステップに aria-current="step"。入力画面から「2 質問」を押したときは入力内容を確かめてから移動。入力や答えはそのまま残り(画面を開いている間のメモリだけ。localStorage・cookie は使わない)、移動先の画面の先頭へスクロール | — |
 | 45 | レポートを作ったあとに内容を変えた場合 | 「3 レポート」で戻ると、入力・答えの「指紋」を比べて、変わっていれば「内容が変わったので、もう一度レポートを作る」ボタンを出す(前のレポートはそのまま表示)。入力に不足があれば、そのボタンから該当する画面へ戻してエラーを表示 | — |
 | 46 | 「やる気が冷めやすいとき」の書き方 | 人物像では選んだ答えを言い直さず、「きっかけ×アクセル」(7×9=63通り、`COOLWHY-…`)の1文で「なぜそうなりやすいのか」を書く。2つ選んだ場合は「また、」でつないで2文まで。具体的な対策は3章「落とし穴と対策」(`COOL-…`)に残し、選んだ答えはカードの見出しだけに出す | — |
+| 47 | 本文の根拠ラベル | 本文(0〜5章)の小さな根拠ラベル(「根拠:Big Five・九星気学…」「アクセルの根拠:…」など)は表示しない。全文コピー・AI相談用コピー・共有の要約にも入らない。根拠は付録「根拠の詳細」(折りたたみ)だけに残す。ラベルがあった「やる気が冷めやすい場面」の前には、つなぎの1文(`PERSONA-COOL-LEAD`)を置いた | — |
+| 48 | レポートの最後の「相談テーマを変えて見る」 | 6テーマのボタン(いま表示中のテーマに印)。別のテーマを選ぶと、そのテーマの状況の質問2問だけをその場に表示(「まずは全体を見たい」は質問なし)。「このテーマでレポートを作り直す」で、入力画面のテーマ・状況の答えも新しいテーマに合わせて更新してから、いつもの作り直しの流れで作り直し、先頭へ移動。テーマごとの状況の答えは画面を開いている間のメモリだけに覚え、前のテーマに戻すと前の答えが選ばれた状態になる(入力画面でテーマを切り替えたときも同じ)。未回答があればその場でエラー | — |

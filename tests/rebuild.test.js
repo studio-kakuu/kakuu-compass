@@ -141,13 +141,14 @@ test('B3: 冷めるきっかけは最大2つまで使う', () => {
   assert.deepEqual(r.data.extra.cool, ['denied', 'routine']);
 });
 
-test('B1: 流派ごとの解説は付録に移し、本文には根拠ラベルだけ', () => {
+test('B1: 流派ごとの解説は付録に移し、本文には根拠ラベルも出さない', () => {
   const r = build({ theme: 'love', situation: { S1: 'partner', S2: 'fun' } });
   const body = bodyOf(r);
   ['ライフパスナンバー', 'バースデーナンバー', '月命星'].forEach((w) => assert.ok(!body.includes(w), w));
   const app = r.appendix.map((s) => s.blocks.map((b) => R.blockToText(b, false, {})).join('\n')).join('\n');
   ['ライフパスナンバー', '月命星', '太陽星座'].forEach((w) => assert.ok(app.includes(w), w));
-  assert.ok(r.sections.find((s) => s.id === 'persona').blocks.some((b) => b.t === 'label' && /Big Five/.test(b.text)));
+  // 本文には根拠ラベルを出さない(根拠は付録「根拠の詳細」だけ)
+  r.sections.forEach((s) => assert.ok(!s.blocks.some((b) => b.t === 'label'), s.id));
 });
 
 // ---------- B2 ----------

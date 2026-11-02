@@ -203,7 +203,6 @@
     var fnames = function (arr) { return arr.map(function (x) { return x.name; }).join('・'); };
     var sameOthers = friends.same.filter(function (x) { return x.num !== honmei; });
     sg.blocks.push({ t: 'p', text: pick(sameOthers.length ? 'FRIEND' : 'FRIEND-NOSAME', V({ supports: fnames(friends.supports), same: fnames(sameOthers), drains: fnames(friends.drains) })) });
-    sg.blocks.push({ t: 'label', text: '根拠:九星気学(' + targetMonth + '月の盤・本命星)' });
 
     // ================= 2. 人物像 =================
     var sp = { id: 'persona', title: T.persona, blocks: [] };
@@ -215,18 +214,15 @@
         return { id: a.id, label: a.label, plusName: PN[a.plus], minusName: PN[a.minus], score: a.score };
       })
     });
-    sp.blocks.push({ t: 'label', text: '根拠:Big Five(回答)60%+西洋占星術・数秘術・九星気学 40%(変換表は付録)' });
     sp.blocks.push({ t: 'h', text: 'アクセル(強み):' + accelName });
     sp.blocks.push({ t: 'p', text: pick('ACCEL-' + accelPole, V()) });
-    if (accelPole !== 'balance') sp.blocks.push({ t: 'label', text: 'アクセルの根拠:' + persona.sources(pers.accel.axis, accelPole, srcNames).join('・') });
     if (success) sp.blocks.push({ t: 'p', text: pick('SUCCESS-' + success.id, V()) });
     sp.blocks.push({ t: 'h', text: 'ブレーキ(盲点):' + brakeName });
     sp.blocks.push({ t: 'p', text: pick('BRAKE-' + brakePole, V()) });
-    if (brakePole !== 'balance') sp.blocks.push({ t: 'label', text: 'ブレーキの根拠:' + persona.sources(pers.brake.axis, brakePole, srcNames).join('・') });
     // やる気が冷めやすいとき:選んだ答えを言い直さず、アクセルとつなげて「なぜそうなりやすいのか」を1つにつき1文(最大2文)
     if (cools.length) {
+      sp.blocks.push({ t: 'p', text: pick('PERSONA-COOL-LEAD', V()) });
       sp.blocks.push({ t: 'p', key: 'coolwhy', text: cools.map(function (c, i) { return (i ? 'また、' : '') + pick('COOLWHY-' + c.id + '-' + accelPole, V()); }).join('') });
-      sp.blocks.push({ t: 'label', text: '根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(' + accelName + ')' });
     }
     sp.blocks.push({ t: 'p', text: pick('PERSONA-CLOSE', V()) });
 
@@ -243,7 +239,6 @@
       ss.blocks.push({ t: 'p', text: pick('READ-overview-' + monthPhase, V()) });
     }
     ss.blocks.push({ t: 'p', text: pick((th === 'overview' ? 'READ-AXIS-ALL-' : 'READ-AXIS-') + accelPole, V()) });
-    ss.blocks.push({ t: 'label', text: '根拠:' + (hasSit ? '今の状況の回答・' : '九星気学(' + targetMonth + '月の盤)・') + '人物像' });
 
     // 3-2 〇月の勝ち筋
     ss.blocks.push({ t: 'h', id: 's32', text: fill(T.s32, { month: targetMonth }) });
@@ -259,7 +254,6 @@
     else if (stance === 'prepare' && lv('E') === 'high') bfAdj = 'TIM-BF-EHIGH';
     else if (stance === 'prepare' && lv('O') === 'high') bfAdj = 'TIM-BF-OHIGH';
     if (bfAdj) ss.blocks.push({ t: 'p', text: pick(bfAdj, V()) });
-    ss.blocks.push({ t: 'label', text: '根拠:九星気学(年の盤・' + targetMonth + '月の盤)・Big Five' });
 
     // 3-3 落とし穴と対策
     ss.blocks.push({ t: 'h', id: 's33', text: T.s33 });
@@ -296,7 +290,6 @@
       ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V()) + '。' });
     });
     ss.blocks.push({ t: 'card', title: '読むときの注意:' + P['BIAS-BARNUM'].title, text: pick('BIAS-BARNUM', V()), sub: '対策:' + pick('BIAS-BARNUM', V(), 'hedge') });
-    ss.blocks.push({ t: 'label', text: '根拠:Big Five・今の状況とやる気についての回答' });
 
     // 3-4 行動プラン
     ss.blocks.push({ t: 'h', id: 's34', text: T.s34 });
@@ -312,7 +305,6 @@
       ]
     });
     if (th === 'money') ss.blocks.push({ t: 'note', text: pick('MONEY-NOTE', V()) });
-    ss.blocks.push({ t: 'label', text: '根拠:今の状況の回答・うまくいった型・' + targetMonth + '月の戦略' });
 
     // 3-5 ラッキーデーの使いどころ
     ss.blocks.push({ t: 'h', id: 's35', text: T.s35 });
@@ -354,7 +346,6 @@
     } else {
       ss.blocks.push({ t: 'p', text: pick('LUCKY-NONE', V({ range: range })) });
     }
-    ss.blocks.push({ t: 'label', text: '根拠:九星気学(日盤)・相談テーマ' });
 
     // 3-6 方角の使い方(1方位1行:どこへ・何をしに・いつ)
     ss.blocks.push({ t: 'h', id: 's36', text: T.s36 });
@@ -377,7 +368,6 @@
     }
     ss.blocks.push({ t: 'p', text: pick('DIR-SCALE-' + stance, V()) });
     ss.blocks.push({ t: 'p', text: pick('DIRLINE-LONG', V()) });
-    ss.blocks.push({ t: 'label', text: '根拠:九星気学(' + targetMonth + '月の盤)・' + input.homePref + 'からの方角' });
 
     // ================= 4. 気をつけること(〇月のみ) =================
     var sc = { id: 'caution', title: fill(T.caution, { monthLabel: monthLabel }), blocks: [] };
@@ -388,7 +378,6 @@
     else sc.blocks.push({ t: 'p', text: pick('CAU-REL-' + cauRel, V({ period: monthLabel, center: mcStar.name, centerEl: EL[mcStar.element] })) });
     sc.blocks.push({ t: 'p', text: pick('CAU-EL-' + mcStar.element, V()) });
     sc.blocks.push({ t: 'p', text: 'ひとこと注意:' + cardCaution + '。', key: 'caution' });
-    sc.blocks.push({ t: 'label', text: '根拠:九星気学(' + targetMonth + '月の盤・五行)・相談テーマ' });
 
     // ================= 5. 最後の問いかけ =================
     var sq = { id: 'question', title: T.question, blocks: [] };
