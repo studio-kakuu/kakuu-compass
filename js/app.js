@@ -8,8 +8,9 @@
   var TX = window.COMPASS_TEXTS;
   var $ = function (id) { return document.getElementById(id); };
 
-  // 入力・答えは画面を開いている間のメモリ(この変数)だけに置く。localStorage・cookie などには保存しない
-  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {} };
+  // 入力・答えは画面を開いている間のメモリ(この変数)に置く。
+  // 「この端末に覚えておく」をオンにした人だけ、この端末の localStorage にも保存する(送信はしない)
+  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {}, checks: {}, remember: false };
 
   // ---------- 初期化 ----------
   function el(tag, cls, text) {
@@ -73,6 +74,116 @@
     $('shareBtn').addEventListener('click', shareSummary);
     $('cardBtn').addEventListener('click', saveCard);
     $('includeBirth').addEventListener('change', function () { if (!$('cardPreview').hidden) drawCard(); });
+    initMemory();
+  }
+
+  // ---------- この端末に覚えておく(本人が選んだときだけ保存) ----------
+  var persistTimer = null;
+  function persistSoon() {
+    if (!state.remember) return;
+    clearTimeout(persistTimer);
+    persistTimer = setTimeout(persist, 0);
+  }
+  function snapshot() {
+    var themeEl = document.querySelector('input[name="theme"]:checked');
+    return {
+      savedAt: new Date().toISOString(),
+      form: {
+        nickname: $('nickname').value, birthdate: $('birthdate').value, birthtime: $('birthtime').value,
+        timeUnknown: $('timeUnknown').checked, birthPref: $('birthPref').value, homePref: $('homePref').value,
+        theme: themeEl ? themeEl.value : null
+      },
+      sitMemory: state.sitMemory, answers: state.answers, extra: state.extra, checks: state.checks
+    };
+  }
+  function persist() { if (state.remember) C.store.save(snapshot()); }
+  function memMsg(text) { $('memMsg1').textContent = text; $('memMsg2').textContent = text; }
+  function setRemember(on, quiet) {
+    state.remember = !!on;
+    $('remember').checked = state.remember;
+    $('remember2').checked = state.remember;
+    if (state.remember) {
+      var ok = C.store.save(snapshot());
+      if (!quiet) memMsg(ok ? 'この端末の中に保存しました。サーバーへは送信していません。' : 'この端末に保存できませんでした。');
+    } else {
+      C.store.clear();
+      if (!quiet) memMsg('この端末の記憶を消しました。');
+    }
+  }
+  function forget() {
+    setRemember(false, true);
+    memMsg('この端末の記憶を消しました。画面の入力はそのまま残っています。');
+  }
+  function initMemory() {
+    var ok = C.store.available();
+    ['remember', 'remember2'].forEach(function (id) {
+      $(id).addEventListener('change', function () { setRemember(this.checked); });
+      if (!ok) { $(id).disabled = true; }
+    });
+    $('forget1').addEventListener('click', forget);
+    $('forget2').addEventListener('click', forget);
+    if (!ok) memMsg('この環境では、この端末に保存できません(プライベートブラウズなど)。');
+    // 入力や答えが変わったら(オンのときだけ)保存しなおす
+    document.addEventListener('change', function (e) { if (e.target.id !== 'remember' && e.target.id !== 'remember2') persistSoon(); });
+    $('nickname').addEventListener('input', persistSoon);
+    // 前回の保存があれば、始め方を選んでもらう
+    var data = ok ? C.store.load() : null;
+    if (data && data.form) {
+      var d = data.savedAt ? new Date(data.savedAt) : null;
+      $('resumeDate').textContent = d && !isNaN(d) ? '保存した日時:' + d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + pad(d.getMinutes()) : '';
+      $('resumeBox').hidden = false;
+      $('resumeYes').addEventListener('click', function () { resumeFrom(data); });
+      $('resumeNo').addEventListener('click', function () {
+        C.store.clear();
+        $('resumeBox').hidden = true;
+        memMsg('この端末の記憶を消しました。最初から入力できます。');
+        $('nickname').focus();
+      });
+    }
+  }
+  function resumeFrom(data) {
+    var f = data.form || {};
+    $('nickname').value = f.nickname || '';
+    $('birthdate').value = f.birthdate || '';
+    $('birthtime').value = f.birthtime || '';
+    $('timeUnknown').checked = f.timeUnknown !== false;
+    $('birthtime').disabled = $('timeUnknown').checked;
+    $('birthPref').value = f.birthPref || '';
+    $('homePref').value = f.homePref || '';
+    var tInp = f.theme && document.querySelector('#themes input[value="' + f.theme + '"]');
+    if (tInp) tInp.checked = true;
+    state.sitMemory = data.sitMemory || {};
+    renderSituation();
+    // 性格の10問
+    state.answers = {};
+    Object.keys(data.answers || {}).forEach(function (qid) {
+      var v = data.answers[qid];
+      var inp = document.querySelector('input[name="' + qid + '"][value="' + v + '"]');
+      if (!inp) return;
+      inp.checked = true;
+      state.answers[qid] = Number(v);
+      var wrap = $('q-' + qid);
+      if (wrap) { wrap.classList.add('is-answered'); wrap.querySelector('.selected-label').textContent = '選択中:' + v + '(' + TX.scaleLabels[v - 1] + ')'; }
+    });
+    // 追加の2問
+    var ex = data.extra || {};
+    state.extra = { cool: [], success: null };
+    (ex.cool || []).forEach(function (id) { var i = document.querySelector('input[name="x-X1"][value="' + id + '"]'); if (i) { i.checked = true; state.extra.cool.push(id); } });
+    if (ex.success) { var i2 = document.querySelector('input[name="x-X2"][value="' + ex.success + '"]'); if (i2) { i2.checked = true; state.extra.success = ex.success; } }
+    if (state.extra.cool.length) { $('q-X1').classList.add('is-answered'); $('q-X1').querySelector('.selected-label').textContent = '選択中:' + state.extra.cool.length + 'つ'; }
+    if (state.extra.success) { $('q-X2').classList.add('is-answered'); $('q-X2').querySelector('.selected-label').textContent = '選択中:' + TX.extraQuestions.success.options.filter(function (o) { return o.id === state.extra.success; })[0].label; }
+    updateAnswered();
+    state.checks = data.checks || {};
+    $('resumeBox').hidden = true;
+    setRemember(true, true);
+    memMsg('前回の入力を読み込みました。');
+    // そろっていればそのままレポートへ。足りなければ入力画面・質問画面へ
+    var r = readInput();
+    if (r.error) { show(1); showError('error1', r.error); return; }
+    state.input = r.input;
+    var a = checkAnswers();
+    if (a) { show(2); showError('error2', a.error); return; }
+    try { buildReport(); show(3); } catch (e) { show(2); showError('error2', '計算中にエラーが起きました。入力内容を確かめてください。(' + e.message + ')'); }
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -476,7 +587,7 @@
     root.appendChild(head);
 
     rep.sections.forEach(function (s) {
-      var sec = el('section', 'r-section r-' + s.id);
+      var sec = el('section', 'r-section r-' + s.id + (s.tone ? ' tone-' + s.tone : ''));
       sec.id = 'r-' + s.id;
       sec.appendChild(el('h3', null, s.title));
       s.blocks.forEach(function (b) { sec.appendChild(renderBlock(b)); });
@@ -508,10 +619,179 @@
     app.appendChild(asec);
   }
 
+  // 長い段落は、2文ほどずつに分けて読みやすくする(文の中身は変えない)
+  function shortParas(text) {
+    var frag = document.createDocumentFragment();
+    var sents = text.match(/[^。]+。?/g) || [text];
+    var cur = '';
+    sents.forEach(function (st) {
+      if (cur && (cur + st).length > 70) { frag.appendChild(el('p', null, cur)); cur = ''; }
+      cur += st;
+    });
+    if (cur) frag.appendChild(el('p', null, cur));
+    return frag;
+  }
+
+  function badge(text, tone) { return el('span', 'badge tone-' + tone, text); }
+
+  // 小さな方位図(上が北・下が南)。marks の方位の縁に印、needle の方位を金色の針で指す
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var ANG = { N: 0, NE: 45, E: 90, SE: 135, S: 180, SW: 225, W: 270, NW: 315 };
+  var SPAN = { N: 30, E: 30, S: 30, W: 30, NE: 60, SE: 60, SW: 60, NW: 60 };
+  function svgEl(tag, attrs) { var x = document.createElementNS(SVGNS, tag); Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); return x; }
+  function pt(a, r) { var rad = (a - 90) * Math.PI / 180; return [50 + Math.cos(rad) * r, 50 + Math.sin(rad) * r]; }
+  function miniCompass(marks, color, needle, label) {
+    var svg = svgEl('svg', { viewBox: '0 0 100 100', width: '88', height: '88', role: 'img', 'aria-label': label, 'class': 'mini-compass' });
+    svg.appendChild(svgEl('circle', { cx: 50, cy: 50, r: 30, fill: 'none', stroke: '#6b6b66', 'stroke-width': 2 }));
+    Object.keys(ANG).forEach(function (k) {
+      var a = pt(ANG[k], 25), b2 = pt(ANG[k], 30);
+      svg.appendChild(svgEl('line', { x1: a[0], y1: a[1], x2: b2[0], y2: b2[1], stroke: '#8a8a84', 'stroke-width': 1.5 }));
+    });
+    marks.forEach(function (id) {
+      var half = SPAN[id] / 2 - 3, p1 = pt(ANG[id] - half, 30), p2 = pt(ANG[id] + half, 30);
+      svg.appendChild(svgEl('path', { d: 'M' + p1[0] + ' ' + p1[1] + ' A30 30 0 0 1 ' + p2[0] + ' ' + p2[1], fill: 'none', stroke: color, 'stroke-width': 6, 'stroke-linecap': 'round' }));
+    });
+    if (needle) {
+      var tip = pt(ANG[needle], 24), l = pt(ANG[needle] + 90, 5), r = pt(ANG[needle] - 90, 5), tail = pt(ANG[needle] + 180, 10);
+      svg.appendChild(svgEl('polygon', { points: [tip, l, tail, r].map(function (q) { return q[0] + ',' + q[1]; }).join(' '), fill: '#E9C46A' }));
+    }
+    svg.appendChild(svgEl('circle', { cx: 50, cy: 50, r: 3, fill: needle ? '#E9C46A' : '#8a8a84' }));
+    var n = svgEl('text', { x: 50, y: 13, 'text-anchor': 'middle', 'font-size': 12, fill: '#F4F4F1', 'font-weight': 700 }); n.textContent = '北';
+    var so = svgEl('text', { x: 50, y: 96, 'text-anchor': 'middle', 'font-size': 12, fill: '#B9B9B2' }); so.textContent = '南';
+    svg.appendChild(n); svg.appendChild(so);
+    return svg;
+  }
+
+  // 行動のチェックリスト(同じ行動は要約と行動プランで同じチェック状態)
+  function checkItem(item, num) {
+    var li = el('li', 'check-item');
+    var lab = el('label');
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.setAttribute('data-act', item.id);
+    cb.checked = !!state.checks[item.id];
+    cb.addEventListener('change', function () {
+      if (cb.checked) state.checks[item.id] = true; else delete state.checks[item.id];
+      var same = document.querySelectorAll('input[data-act="' + item.id + '"]');
+      for (var k = 0; k < same.length; k++) { same[k].checked = cb.checked; same[k].closest('li').classList.toggle('is-done', cb.checked); }
+      persistSoon();
+    });
+    li.classList.toggle('is-done', cb.checked);
+    lab.appendChild(cb);
+    if (num) lab.appendChild(el('span', 'num', String(num)));
+    lab.appendChild(el('span', 'check-text', item.text));
+    li.appendChild(lab);
+    return li;
+  }
+
+  function calendarButton() {
+    var wrap = el('div', 'cal-wrap');
+    var btn = el('button', 'btn btn-gold cal-btn', 'カレンダーに追加');
+    btn.setAttribute('aria-label', 'ラッキーデーをカレンダーに追加');
+    btn.type = 'button';
+    var msgEl = el('p', 'copy-msg');
+    msgEl.setAttribute('role', 'status');
+    btn.addEventListener('click', function () { addToCalendar(msgEl); });
+    wrap.appendChild(btn);
+    wrap.appendChild(msgEl);
+    return wrap;
+  }
+
   function renderBlock(b) {
     var e, i;
     switch (b.t) {
-      case 'p': return el('p', null, b.text);
+      case 'p': return shortParas(b.text);
+      case 'point':
+        e = el('div', 'point tone-' + (b.tone || 'lime'));
+        e.appendChild(el('span', 'point-label', 'ポイント'));
+        e.appendChild(el('strong', null, b.text));
+        return e;
+      case 'panel':
+        e = el('div', 'panel');
+        e.appendChild(el('p', 'panel-label', b.monthLabel + 'の指針'));
+        e.appendChild(el('p', 'panel-name', '「' + b.guideName + '」'));
+        e.appendChild(el('p', 'panel-desc', b.guideDesc));
+        var tiles = el('div', 'panel-tiles');
+        var tg = el('div', 'tile tone-lime');
+        tg.appendChild(el('p', 'tile-title', '吉方位'));
+        tg.appendChild(miniCompass(b.good.map(function (d) { return d.id; }), '#C8F03C', b.needle, '吉方位の方位図'));
+        tg.appendChild(el('p', 'tile-value', b.good.length ? b.good.map(function (d) { return d.name; }).join('・') : b.noGood));
+        var tb2 = el('div', 'tile tone-orange');
+        tb2.appendChild(el('p', 'tile-title', '避けたい方位'));
+        tb2.appendChild(miniCompass(b.avoid.map(function (d) { return d.id; }), '#F2A65A', null, '避けたい方位の方位図'));
+        var bv = el('p', 'tile-value', b.avoid.length ? b.avoid.map(function (d) { return d.name; }).join('・') : b.noBad);
+        if (b.avoid.length && b.avoidMore) bv.appendChild(el('small', null, 'など'));
+        tb2.appendChild(bv);
+        tiles.appendChild(tg); tiles.appendChild(tb2);
+        e.appendChild(tiles);
+        var dayBox = el('div', 'panel-row tone-gold');
+        dayBox.appendChild(el('p', 'row-title', 'ラッキーデー'));
+        if (b.days.length) {
+          var chips = el('div', 'day-chips');
+          b.days.forEach(function (d) { var c = el('span', 'day-chip'); c.appendChild(el('b', null, d.date)); c.appendChild(el('small', null, d.tag)); chips.appendChild(c); });
+          dayBox.appendChild(chips);
+          dayBox.appendChild(calendarButton());
+        } else dayBox.appendChild(el('p', null, b.noDays));
+        e.appendChild(dayBox);
+        var colorRow = el('div', 'panel-row tone-gold color-line');
+        var dot = el('span', 'color-dot'); dot.style.backgroundColor = b.color.hex; dot.setAttribute('aria-hidden', 'true');
+        colorRow.appendChild(el('p', 'row-title', 'ラッキーカラー'));
+        var cv = el('p', 'color-value'); cv.appendChild(dot); cv.appendChild(el('b', null, b.color.name)); colorRow.appendChild(cv);
+        e.appendChild(colorRow);
+        var actBox = el('div', 'panel-row tone-lime');
+        actBox.appendChild(el('p', 'row-title', '行動のヒント'));
+        var ol = el('ul', 'checklist numbered');
+        b.actions.forEach(function (a, k) { ol.appendChild(checkItem(a, k + 1)); });
+        actBox.appendChild(ol);
+        e.appendChild(actBox);
+        var cau = el('div', 'panel-row tone-orange');
+        cau.appendChild(el('p', 'row-title', '気をつけること'));
+        cau.appendChild(el('p', null, b.caution));
+        e.appendChild(cau);
+        return e;
+      case 'lucky':
+        e = el('div', 'lucky-wrap');
+        var ul3 = el('ul', 'lucky-list');
+        b.items.forEach(function (x) {
+          var li = el('li');
+          li.appendChild(el('span', 'day-chip', x.date));
+          var body = el('div', 'lucky-body');
+          var head = el('p', 'lucky-head');
+          head.appendChild(el('b', null, '「' + x.tag + '」向き'));
+          head.appendChild(el('small', null, x.star + 'の日・' + x.rel));
+          body.appendChild(head);
+          body.appendChild(el('p', null, x.text + '。'));
+          li.appendChild(body);
+          ul3.appendChild(li);
+        });
+        e.appendChild(ul3);
+        e.appendChild(calendarButton());
+        return e;
+      case 'dirs':
+        e = el('ul', 'dir-list');
+        b.items.forEach(function (x) {
+          var li = el('li');
+          li.appendChild(el('b', null, x.dir));
+          li.appendChild(document.createTextNode(x.area + 'へ。' + x.act + 'の予定を'));
+          li.appendChild(el('b', null, x.when));
+          li.appendChild(document.createTextNode('に。'));
+          li.appendChild(badge(x.badge, 'lime'));
+          e.appendChild(li);
+        });
+        return e;
+      case 'avoid':
+        e = el('div', 'avoid-box');
+        e.appendChild(el('p', 'row-title', '避けたい方角'));
+        var ul4 = el('ul', 'avoid-list');
+        b.items.forEach(function (x) {
+          var li = el('li');
+          li.appendChild(el('b', null, x.dir));
+          x.labels.forEach(function (lb) { li.appendChild(badge(lb, 'orange')); });
+          ul4.appendChild(li);
+        });
+        e.appendChild(ul4);
+        e.appendChild(el('p', 'note', '言葉の意味は付録の用語集へ'));
+        return e;
       case 'note': return el('p', 'note', '※' + b.text);
       case 'label': return el('p', 'basis', b.text);
       case 'pair':
@@ -548,11 +828,12 @@
         b.groups.forEach(function (g) {
           var gr = el('div', 'plan-group');
           gr.appendChild(el('p', 'plan-label', g.label));
-          var ul = el('ul');
-          g.items.forEach(function (x) { ul.appendChild(el('li', null, x)); });
+          var ul = el('ul', 'checklist');
+          g.items.forEach(function (x) { ul.appendChild(checkItem(x)); });
           gr.appendChild(ul);
           e.appendChild(gr);
         });
+        e.appendChild(el('p', 'note', '終わったら✓を付けてみてください。「この端末に覚えておく」をオンにすると、チェックもこの端末に保存されます。'));
         return e;
       case 'summary':
         e = el('dl', 'summary');
@@ -584,17 +865,17 @@
         b.items.forEach(function (it) { e.appendChild(el('dt', null, it.term)); e.appendChild(el('dd', null, it.text)); });
         return e;
       case 'h':
-        e = el('h4', null, b.text);
+        e = el('h4', b.tone ? 'tone-' + b.tone : null, b.text);
         if (b.id) e.id = 'r-' + b.id;
         if (b.framework) e.appendChild(el('span', 'framework', b.framework));
         return e;
       case 'list':
       case 'olist':
-        e = el(b.t === 'list' ? 'ul' : 'ol');
+        e = el(b.t === 'list' ? 'ul' : 'ol', b.tone ? 'tone-list tone-' + b.tone : null);
         b.items.forEach(function (x) { e.appendChild(el('li', null, x)); });
         return e;
       case 'card':
-        e = el('div', 'r-card');
+        e = el('div', 'r-card' + (b.tone ? ' tone-' + b.tone : ''));
         e.appendChild(el('h5', null, b.title));
         e.appendChild(el('p', null, b.text));
         if (b.sub) e.appendChild(el('p', 'sub', b.sub));
@@ -736,6 +1017,30 @@
     });
   }
 
+  function addToCalendar(msgEl) {
+    if (!state.report || !state.report.ics.length) return;
+    var text = C.ics.build(state.report.ics, { url: toolUrl() });
+    var name = 'compass-luckydays.ics';
+    var file = (typeof File === 'function') ? new File([text], name, { type: 'text/calendar' }) : null;
+    function dl() {
+      var a = document.createElement('a');
+      a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(text);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      msgEl.textContent = 'カレンダー用のファイル(' + name + ')を保存しました。開くとカレンダーに追加できます。';
+    }
+    if (file && navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+      navigator.share({ files: [file], title: 'COMPASS ラッキーデー' }).then(function () { msgEl.textContent = '共有メニューを開きました。'; }, function (err) {
+        if (err && err.name === 'AbortError') { msgEl.textContent = ''; return; }
+        dl();
+      });
+    } else {
+      dl();
+    }
+  }
+
   function download(canvas, name) {
     var a = document.createElement('a');
     a.href = canvas.toDataURL('image/png');
@@ -747,7 +1052,9 @@
   }
 
   function restart() {
-    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {} };
+    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1, sitMemory: {}, checks: {}, remember: state.remember };
+    setRemember(false, true); // 入力を消すので、この端末の記憶も消す
+    memMsg('');
     $('reportAppendix').textContent = '';
     $('form1').reset();
     $('form2').reset();

@@ -6,8 +6,12 @@
   --line: #2e2e2e;
   --text: #f4f4f1;
   --muted: #b9b9b2;
-  --lime: #c8ff00;
-  --lime-dim: #9fcc00;
+  --lime: #C8F03C;      /* 追い風・強み・行動(カード画像と同じ) */
+  --lime-dim: #9dbe2c;
+  --orange: #F2A65A;    /* 注意・ブレーキ・避けたい方位・落とし穴 */
+  --orange-dim: #a8723e;
+  --gold: #E9C46A;      /* ラッキーデー・ラッキーカラー・力をくれる人 */
+  --gold-dim: #9c8445;
   --danger: #ff8a7a;
   --radius: 14px;
   --font-ja: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
@@ -282,3 +286,120 @@ html { scroll-behavior: smooth; }
 .tsw-sit legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
 .tsw-sit legend .req { margin-left: 8px; }
 .tsw-btn { width: 100%; margin-top: 4px; }
+
+/* =====================================================================
+   レポートの読みやすさ(色の役割をカード画像とそろえる)
+   ライム=追い風・強み・行動 / オレンジ=注意・ブレーキ・落とし穴 / 金=ラッキー系
+   本文=白(--text)/補足=グレー(--muted #b9b9b2:背景 #151515 に対してコントラスト比 約9:1)
+   ===================================================================== */
+.r-section.tone-lime > h3 { border-bottom-color: var(--lime); }
+.r-section.tone-orange > h3 { border-bottom-color: var(--orange); }
+.r-section.tone-orange { border-color: #4a3826; }
+.r-section h4.tone-lime { color: var(--lime); }
+.r-section h4.tone-orange { color: var(--orange); }
+.r-section h4.tone-gold { color: var(--gold); }
+.r-section h4 { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); }
+.r-section p { margin: 0 0 16px; }
+.r-section > p + p { margin-top: -4px; }
+
+/* ポイント(各章・各小見出しの先頭の要点1行) */
+.point { border: 1px solid; border-left-width: 5px; border-radius: 10px; padding: 10px 14px; margin: 4px 0 18px; background: rgba(255, 255, 255, 0.03); }
+.point.tone-lime { border-color: var(--lime-dim); border-left-color: var(--lime); }
+.point.tone-orange { border-color: var(--orange-dim); border-left-color: var(--orange); }
+.point.tone-gold { border-color: var(--gold-dim); border-left-color: var(--gold); }
+.point-label { display: block; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 2px; }
+.point.tone-lime .point-label { color: var(--lime); }
+.point.tone-orange .point-label { color: var(--orange); }
+.point.tone-gold .point-label { color: var(--gold); }
+.point strong { display: block; font-size: 17px; line-height: 1.7; }
+
+/* カード(落とし穴など) */
+.r-card.tone-orange { border-left-color: var(--orange); }
+.r-card.tone-orange h5 { color: var(--orange); }
+.r-card.tone-orange .sub { background: rgba(242, 166, 90, 0.08); }
+.tone-list.tone-orange li::marker { color: var(--orange); }
+
+/* バッジ(〔吉方位〕〔五黄殺〕など)。途中で折り返さない */
+.badge { display: inline-block; white-space: nowrap; font-size: 14px; font-weight: 700; line-height: 1.5; padding: 1px 10px; border-radius: 999px; margin: 0 0 0 6px; vertical-align: 1px; }
+.badge.tone-lime { color: #0b0b0b; background: var(--lime); }
+.badge.tone-orange { color: #0b0b0b; background: var(--orange); }
+.badge.tone-gold { color: #0b0b0b; background: var(--gold); }
+
+/* 要約パネル(カード画像と同じ考え方) */
+.panel { border: 1px solid var(--gold-dim); border-radius: 16px; padding: 18px 16px; margin: 0 0 18px; background: radial-gradient(ellipse at top, rgba(233, 196, 106, 0.16), rgba(233, 196, 106, 0) 65%); }
+.panel-label { text-align: center; font-weight: 700; margin: 0 !important; }
+.panel-name { text-align: center; color: var(--lime); font-size: 32px; font-weight: 700; line-height: 1.35; margin: 4px 0 4px !important; }
+.panel-desc { text-align: center; color: var(--gold); margin: 0 0 16px !important; }
+.panel-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; }
+.tile { border: 2px solid; border-radius: 14px; padding: 10px 8px; text-align: center; background: rgba(255, 255, 255, 0.02); }
+.tile.tone-lime { border-color: var(--lime); }
+.tile.tone-orange { border-color: var(--orange); }
+.tile-title { font-weight: 700; margin: 0 !important; font-size: 15px; }
+.tile.tone-lime .tile-title { color: var(--lime); }
+.tile.tone-orange .tile-title { color: var(--orange); }
+.mini-compass { display: block; margin: 2px auto; }
+.tile-value { font-weight: 700; margin: 0 !important; line-height: 1.5; }
+.panel-row { border-top: 1px solid var(--line); padding: 12px 0 0; margin: 12px 0 0; }
+.row-title { font-size: 15px; font-weight: 700; margin: 0 0 6px !important; }
+.panel-row.tone-gold .row-title, .avoid-box .row-title.tone-gold { color: var(--gold); }
+.panel-row.tone-lime .row-title { color: var(--lime); }
+.panel-row.tone-orange .row-title, .avoid-box .row-title { color: var(--orange); }
+.day-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; }
+.day-chip { display: inline-flex; flex-direction: column; align-items: center; border: 2px solid var(--gold); color: var(--gold); border-radius: 12px; padding: 4px 12px; background: rgba(233, 196, 106, 0.1); white-space: nowrap; line-height: 1.4; }
+.day-chip b { font-family: var(--font-en); font-size: 17px; }
+.day-chip small { font-size: 14px; color: var(--text); }
+.color-value { display: flex; align-items: center; gap: 10px; margin: 0 !important; }
+.color-value b { font-size: 18px; }
+
+/* チェックリスト(押しやすい大きさ:行の高さ44px以上) */
+.checklist { list-style: none; margin: 0; padding: 0; }
+.check-item label { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 8px 4px; cursor: pointer; border-radius: 10px; }
+.check-item label:hover { background: rgba(200, 240, 60, 0.05); }
+.check-item input { flex: 0 0 auto; width: 24px; height: 24px; margin: 2px 0 0; accent-color: var(--lime); cursor: pointer; }
+.check-item .num { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); color: #0b0b0b; font-family: var(--font-en); font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.check-item .check-text { flex: 1 1 auto; }
+.check-item.is-done .check-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--lime-dim); }
+.plan-group .checklist { margin: 2px 0 0; }
+
+/* ラッキーデーの使いどころ・方角 */
+.lucky-list { list-style: none; margin: 0 0 12px; padding: 0; }
+.lucky-list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.lucky-list li:last-child { border-bottom: 0; }
+.lucky-list .day-chip { font-family: var(--font-en); font-weight: 700; font-size: 16px; flex: 0 0 auto; }
+.lucky-body p { margin: 0 !important; }
+.lucky-head b { color: var(--gold); margin-right: 8px; }
+.lucky-head small { color: var(--muted); font-size: 14px; }
+.cal-wrap { margin: 8px 0 4px; }
+.btn-gold { background: var(--gold); color: #0b0b0b; width: 100%; }
+.btn-gold:hover { background: #f0d088; }
+.dir-list { margin: 0 0 14px; padding-left: 1.2em; }
+.dir-list li { margin-bottom: 10px; }
+.dir-list li::marker { color: var(--lime); }
+.avoid-box { border: 1px solid var(--orange-dim); border-radius: 12px; padding: 10px 12px; margin: 0 0 16px; background: rgba(242, 166, 90, 0.05); }
+.avoid-list { list-style: none; margin: 0 0 4px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.avoid-list .badge { margin-left: 4px; }
+.avoid-box .note { margin: 6px 0 0 !important; }
+
+/* 人物像の章:ブレーキはオレンジ */
+.r-persona .pair-brake { border-color: var(--orange-dim); }
+
+/* この端末の記憶・前回の入力 */
+.remember-box { border: 1px dashed var(--line); border-radius: 12px; padding: 12px; }
+.btn-small { min-height: 44px; padding: 8px 16px; font-size: 15px; margin-top: 6px; }
+.resume-box { border-color: var(--gold-dim); }
+.resume-box .hint { margin-bottom: 16px; }
+.memory-box { border-color: var(--line); }
+
+/* プログラムで移動した見出しにはフォーカス枠を出さない(キーボードで操作する部品の表示は残す) */
+[tabindex="-1"]:focus, [tabindex="-1"]:focus-visible { outline: none; }
+
+@media (min-width: 640px) {
+  .panel { padding: 24px 28px; }
+  .panel-name { font-size: 40px; }
+  .btn-gold { width: auto; min-width: 280px; }
+}
+.r-section .checklist, .panel .checklist { padding-left: 0; }
+.tile-value { font-size: 15px; }
+.tile-value small { white-space: nowrap; font-size: 14px; }
+.r-section .avoid-list, .r-section .lucky-list { padding-left: 0; }
+.lucky-head small { display: block; }

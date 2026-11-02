@@ -3,7 +3,7 @@
 西洋占星術・数秘術・九星気学の基礎データをプログラムで計算し、性格の質問10問と組み合わせて「戦略プロファイリングレポート」を表示する、無料公開用の Web ツールです(KAKUU STUDIO「KAKUU LAB」シリーズ)。
 
 - **静的サイトのみ**(HTML / CSS / JavaScript)。サーバー・外部API・AI API は使いません。
-- **入力データは保存・送信しません**(localStorage・cookie・アクセス解析なし。Content-Security-Policy で外部通信も禁止)。
+- **入力内容は送信されません**。「この端末に覚えておく」を選んだときだけ、この端末の中(ブラウザの localStorage、キー `kakuu-compass:v1` の1つだけ)に保存されます。初期はオフで、オフのあいだは何も保存しません。「この端末の記憶を消す」ボタン(入力画面とレポートの下)か、オフに戻すと消えます。cookie・アクセス解析はなし。Content-Security-Policy で外部通信も禁止。
 - ライブラリとフォントはリポジトリ内に同梱(`THIRD_PARTY_NOTICES.md`)。
 
 ## 公開前の確認
@@ -36,7 +36,10 @@
 | `css/` | デザイン(`style.css`)・フォント定義(`fonts.css`) |
 | `data/texts.js` | **レポートの文章パーツ・質問文**(文章だけ直すときはここ) |
 | `js/core/` | 計算(`astro.js` 西洋占星術 / `numerology.js` 数秘術 / `kyusei.js` 九星気学 / `geo.js` 都道府県と方位 / `bigfive.js` 性格 / `persona.js` 人物像の4軸 / `report.js` レポート組み立て) |
-| `js/app.js` | 画面の動き(入力・質問・レポート表示・コピー/共有) |
+| `js/app.js` | 画面の動き(入力・質問・レポート表示・チェックリスト・コピー/共有) |
+| `js/storage.js` | 「この端末に覚えておく」(本人が選んだときだけ localStorage に保存・読み込み・削除) |
+| `js/ics.js` | ラッキーデーをカレンダーに追加する .ics ファイルを作る(ブラウザ内で作成) |
+| `og-image.png` ほか | 共有用プレビュー画像(1200×630)・ホーム画面アイコン(`npm run images` で作り直し)、`manifest.webmanifest` |
 | `js/card.js` | 共有用カード画像(1080×1920)の描画 |
 | `vendor/`, `fonts/` | 同梱ライブラリ・フォント |
 | `tests/` | 自動テスト |

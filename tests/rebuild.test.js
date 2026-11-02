@@ -22,8 +22,8 @@ function combos(th) {
 function build(opts) {
   return R.build(Object.assign({ nickname: 'テスト', birth: { y: 1990, m: 7, d: 15, timeKnown: false }, homePref: '東京都', theme: 'overview', answers: answerSets[0], extra: { cool: ['purpose'], success: 'prepare' } }, opts), texts, opts.now || NOW);
 }
-function bodyOf(rep) { // 1〜5章(要約と付録を除く)
-  return rep.sections.slice(1).map((s) => [s.title].concat(s.blocks.map((b) => R.blockToText(b, false, { hideBirth: true })).filter((x) => x !== null)).join('\n')).join('\n');
+function bodyOf(rep) { // 1〜5章(要約と付録を除く)。「ポイント」は下の文の要点なので、同じ文が重なるのは意図どおり(数えない)
+  return rep.sections.slice(1).map((s) => [s.title].concat(s.blocks.filter((b) => b.t !== 'point').map((b) => R.blockToText(b, false, { hideBirth: true })).filter((x) => x !== null)).join('\n')).join('\n');
 }
 
 // ---------- A1 ----------
@@ -52,7 +52,8 @@ test('A2: ラッキーデーの「向いていること」は3日で重ならな
       assert.equal(new Set(uses.map((u) => u.tag)).size, uses.length);
       assert.equal(new Set(uses.map((u) => u.text)).size, uses.length);
       const list = r.sections.find((s) => s.id === 'strategy').blocks;
-      uses.forEach((u) => assert.ok(list.some((b) => b.t === 'list' && b.items.some((x) => x.includes('「' + u.tag + '」向き')))));
+      const lk = list.find((b) => b.t === 'lucky');
+      uses.forEach((u) => assert.ok(lk && lk.items.some((x) => x.tag === u.tag && x.text === u.text)));
       if (uses.length >= 2) checked++;
     }
   }
@@ -85,10 +86,18 @@ test('A4: 先頭に要約と目次。目次のリンク先はすべて存在す�
   const r = build({ theme: 'money', situation: { S1: 'buy', S2: 'impulse' } });
   const s0 = r.sections[0];
   assert.equal(s0.id, 'summary');
-  const sum = s0.blocks.find((b) => b.t === 'summary');
-  const labels = sum.items.map((i) => i.label);
-  ['11月の指針', '人物像', '吉方位', '避けたい方位', 'ラッキーデー', '行動のヒント', '気をつけること'].forEach((l) => assert.ok(labels.includes(l), l));
-  assert.deepEqual(sum.items.find((i) => i.label === '行動のヒント').list, r.card.actions);
+  // 要約はカード風のパネル(指針・吉方位・避けたい方位・ラッキーデー・ラッキーカラー・行動のヒント・気をつけること)
+  const panel = s0.blocks.find((b) => b.t === 'panel');
+  assert.ok(panel);
+  assert.equal(panel.guideName, r.card.guideName);
+  assert.deepEqual(panel.good.map((d) => d.id), r.card.goodDirs.map((d) => d.id));
+  assert.deepEqual(panel.avoid.map((d) => d.id), r.card.badDirs.map((d) => d.id));
+  assert.deepEqual(panel.days.map((d) => d.date), r.card.luckyDays);
+  assert.equal(panel.color.hex, r.card.color.hex);
+  assert.deepEqual(panel.actions.map((a) => a.text), r.card.actions);
+  assert.equal(panel.caution, r.card.caution);
+  const txt = R.blockToText(panel, false, {});
+  ['指針', '人物像', '吉方位', '避けたい方位', 'ラッキーデー', 'ラッキーカラー', '行動のヒント', '気をつけること'].forEach((l) => assert.ok(txt.includes('- ' + l), l));
   const toc = s0.blocks.find((b) => b.t === 'toc');
   const ids = new Set(r.sections.map((s) => s.id).concat(['appendix']));
   r.sections.forEach((s) => s.blocks.forEach((b) => { if (b.id) ids.add(b.id); }));
@@ -130,7 +139,7 @@ test('B1/B3: 冷めるきっかけは人物像と落とし穴に、うまくい�
   assert.ok(cards.includes('冷めるきっかけ:頭ごなしに否定されたとき'));
   assert.ok(cards.includes('冷めるきっかけ:同じことの繰り返しが続くとき'));
   const plan = strat.blocks.find((b) => b.t === 'plan');
-  assert.ok(texts.parts['PLAN-WEEK-team'].v.some((v) => plan.groups[0].items[0] === v));
+  assert.ok(texts.parts['PLAN-WEEK-team'].v.some((v) => plan.groups[0].items[0].text === v));
   assert.equal(plan.groups.length, 3);
   assert.match(plan.groups[1].label, /^11月中\(11\/7〜12\/6\)$/);
   assert.match(plan.groups[2].label, /^3か月\(〜2027\/2\/2\)$/);

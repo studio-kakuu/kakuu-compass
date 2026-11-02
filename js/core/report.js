@@ -39,6 +39,10 @@
     return fmtYMD(date) + ' ' + j.getUTCHours() + ':' + (mm < 10 ? '0' : '') + mm;
   }
   var DAY = 86400000;
+  function firstSentence(t) { var i = t.indexOf('。'); return i === -1 ? t : t.slice(0, i + 1); }
+  function lastSentence(t) { var parts = t.split('。').filter(function (x) { return x.trim(); }); return parts.length ? parts[parts.length - 1] + '。' : t; }
+  /** チェックリスト用のID(同じ文なら要約と行動プランで同じIDになる) */
+  function actionId(text) { return 'a' + hash(text).toString(36); }
   var WD = ['日', '月', '火', '水', '木', '金', '土'];
   function dayLabel(d) { return d.m + '/' + d.d + '(' + WD[d.dow] + ')'; }
 
@@ -191,21 +195,23 @@
     var T = texts.sectionTitles, F = texts.frameworks;
 
     // ================= 1. 〇月の指針 =================
-    var sg = { id: 'guide', title: fill(T.guide, { monthLabel: monthLabel }), blocks: [] };
+    var sg = { id: 'guide', tone: 'lime', title: fill(T.guide, { monthLabel: monthLabel }), blocks: [] };
+    sg.blocks.push({ t: 'point', tone: 'lime', text: monthLabel + 'の指針は「' + guideName + '」。' });
     sg.blocks.push({ t: 'p', text: pick('GUIDE-INTRO', V()) });
     sg.blocks.push({ t: 'guide', name: guideName, text: guideDesc });
     if (cur.target.beforeSetsu) {
       sg.blocks.push({ t: 'note', text: pick('GUIDE-SWITCH', V({ setsu: kyusei.SETSU[cur.monthIndex - 1].name, setsuDate: fmtMD(cur.monthStart) })) });
     }
-    sg.blocks.push({ t: 'h', text: 'ラッキーカラー' });
+    sg.blocks.push({ t: 'h', tone: 'gold', text: 'ラッキーカラー' });
     sg.blocks.push({ t: 'color', name: lcolor.color.name, hex: lcolor.color.hex, text: pick('COLOR-' + lcolor.rule, V({ star: lcolor.star.name, color: lcolor.color.name, dir: lcolor.palace ? lcolor.palace.name : '' })) });
-    sg.blocks.push({ t: 'h', text: '力をくれる人' });
+    sg.blocks.push({ t: 'h', tone: 'gold', text: '力をくれる人' });
     var fnames = function (arr) { return arr.map(function (x) { return x.name; }).join('・'); };
     var sameOthers = friends.same.filter(function (x) { return x.num !== honmei; });
     sg.blocks.push({ t: 'p', text: pick(sameOthers.length ? 'FRIEND' : 'FRIEND-NOSAME', V({ supports: fnames(friends.supports), same: fnames(sameOthers), drains: fnames(friends.drains) })) });
 
     // ================= 2. 人物像 =================
-    var sp = { id: 'persona', title: T.persona, blocks: [] };
+    var sp = { id: 'persona', tone: 'lime', title: T.persona, blocks: [] };
+    sp.blocks.push({ t: 'point', tone: 'lime', text: 'アクセル(強み)は「' + accelName + '」、ブレーキ(盲点)は「' + brakeName + '」。' });
     sp.blocks.push({ t: 'p', text: pick('PERSONA-OPEN', V()) });
     sp.blocks.push({ t: 'pair', accel: accelName, brake: brakeName });
     sp.blocks.push({
@@ -214,10 +220,10 @@
         return { id: a.id, label: a.label, plusName: PN[a.plus], minusName: PN[a.minus], score: a.score };
       })
     });
-    sp.blocks.push({ t: 'h', text: 'アクセル(強み):' + accelName });
+    sp.blocks.push({ t: 'h', tone: 'lime', text: 'アクセル(強み):' + accelName });
     sp.blocks.push({ t: 'p', text: pick('ACCEL-' + accelPole, V()) });
     if (success) sp.blocks.push({ t: 'p', text: pick('SUCCESS-' + success.id, V()) });
-    sp.blocks.push({ t: 'h', text: 'ブレーキ(盲点):' + brakeName });
+    sp.blocks.push({ t: 'h', tone: 'orange', text: 'ブレーキ(盲点):' + brakeName });
     sp.blocks.push({ t: 'p', text: pick('BRAKE-' + brakePole, V()) });
     // やる気が冷めやすいとき:選んだ答えを言い直さず、アクセルとつなげて「なぜそうなりやすいのか」を1つにつき1文(最大2文)
     if (cools.length) {
@@ -227,27 +233,30 @@
     sp.blocks.push({ t: 'p', text: pick('PERSONA-CLOSE', V()) });
 
     // ================= 3. テーマ別の作戦 =================
-    var ss = { id: 'strategy', title: th === 'overview' ? T.strategyOverview : fill(T.strategy, { themeName: themeObj.name }), blocks: [] };
+    var ss = { id: 'strategy', tone: 'lime', title: th === 'overview' ? T.strategyOverview : fill(T.strategy, { themeName: themeObj.name }), blocks: [] };
+    var winText = pick('WIN-' + th + '-' + stance, V());
+    ss.blocks.push({ t: 'point', tone: 'lime', text: targetMonth + '月の戦略は「' + STANCE_NAMES[stance] + '」。' + firstSentence(winText) });
     ss.blocks.push({ t: 'p', text: pick(th === 'overview' ? 'STRAT-INTRO-overview' : 'STRAT-INTRO', V()) });
 
     // 3-1 今の状況の読み
-    ss.blocks.push({ t: 'h', id: 's31', text: T.s31 });
-    if (hasSit) {
-      ss.blocks.push({ t: 'p', text: pick('READ-' + th + '-' + s1id, V()) });
-      ss.blocks.push({ t: 'p', text: pick('VALUE-' + th + '-' + s2id, V()) });
-    } else {
-      ss.blocks.push({ t: 'p', text: pick('READ-overview-' + monthPhase, V()) });
-    }
+    ss.blocks.push({ t: 'h', tone: 'lime', id: 's31', text: T.s31 });
+    var readText = pick(hasSit ? 'READ-' + th + '-' + s1id : 'READ-overview-' + monthPhase, V());
+    ss.blocks.push({ t: 'point', tone: 'lime', text: lastSentence(readText) });
+    ss.blocks.push({ t: 'p', text: readText });
+    if (hasSit) ss.blocks.push({ t: 'p', text: pick('VALUE-' + th + '-' + s2id, V()) });
     ss.blocks.push({ t: 'p', text: pick((th === 'overview' ? 'READ-AXIS-ALL-' : 'READ-AXIS-') + accelPole, V()) });
 
     // 3-2 〇月の勝ち筋
-    ss.blocks.push({ t: 'h', id: 's32', text: fill(T.s32, { month: targetMonth }) });
-    ss.blocks.push({ t: 'p', text: yearLabel + 'は「' + PHASE_SHORT[yearPhase] + '」の流れ。その中で、' + name + 'さんの' + targetMonth + '月の戦略は「' + STANCE_NAMES[stance] + '」です。' + (capped ? '本命星が盤の中央に入る時期なので、攻めすぎず、足元を固めながら進めるのがよさそうです。' : '') });
+    ss.blocks.push({ t: 'h', tone: 'lime', id: 's32', text: fill(T.s32, { month: targetMonth }) });
+    var timText = null;
     if (th !== 'overview') {
       var mP = kyusei.palaceInfo(monthPalaceId);
-      ss.blocks.push({ t: 'p', text: pick('TIM-MONTH-' + monthPhase, V({ monthPalace: monthPalaceId === 'C' ? '月の盤の中央' : '月の盤で本命星が' + mP.name + 'にある巡り' })) });
+      timText = pick('TIM-MONTH-' + monthPhase, V({ monthPalace: monthPalaceId === 'C' ? '月の盤の中央' : '月の盤で本命星が' + mP.name + 'にある巡り' }));
     }
-    ss.blocks.push({ t: 'p', text: pick('WIN-' + th + '-' + stance, V()) });
+    ss.blocks.push({ t: 'point', tone: 'lime', text: timText ? firstSentence(timText) : yearLabel + 'は「' + PHASE_SHORT[yearPhase] + '」の流れ。' });
+    ss.blocks.push({ t: 'p', text: yearLabel + 'は「' + PHASE_SHORT[yearPhase] + '」の流れ。その中で、' + name + 'さんの' + targetMonth + '月の戦略は「' + STANCE_NAMES[stance] + '」です。' + (capped ? '本命星が盤の中央に入る時期なので、攻めすぎず、足元を固めながら進めるのがよさそうです。' : '') });
+    if (timText) ss.blocks.push({ t: 'p', text: timText });
+    ss.blocks.push({ t: 'p', text: winText });
     var bfAdj = null;
     if (stance === 'attack' && lv('C') === 'low') bfAdj = 'TIM-BF-CLOW';
     else if (stance !== 'prepare' && lv('N') === 'high') bfAdj = 'TIM-BF-NHIGH';
@@ -256,9 +265,10 @@
     if (bfAdj) ss.blocks.push({ t: 'p', text: pick(bfAdj, V()) });
 
     // 3-3 落とし穴と対策
-    ss.blocks.push({ t: 'h', id: 's33', text: T.s33 });
+    ss.blocks.push({ t: 'h', tone: 'orange', id: 's33', text: T.s33 });
+    var trapPointAt = ss.blocks.length; // ポイントは判断のクセを選んだあとで入れる
     ss.blocks.push({ t: 'p', text: pick('TRAP-INTRO', V()) });
-    ss.blocks.push({ t: 'card', title: '盲点:' + brakeName, text: pick('TRAP-' + brakePole, V()) });
+    ss.blocks.push({ t: 'card', tone: 'orange', title: '盲点:' + brakeName, text: pick('TRAP-' + brakePole, V()) });
     var FN = {}; bigfive.FACTORS.forEach(function (f) { FN[f.id] = f.name; });
     function r(f) { return FN[f] + 'が' + bigfive.LEVEL_NAMES[lv(f)] + '(回答)'; }
     var tr = '相談テーマが' + themeObj.name;
@@ -280,34 +290,37 @@
       b.add.forEach(function (a) { if (a[0]) { s += a[1]; reasons.push(a[2]); } });
       return { id: b.id, score: s + (hash(seed + b.id) % 100) / 1000, reasons: reasons };
     }).sort(function (a, b) { return b.score - a.score; });
+    ss.blocks.splice(trapPointAt, 0, { t: 'point', tone: 'orange', text: '気をつけたい落とし穴は「' + brakeName + '」と「' + P[scored[0].id].title + '」。' });
     scored.slice(0, 2).forEach(function (b) {
-      ss.blocks.push({ t: 'card', title: '判断のクセ:' + P[b.id].title, text: pick(b.id, V()) + (b.reasons.length ? '(選んだ理由:' + b.reasons.join('、') + ')' : ''), sub: '対策:' + pick(b.id, V(), 'hedge') });
+      ss.blocks.push({ t: 'card', tone: 'orange', title: '判断のクセ:' + P[b.id].title, text: pick(b.id, V()) + (b.reasons.length ? '(選んだ理由:' + b.reasons.join('、') + ')' : ''), sub: '対策:' + pick(b.id, V(), 'hedge') });
     });
     var pat = success ? success.id : null;
     cools.forEach(function (c) {
       // 対策が行動プラン(3-4)とほぼ同じになる組み合わせは、重ねて書かずに3-4を案内する
       var overlap = (c.id === 'purpose' && pat === 'purpose') || (c.id === 'alone' && pat === 'team');
-      ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V()) + '。' });
+      ss.blocks.push({ t: 'card', tone: 'orange', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V()) + '。' });
     });
-    ss.blocks.push({ t: 'card', title: '読むときの注意:' + P['BIAS-BARNUM'].title, text: pick('BIAS-BARNUM', V()), sub: '対策:' + pick('BIAS-BARNUM', V(), 'hedge') });
+    ss.blocks.push({ t: 'card', tone: 'orange', title: '読むときの注意:' + P['BIAS-BARNUM'].title, text: pick('BIAS-BARNUM', V()), sub: '対策:' + pick('BIAS-BARNUM', V(), 'hedge') });
 
     // 3-4 行動プラン
-    ss.blocks.push({ t: 'h', id: 's34', text: T.s34 });
+    ss.blocks.push({ t: 'h', tone: 'lime', id: 's34', text: T.s34 });
+    ss.blocks.push({ t: 'point', tone: 'lime', text: 'まずは今週、' + weekAct + '。' });
     ss.blocks.push({ t: 'p', text: pick('PLAN-INTRO', V({ pattern: success ? success.type : 'これまでの' })) });
     var weekItems = (pat ? [pick('PLAN-WEEK-' + pat, V())] : []).concat([weekAct]);
     var monthItems = [monthAct].concat(pat ? [pick('PLAN-MONTH-' + pat, V())] : []);
     var longItems = [pick('PLAN-3M-' + (hasSit ? th + '-' + s1id : 'overview-' + stance), V())].concat(pat ? [pick('PLAN-KEEP-' + pat, V())] : []);
+    function checkItems(arr) { return arr.map(function (x) { return { id: actionId(x), text: x }; }); }
     ss.blocks.push({
       t: 'plan', groups: [
-        { label: '今週', items: weekItems },
-        { label: targetMonth + '月中(' + monthRange + ')', items: monthItems },
-        { label: '3か月(〜' + fmtYMDslash(plan3End) + ')', items: longItems }
+        { label: '今週', items: checkItems(weekItems) },
+        { label: targetMonth + '月中(' + monthRange + ')', items: checkItems(monthItems) },
+        { label: '3か月(〜' + fmtYMDslash(plan3End) + ')', items: checkItems(longItems) }
       ]
     });
     if (th === 'money') ss.blocks.push({ t: 'note', text: pick('MONEY-NOTE', V()) });
 
     // 3-5 ラッキーデーの使いどころ
-    ss.blocks.push({ t: 'h', id: 's35', text: T.s35 });
+    ss.blocks.push({ t: 'h', tone: 'gold', id: 's35', text: T.s35 });
     var range = fmtMD(new Date(Date.UTC(lucky.start.y, lucky.start.m - 1, lucky.start.d))) + '〜' + fmtMD(new Date(Date.UTC(lucky.end.y, lucky.end.m - 1, lucky.end.d)));
     var useArr = P['LUCKY-USE-' + th].v;
     var usedUse = [];
@@ -336,53 +349,69 @@
       var parts = useArr[idx].split('|');
       return { tag: parts[0], text: fill(parts[1], V()), paired: false };
     });
+    var luckyItems = lucky.days.map(function (d, i) {
+      return { date: dayLabel(d.date), ymd: [d.date.y, d.date.m, d.date.d], star: d.star.short, rel: pick('LABEL-REL-' + d.relation), tag: luckyUses[i].tag, text: luckyUses[i].text, paired: luckyUses[i].paired };
+    });
     if (lucky.days.length) {
+      ss.blocks.push({ t: 'point', tone: 'gold', text: 'ラッキーデーは' + luckyItems.map(function (x) { return x.date + '「' + x.tag + '」'; }).join('・') + '。' });
       ss.blocks.push({ t: 'p', text: pick('LUCKY-INTRO', V({ range: range })) });
-      ss.blocks.push({
-        t: 'list', items: lucky.days.map(function (d, i) {
-          return dayLabel(d.date) + ' ' + d.star.short + 'の日(' + pick('LABEL-REL-' + d.relation) + '):「' + luckyUses[i].tag + '」向き。' + luckyUses[i].text + '。';
-        })
-      });
+      ss.blocks.push({ t: 'lucky', items: luckyItems });
     } else {
-      ss.blocks.push({ t: 'p', text: pick('LUCKY-NONE', V({ range: range })) });
+      var noneText = pick('LUCKY-NONE', V({ range: range }));
+      ss.blocks.push({ t: 'point', tone: 'gold', text: firstSentence(noneText) });
+      ss.blocks.push({ t: 'p', text: noneText });
     }
 
     // 3-6 方角の使い方(1方位1行:どこへ・何をしに・いつ)
-    ss.blocks.push({ t: 'h', id: 's36', text: T.s36 });
-    var dirLines = [];
+    ss.blocks.push({ t: 'h', tone: 'lime', id: 's36', text: T.s36 });
+    var dirLines = [], dirItems = [];
+    var avoidItems = monthBad.map(function (x) { return { dir: x.palace.name, labels: x.bad.map(function (b) { return BAD_NAMES[b]; }) }; });
+    var dirNoneText = dirPairs.length ? null : pick('DIRLINE-NONE', V());
+    ss.blocks.push({ t: 'point', tone: 'lime', text: (dirPairs.length ? 'おすすめの方角は' + dirPairs.map(function (pr) { return pr.dir.palace.name; }).join('・') + '。' : firstSentence(dirNoneText)) + (avoid.length ? '避けたい方角は' + avoid.map(function (p) { return p.name; }).join('・') + (monthBad.length > 2 ? 'など' : '') + '。' : '') });
     if (dirPairs.length) {
       ss.blocks.push({ t: 'p', text: pick('DIRLINE-INTRO', V()) });
       dirPairs.forEach(function (pr) {
         var d = pr.dir;
         var when = pr.day ? 'ラッキーデーの' + dayLabel(pr.day.date) : targetMonth + '月中(' + monthRange + ')';
         // 年の盤の情報は付録「方位の全一覧」だけに載せる(すすめる方角に凶のラベルを並べない)
-        var tag = d.good === 'best' ? '〔最大吉方〕' : '〔吉方位〕';
-        dirLines.push(pr.where + 'へ。' + pr.act + 'の予定を' + when + 'に。' + tag);
+        var badge = d.good === 'best' ? '最大吉方' : '吉方位';
+        dirItems.push({ dir: d.palace.name, area: pr.where.slice(d.palace.name.length), act: pr.act, when: when, badge: badge });
+        dirLines.push(pr.where + 'へ。' + pr.act + 'の予定を' + when + 'に。〔' + badge + '〕');
       });
-      ss.blocks.push({ t: 'list', items: dirLines });
+      ss.blocks.push({ t: 'dirs', items: dirItems });
     } else {
-      ss.blocks.push({ t: 'p', text: pick('DIRLINE-NONE', V()) });
+      ss.blocks.push({ t: 'p', text: dirNoneText });
     }
-    if (monthBad.length) {
-      ss.blocks.push({ t: 'p', text: '避けたい方角:' + monthBad.map(function (x) { return x.palace.name + '〔' + x.bad.map(function (b) { return BAD_NAMES[b]; }).join('・') + '〕'; }).join('、') + '(言葉の意味は付録の用語集へ)' });
-    }
+    if (avoidItems.length) ss.blocks.push({ t: 'avoid', items: avoidItems });
     ss.blocks.push({ t: 'p', text: pick('DIR-SCALE-' + stance, V()) });
     ss.blocks.push({ t: 'p', text: pick('DIRLINE-LONG', V()) });
 
     // ================= 4. 気をつけること(〇月のみ) =================
-    var sc = { id: 'caution', title: fill(T.caution, { monthLabel: monthLabel }), blocks: [] };
+    var sc = { id: 'caution', tone: 'orange', title: fill(T.caution, { monthLabel: monthLabel }), blocks: [] };
     var EL = kyusei.ELEMENT_NAMES;
+    sc.blocks.push({ t: 'point', tone: 'orange', key: 'caution', text: 'ひとこと注意:' + cardCaution + '。' });
     sc.blocks.push({ t: 'p', text: pick('CAU-INTRO', V()) });
-    sc.blocks.push({ t: 'h', text: '盤の中心:' + mcStar.name + '(' + EL[mcStar.element] + ')' });
+    sc.blocks.push({ t: 'h', tone: 'orange', text: '盤の中心:' + mcStar.name + '(' + EL[mcStar.element] + ')' });
     if (mcStar.num === honmei) sc.blocks.push({ t: 'p', text: pick('CAU-CENTER', V({ period: monthLabel })) });
     else sc.blocks.push({ t: 'p', text: pick('CAU-REL-' + cauRel, V({ period: monthLabel, center: mcStar.name, centerEl: EL[mcStar.element] })) });
-    sc.blocks.push({ t: 'p', text: pick('CAU-EL-' + mcStar.element, V()) });
-    sc.blocks.push({ t: 'p', text: 'ひとこと注意:' + cardCaution + '。', key: 'caution' });
+    // 「A、B、C。この3つを…」の形は、並べられるので箇条書きにする
+    var elText = pick('CAU-EL-' + mcStar.element, V());
+    var elm = /^(.*?。)(.+)。(この(\d)つ.+)$/.exec(elText);
+    var elItems = elm ? elm[2].split('、') : [];
+    if (elm && elItems.length === Number(elm[4])) {
+      sc.blocks.push({ t: 'p', text: elm[1] });
+      sc.blocks.push({ t: 'list', tone: 'orange', items: elItems });
+      sc.blocks.push({ t: 'p', text: elm[3] });
+    } else {
+      sc.blocks.push({ t: 'p', text: elText });
+    }
 
     // ================= 5. 最後の問いかけ =================
-    var sq = { id: 'question', title: T.question, blocks: [] };
+    var sq = { id: 'question', tone: 'lime', title: T.question, blocks: [] };
+    var outro = pick('OUTRO', V());
+    sq.blocks.push({ t: 'point', tone: 'lime', text: firstSentence(outro) });
     sq.blocks.push({ t: 'question', text: pick('QUE-' + th, V()) });
-    sq.blocks.push({ t: 'p', text: pick('OUTRO', V()) });
+    sq.blocks.push({ t: 'p', text: outro });
 
     // ================= 付録 =================
     var appendix = [];
@@ -470,15 +499,17 @@
     var s0 = { id: 'summary', title: T.summary, blocks: [] };
     s0.blocks.push({ t: 'p', text: pick('INTRO', V()) });
     s0.blocks.push({
-      t: 'summary', items: [
-        { label: targetMonth + '月の指針', text: '「' + guideName + '」' + guideDesc },
-        { label: '人物像', text: 'アクセル=' + accelName + '/ブレーキ=' + brakeName },
-        { label: '吉方位', text: goodOrdered.length ? goodOrdered.map(function (d) { return d.palace.name; }).join('・') + '(' + targetMonth + '月の盤)' : texts.card.noGood },
-        { label: '避けたい方位', text: avoid.length ? avoid.map(function (p) { return p.name; }).join('・') + (monthBad.length > 2 ? 'など' : '') : texts.card.noBad },
-        { label: 'ラッキーデー', text: lucky.days.length ? lucky.days.map(function (d, i) { return dayLabel(d.date) + '「' + luckyUses[i].tag + '」'; }).join('・') : texts.card.noDays },
-        { label: '行動のヒント', list: cardActions },
-        { label: '気をつけること', text: cardCaution }
-      ]
+      t: 'panel',
+      monthLabel: monthLabel, guideName: guideName, guideDesc: guideDesc,
+      persona: { accel: accelName, brake: brakeName },
+      good: goodOrdered.map(function (d) { return { id: d.palace.id, name: d.palace.name }; }),
+      needle: needleDir ? needleDir.palace.id : null,
+      avoid: avoid.map(function (p) { return { id: p.id, name: p.name }; }), avoidMore: monthBad.length > 2,
+      days: luckyItems.map(function (x) { return { date: x.date, tag: x.tag }; }),
+      color: { name: lcolor.color.name, hex: lcolor.color.hex },
+      actions: cardActions.map(function (x) { return { id: actionId(x), text: x }; }),
+      caution: cardCaution,
+      noGood: texts.card.noGood, noBad: texts.card.noBad, noDays: texts.card.noDays
     });
     var toc = [
       { id: 'guide', text: sg.title }, { id: 'persona', text: sp.title }, { id: 'strategy', text: ss.title }
@@ -529,13 +560,15 @@
       appendix: appendix,
       appendixTitle: T.appendix,
       aiPrompt: aiPrompt,
+      // カレンダー(.ics)用:ラッキーデー(最大3日)。生年月日・ニックネームは入れない
+      ics: luckyItems.map(function (x) { return { y: x.ymd[0], m: x.ymd[1], d: x.ymd[2], tag: x.tag, text: x.text.replace('(3-6の方角)', '') }; }),
       disclaimer: texts.disclaimer,
       usedParts: used,
       data: {
         planets: planets, lifePath: lp, birthday: bd, kyusei: ks, bigfive: bf, current: cur, stance: stance, stanceCapped: capped,
         yearPhase: yearPhase, monthPhase: monthPhase, lucky: lucky, luckyUses: luckyUses, friends: friends, luckyColor: lcolor,
         situation: hasSit ? [s1id, s2id] : [], guide: { name: guideName, desc: guideDesc }, persona: pers,
-        accelName: accelName, brakeName: brakeName, monthLabel: monthLabel, yearLabel: yearLabel, dirLines: dirLines,
+        accelName: accelName, brakeName: brakeName, monthLabel: monthLabel, yearLabel: yearLabel, dirLines: dirLines, luckyItems: luckyItems,
         extra: { cool: coolIds, success: success ? success.id : null }
       }
     };
@@ -578,7 +611,21 @@
       case 'color': return (md ? '**' + b.name + '**(' + b.hex + ')\n\n' : '') + b.text;
       case 'pair': return (md ? '**' : '') + 'アクセル(強み):' + b.accel + '/ブレーキ(盲点):' + b.brake + (md ? '**' : '');
       case 'axes': return b.items.map(function (a) { return '- ' + a.minusName + ' ' + axisScale(a.score) + ' ' + a.plusName + '(' + axisWord(a) + ')'; }).join('\n');
-      case 'plan': return b.groups.map(function (g) { return (md ? '**' + g.label + '**\n\n' : '【' + g.label + '】\n') + g.items.map(function (x) { return '- ' + x; }).join('\n'); }).join(md ? '\n\n' : '\n');
+      case 'plan': return b.groups.map(function (g) { return (md ? '**' + g.label + '**\n\n' : '【' + g.label + '】\n') + g.items.map(function (x) { return '- ' + (x.text || x); }).join('\n'); }).join(md ? '\n\n' : '\n');
+      case 'point': return (md ? '> **ポイント:' + b.text + '**' : '▶ ' + b.text);
+      case 'panel': return [
+        (md ? '- **' + targetMonthOf(b) + 'の指針**:' : '- 指針:') + '「' + b.guideName + '」' + b.guideDesc,
+        '- 人物像:アクセル=' + b.persona.accel + '/ブレーキ=' + b.persona.brake,
+        '- 吉方位:' + (b.good.length ? b.good.map(function (d) { return d.name; }).join('・') : b.noGood),
+        '- 避けたい方位:' + (b.avoid.length ? b.avoid.map(function (d) { return d.name; }).join('・') + (b.avoidMore ? 'など' : '') : b.noBad),
+        '- ラッキーデー:' + (b.days.length ? b.days.map(function (d) { return d.date + '「' + d.tag + '」'; }).join('・') : b.noDays),
+        '- ラッキーカラー:' + b.color.name,
+        '- 行動のヒント:\n' + b.actions.map(function (a, i) { return '  ' + (i + 1) + '. ' + a.text; }).join('\n'),
+        '- 気をつけること:' + b.caution
+      ].join('\n');
+      case 'lucky': return b.items.map(function (x) { return '- ' + x.date + ' ' + x.star + 'の日(' + x.rel + '):「' + x.tag + '」向き。' + x.text + '。'; }).join('\n');
+      case 'dirs': return b.items.map(function (x) { return '- ' + x.dir + x.area + 'へ。' + x.act + 'の予定を' + x.when + 'に。〔' + x.badge + '〕'; }).join('\n');
+      case 'avoid': return '避けたい方角:' + b.items.map(function (x) { return x.dir + '〔' + x.labels.join('・') + '〕'; }).join('、') + '(言葉の意味は付録の用語集へ)';
       case 'summary': return b.items.map(function (it) {
         return '- ' + (md ? '**' + it.label + '**' : it.label) + ':' + (it.list ? '\n' + it.list.map(function (x, i) { return '  ' + (i + 1) + '. ' + x; }).join('\n') : it.text);
       }).join('\n');
@@ -604,6 +651,8 @@
       default: return '';
     }
   }
+
+  function targetMonthOf(b) { return b.monthLabel.replace(/\(.*$/, ''); }
 
   function sectionText(s, md, opts) {
     var out = [(md ? '#### ' : '\n――――――――――\n') + s.title];
@@ -663,7 +712,11 @@
       case 'guide': return (b.name + b.text).length;
       case 'pair': return (b.accel + b.brake).length + 16;
       case 'axes': return b.items.map(function (a) { return a.label; }).join('').length;
-      case 'plan': return b.groups.map(function (g) { return g.label + g.items.join(''); }).join('').length;
+      case 'plan': return b.groups.map(function (g) { return g.label + g.items.map(function (x) { return x.text || x; }).join(''); }).join('').length;
+      case 'panel': return (b.guideName + b.guideDesc + b.caution + b.actions.map(function (a) { return a.text; }).join('') + b.days.map(function (d) { return d.date + d.tag; }).join('')).length + 40;
+      case 'lucky': return b.items.map(function (x) { return x.date + x.star + x.rel + x.tag + x.text; }).join('').length;
+      case 'dirs': return b.items.map(function (x) { return x.dir + x.area + x.act + x.when + x.badge; }).join('').length;
+      case 'avoid': return b.items.map(function (x) { return x.dir + x.labels.join(''); }).join('').length + 20;
       case 'summary': return b.items.map(function (it) { return it.label + (it.text || '') + (it.list ? it.list.join('') : ''); }).join('').length;
       case 'table': return b.rows.map(function (r) { return r.join(''); }).join('').length;
       case 'bars': return b.items.length * 12;
@@ -673,5 +726,5 @@
   }
   function sectionChars(s) { return s.title.length + s.blocks.reduce(function (n, b) { return n + blockChars(b); }, 0); }
 
-  return { axisStep: axisStep, axisScale: axisScale, axisWord: axisWord, build: build, toText: toText, clipboardText: clipboardText, summaryText: summaryText, fill: fill, hash: hash, sectionChars: sectionChars, blockToText: blockToText };
+  return { actionId: actionId, axisStep: axisStep, axisScale: axisScale, axisWord: axisWord, build: build, toText: toText, clipboardText: clipboardText, summaryText: summaryText, fill: fill, hash: hash, sectionChars: sectionChars, blockToText: blockToText };
 });

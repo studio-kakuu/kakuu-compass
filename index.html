@@ -9,7 +9,25 @@
   <!-- 試験運用中のみ: 検索エンジンに載せない設定。正式公開時はこの行を削除(README参照) -->
   <meta name="robots" content="noindex, nofollow">
   <title>COMPASS | KAKUU LAB</title>
-  <meta name="description" content="西洋占星術・数秘術・九星気学と性格の自己チェックを組み合わせた、無料の戦略プロファイリングツール。入力内容は保存・送信されません。">
+  <meta name="description" content="西洋占星術・数秘術・九星気学と性格の自己チェックを組み合わせた、無料の戦略プロファイリングツール。入力内容は送信されません。">
+  <!-- 共有用のプレビュー(OGP)。URLは試験URLを基準にした絶対URL -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="KAKUU LAB">
+  <meta property="og:title" content="COMPASS | KAKUU LAB">
+  <meta property="og:description" content="生まれた日の暦と、あなたの答えで作る戦略レポート。西洋占星術・数秘術・九星気学と性格の自己チェックを組み合わせた無料ツールです。">
+  <meta property="og:url" content="https://studio-kakuu.github.io/kakuu-compass/">
+  <meta property="og:image" content="https://studio-kakuu.github.io/kakuu-compass/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="KAKUU LAB / COMPASS 生まれた日の暦と、あなたの答えで作る戦略レポート">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="COMPASS | KAKUU LAB">
+  <meta name="twitter:description" content="生まれた日の暦と、あなたの答えで作る戦略レポート。">
+  <meta name="twitter:image" content="https://studio-kakuu.github.io/kakuu-compass/og-image.png">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
@@ -37,7 +55,16 @@
         <p class="eyebrow">STRATEGY PROFILING</p>
         <h1 id="step1-title">生まれた日の暦と、<br>あなたの答えで作る<br><em>戦略レポート</em></h1>
         <p class="lead">西洋占星術・数秘術・九星気学の基礎データをプログラムで計算し、性格の質問10問と組み合わせて、自己分析・タイミング・行動のヒントをまとめます。</p>
-        <p class="privacy-badge">入力内容は保存・送信されません(画面を閉じると消えます)</p>
+        <p class="privacy-badge">入力内容は送信されません(「この端末に覚えておく」を選んだときだけ、この端末の中に保存)</p>
+      </div>
+
+      <div id="resumeBox" class="card resume-box" role="region" aria-labelledby="resume-title" hidden>
+        <h2 id="resume-title" class="ai-title">前回の入力が、この端末に保存されています</h2>
+        <p class="hint" id="resumeDate"></p>
+        <div class="btn-row">
+          <button type="button" id="resumeYes" class="btn btn-primary">前回の入力で始める</button>
+          <button type="button" id="resumeNo" class="btn btn-ghost">最初から入力する(記憶は消します)</button>
+        </div>
       </div>
 
       <form id="form1" class="card form" novalidate>
@@ -78,6 +105,13 @@
         </fieldset>
 
         <div id="situation" class="situation" aria-live="polite"></div>
+
+        <div class="field remember-box">
+          <label class="check"><input id="remember" type="checkbox"> この端末に覚えておく</label>
+          <p class="hint">オンにすると、入力内容・質問の答え・行動のチェックを、この端末(このブラウザ)の中にだけ保存します。サーバーへは送信しません。初期設定はオフです。</p>
+          <button type="button" id="forget1" class="btn btn-ghost btn-small">この端末の記憶を消す</button>
+          <p id="memMsg1" class="copy-msg" role="status" aria-live="polite"></p>
+        </div>
 
         <p id="error1" class="error" role="alert" hidden></p>
         <button type="submit" class="btn btn-primary">次へ:性格の質問(10問)</button>
@@ -128,6 +162,13 @@
         <p class="hint">「AIに相談する」は、レポート全文に相談用の文章をつけてコピーします。お使いのAIチャットに貼り付けて相談できます。</p>
       </section>
       <div id="reportAppendix"></div>
+      <section class="card memory-box" aria-labelledby="memory-title">
+        <h2 id="memory-title" class="ai-title">この端末の記憶</h2>
+        <label class="check"><input id="remember2" type="checkbox"> この端末に覚えておく</label>
+        <p class="hint">オンにすると、入力内容・質問の答え・行動のチェックを、この端末の中にだけ保存します(送信はしません)。オフにすると保存を消します。</p>
+        <button type="button" id="forget2" class="btn btn-ghost">この端末の記憶を消す</button>
+        <p id="memMsg2" class="copy-msg" role="status" aria-live="polite"></p>
+      </section>
       <div class="btn-row center">
         <button type="button" id="back2" class="btn btn-ghost">質問に戻る</button>
         <button type="button" id="restart" class="btn btn-ghost">最初からやり直す(入力を消す)</button>
@@ -155,6 +196,8 @@
   <script src="js/core/persona.js"></script>
   <script src="js/core/report.js"></script>
   <script src="js/card.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ics.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
