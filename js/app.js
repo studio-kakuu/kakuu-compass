@@ -8,7 +8,8 @@
   var TX = window.COMPASS_TEXTS;
   var $ = function (id) { return document.getElementById(id); };
 
-  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null };
+  // 入力・答えは画面を開いている間のメモリ(この変数)だけに置く。localStorage・cookie などには保存しない
+  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1 };
 
   // ---------- 初期化 ----------
   function el(tag, cls, text) {
@@ -56,6 +57,9 @@
 
     $('form1').addEventListener('submit', onSubmit1);
     $('form2').addEventListener('submit', onSubmit2);
+    var stepBtns = document.querySelectorAll('.step-btn');
+    for (var sb = 0; sb < stepBtns.length; sb++) stepBtns[sb].addEventListener('click', onStepClick);
+    $('rebuildBtn').addEventListener('click', rebuild);
     $('back1').addEventListener('click', function () { show(1); });
     $('back2').addEventListener('click', function () { show(2); });
     $('restart').addEventListener('click', restart);
@@ -199,17 +203,127 @@
 
   // ---------- 画面切り替え ----------
   function show(n) {
+    state.current = n;
     [1, 2, 3].forEach(function (i) { $('step' + i).hidden = i !== n; });
-    var lis = document.querySelectorAll('.steps li');
-    for (var i = 0; i < lis.length; i++) {
-      var s = Number(lis[i].getAttribute('data-step'));
-      lis[i].className = s === n ? 'is-current' : (s < n ? 'is-done' : '');
-      if (s === n) lis[i].setAttribute('aria-current', 'step'); else lis[i].removeAttribute('aria-current');
-    }
+    updateSteps();
+    if (n === 3) updateStale();
+    // 移動先の画面の先頭へ
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     updateToTop();
     var h = $('step' + n).querySelector('h1, h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  }
+
+  // ---------- 上のステップ表示(押して移動できる) ----------
+  function canGo(n) {
+    if (n === 1) return true;
+    if (n === 2) return !!state.input;      // 入力を一度終えたあと
+    return !!state.report;                   // レポートを一度作ったあと
+  }
+  function updateSteps() {
+    var btns = document.querySelectorAll('.step-btn');
+    for (var i = 0; i < btns.length; i++) {
+      var s = Number(btns[i].getAttribute('data-step'));
+      var ok = canGo(s);
+      btns[i].disabled = !ok;
+      btns[i].className = 'step-btn' + (s === state.current ? ' is-current' : (ok ? ' is-done' : ''));
+      if (s === state.current) btns[i].setAttribute('aria-current', 'step'); else btns[i].removeAttribute('aria-current');
+      if (ok) btns[i].removeAttribute('title');
+      else btns[i].title = s === 2 ? '入力を終えると選べます' : 'レポートを作ると選べます';
+    }
+  }
+  function onStepClick(ev) {
+    var n = Number(ev.currentTarget.getAttribute('data-step'));
+    if (!canGo(n) || n === state.current) return;
+    if (n === 2 && state.current === 1) {
+      // 入力画面から質問へ進むときは、今の入力内容を確かめてから
+      var r = readInput();
+      if (r.error) { showError('error1', r.error); return; }
+      state.input = r.input;
+    }
+    show(n);
+  }
+
+  // 入力画面の内容を読む(エラーがあれば error に文を入れて返す)
+  function readInput() {
+    var nickname = $('nickname').value.trim();
+    var bd = $('birthdate').value;
+    var timeUnknown = $('timeUnknown').checked;
+    var bt = $('birthtime').value;
+    var home = $('homePref').value;
+    var themeEl = document.querySelector('input[name="theme"]:checked');
+    if (!nickname) return { error: 'ニックネームを入力してください。' };
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(bd);
+    if (!m) return { error: '生年月日を入力してください。' };
+    var y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
+    var check = new Date(Date.UTC(y, mo - 1, d));
+    if (y < 1900 || check.getUTCMonth() !== mo - 1 || check.getTime() > Date.now()) return { error: '生年月日は1900年1月1日から今日までの日付で入力してください。' };
+    var hh = null, mm = null;
+    if (!timeUnknown) {
+      var t = /^(\d{2}):(\d{2})/.exec(bt);
+      if (!t) return { error: '出生時刻を入力するか、「わからない」にチェックを入れてください。' };
+      hh = Number(t[1]); mm = Number(t[2]);
+    }
+    if (!home) return { error: '現在住んでいる都道府県を選んでください。' };
+    if (!themeEl) return { error: '相談テーマを選んでください。' };
+    var situation = {};
+    var sitQs = (TX.situations && TX.situations[themeEl.value]) || [];
+    for (var i = 0; i < sitQs.length; i++) {
+      var sel = document.querySelector('input[name="sit-' + sitQs[i].id + '"]:checked');
+      if (!sel) return { error: '「' + sitQs[i].text + '」を選んでください。' };
+      situation[sitQs[i].id] = sel.value;
+    }
+    return {
+      input: {
+        nickname: nickname,
+        birth: { y: y, m: mo, d: d, hh: hh, mm: mm, timeKnown: !timeUnknown },
+        birthPref: $('birthPref').value || null,
+        homePref: home,
+        theme: themeEl.value,
+        situation: situation
+      }
+    };
+  }
+
+  // 質問画面の答えがそろっているか(足りなければ error と移動先)
+  function checkAnswers() {
+    var missing = TX.questions.filter(function (q) { return !state.answers[q.id]; });
+    if (missing.length) return { error: 'まだ答えていない質問があります(' + missing.map(function (q) { return 'Q' + (TX.questions.indexOf(q) + 1); }).join('・') + ')。', focus: 'q-' + missing[0].id };
+    if (!state.extra.cool.length) return { error: '「' + TX.extraQuestions.cool.text + '」を1つ以上選んでください。', focus: 'q-X1' };
+    if (!state.extra.success) return { error: '「' + TX.extraQuestions.success.text + '」を1つ選んでください。', focus: 'q-X2' };
+    return null;
+  }
+
+  // 今の入力と答えの「指紋」(レポートを作ったときと比べて、変わったかどうかを見る)
+  function currentKey() {
+    var r = readInput();
+    var ans = Object.keys(state.answers).sort().map(function (k) { return k + '=' + state.answers[k]; }).join(',');
+    return JSON.stringify([r.input || r.error, ans, state.extra.cool.slice().sort(), state.extra.success]);
+  }
+  function updateStale() {
+    $('staleNote').hidden = !state.report || currentKey() === state.reportKey;
+  }
+
+  function buildReport() {
+    var input = {};
+    for (var k in state.input) input[k] = state.input[k];
+    input.answers = state.answers;
+    input.extra = { cool: state.extra.cool.slice(), success: state.extra.success };
+    state.report = C.report.build(input, TX, new Date());
+    state.reportKey = currentKey();
+    renderReport(state.report);
+    $('copyMsg').textContent = '';
+    $('cardPreview').hidden = true;
+  }
+
+  function rebuild() {
+    var r = readInput();
+    if (r.error) { show(1); showError('error1', r.error); return; }
+    state.input = r.input;
+    var a = checkAnswers();
+    if (a) { show(2); showError('error2', a.error); var f = $(a.focus); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    try { buildReport(); } catch (e) { show(2); showError('error2', '計算中にエラーが起きました。入力内容を確かめてください。(' + e.message + ')'); return; }
+    show(3);
   }
 
   function showError(id, msg) { var e = $(id); e.textContent = msg; e.hidden = false; }
@@ -217,66 +331,27 @@
   function onSubmit1(ev) {
     ev.preventDefault();
     $('error1').hidden = true;
-    var nickname = $('nickname').value.trim();
-    var bd = $('birthdate').value;
-    var timeUnknown = $('timeUnknown').checked;
-    var bt = $('birthtime').value;
-    var home = $('homePref').value;
-    var themeEl = document.querySelector('input[name="theme"]:checked');
-    if (!nickname) return showError('error1', 'ニックネームを入力してください。');
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(bd);
-    if (!m) return showError('error1', '生年月日を入力してください。');
-    var y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
-    var check = new Date(Date.UTC(y, mo - 1, d));
-    if (y < 1900 || check.getUTCMonth() !== mo - 1 || check.getTime() > Date.now()) return showError('error1', '生年月日は1900年1月1日から今日までの日付で入力してください。');
-    var hh = null, mm = null;
-    if (!timeUnknown) {
-      var t = /^(\d{2}):(\d{2})/.exec(bt);
-      if (!t) return showError('error1', '出生時刻を入力するか、「わからない」にチェックを入れてください。');
-      hh = Number(t[1]); mm = Number(t[2]);
-    }
-    if (!home) return showError('error1', '現在住んでいる都道府県を選んでください。');
-    if (!themeEl) return showError('error1', '相談テーマを選んでください。');
-    var situation = {};
-    var sitQs = (TX.situations && TX.situations[themeEl.value]) || [];
-    for (var i = 0; i < sitQs.length; i++) {
-      var sel = document.querySelector('input[name="sit-' + sitQs[i].id + '"]:checked');
-      if (!sel) return showError('error1', '「' + sitQs[i].text + '」を選んでください。');
-      situation[sitQs[i].id] = sel.value;
-    }
-    state.input = {
-      nickname: nickname,
-      birth: { y: y, m: mo, d: d, hh: hh, mm: mm, timeKnown: !timeUnknown },
-      birthPref: $('birthPref').value || null,
-      homePref: home,
-      theme: themeEl.value,
-      situation: situation
-    };
+    var r = readInput();
+    if (r.error) return showError('error1', r.error);
+    state.input = r.input;
     show(2);
   }
 
   function onSubmit2(ev) {
     ev.preventDefault();
-    var missing = TX.questions.filter(function (q) { return !state.answers[q.id]; });
-    if (missing.length) {
-      showError('error2', 'まだ答えていない質問があります(' + missing.map(function (q) { return 'Q' + (TX.questions.indexOf(q) + 1); }).join('・') + ')。');
-      var first = $('q-' + missing[0].id);
-      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var a = checkAnswers();
+    if (a) {
+      showError('error2', a.error);
+      var f = $(a.focus);
+      if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    if (!state.extra.cool.length) { showError('error2', '「' + TX.extraQuestions.cool.text + '」を1つ以上選んでください。'); $('q-X1').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-    if (!state.extra.success) { showError('error2', '「' + TX.extraQuestions.success.text + '」を1つ選んでください。'); $('q-X2').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-    var input = {};
-    for (var k in state.input) input[k] = state.input[k];
-    input.answers = state.answers;
-    input.extra = { cool: state.extra.cool.slice(), success: state.extra.success };
     try {
-      state.report = C.report.build(input, TX, new Date());
+      buildReport();
     } catch (e) {
       showError('error2', '計算中にエラーが起きました。入力内容を確かめてください。(' + e.message + ')');
       return;
     }
-    renderReport(state.report);
     show(3);
   }
 
@@ -562,7 +637,7 @@
   }
 
   function restart() {
-    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null };
+    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null, reportKey: null, current: 1 };
     $('reportAppendix').textContent = '';
     $('form1').reset();
     $('form2').reset();

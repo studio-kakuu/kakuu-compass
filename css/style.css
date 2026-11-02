@@ -260,3 +260,16 @@ html { scroll-behavior: smooth; }
 @media (min-width: 640px) { .ai-inline { width: 100%; } }
 @media print { .to-top { display: none !important; } }
 .axis-word { font-size: 14px; color: var(--muted); text-align: center; margin: 2px 0 0 !important; }
+
+/* ---- ステップ表示(押して移動できるボタン) ---- */
+.steps li { padding: 0; border: 0; }
+.step-btn { font: inherit; font-size: 14px; display: flex; align-items: center; gap: 4px; padding: 6px 10px; min-height: 36px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.step-btn span { font-family: var(--font-en); font-weight: 700; }
+.step-btn.is-current { color: #0b0b0b; background: var(--lime); border-color: var(--lime); font-weight: 700; cursor: default; }
+.step-btn.is-done { color: var(--text); border-color: var(--lime-dim); }
+.step-btn.is-done:hover { border-color: var(--lime); }
+.step-btn:disabled { opacity: 0.45; border-style: dashed; cursor: not-allowed; }
+.step-btn:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
+.stale-note { border: 2px solid #F2A65A; background: rgba(242, 166, 90, 0.08); border-radius: 14px; padding: 16px; margin: 24px 0 0; }
+.stale-note p { margin: 0 0 12px; }
+.stale-note .btn { width: 100%; }

@@ -122,7 +122,9 @@ test('B1/B3: 冷めるきっかけは人物像と落とし穴に、うまくい�
   const persona2 = r.sections.find((s) => s.id === 'persona');
   const strat = r.sections.find((s) => s.id === 'strategy');
   const ptext = persona2.blocks.map((b) => b.text || '').join('');
-  assert.ok(texts.parts['COOL-denied'].v.some((v) => ptext.includes(v.replace(/\{name\}/g, 'テスト'))));
+  const accel = r.data.persona.accel.pole;
+  assert.ok(ptext.includes(texts.parts['COOLWHY-denied-' + accel].v[0]));
+  assert.ok(ptext.includes('また、' + texts.parts['COOLWHY-routine-' + accel].v[0]));
   assert.ok(texts.parts['SUCCESS-team'].v.some((v) => ptext.includes(v.replace(/\{name\}/g, 'テスト'))));
   const cards = strat.blocks.filter((b) => b.t === 'card').map((b) => b.title);
   assert.ok(cards.includes('冷めるきっかけ:頭ごなしに否定されたとき'));

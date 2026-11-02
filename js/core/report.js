@@ -223,8 +223,11 @@
     sp.blocks.push({ t: 'h', text: 'ブレーキ(盲点):' + brakeName });
     sp.blocks.push({ t: 'p', text: pick('BRAKE-' + brakePole, V()) });
     if (brakePole !== 'balance') sp.blocks.push({ t: 'label', text: 'ブレーキの根拠:' + persona.sources(pers.brake.axis, brakePole, srcNames).join('・') });
-    cools.forEach(function (c) { sp.blocks.push({ t: 'p', text: pick('COOL-' + c.id, V()) }); });
-    if (cools.length) sp.blocks.push({ t: 'label', text: '根拠:あなたの回答(やる気が冷めやすいとき)' });
+    // やる気が冷めやすいとき:選んだ答えを言い直さず、アクセルとつなげて「なぜそうなりやすいのか」を1つにつき1文(最大2文)
+    if (cools.length) {
+      sp.blocks.push({ t: 'p', key: 'coolwhy', text: cools.map(function (c, i) { return (i ? 'また、' : '') + pick('COOLWHY-' + c.id + '-' + accelPole, V()); }).join('') });
+      sp.blocks.push({ t: 'label', text: '根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(' + accelName + ')' });
+    }
     sp.blocks.push({ t: 'p', text: pick('PERSONA-CLOSE', V()) });
 
     // ================= 3. テーマ別の作戦 =================
@@ -290,7 +293,7 @@
     cools.forEach(function (c) {
       // 対策が行動プラン(3-4)とほぼ同じになる組み合わせは、重ねて書かずに3-4を案内する
       var overlap = (c.id === 'purpose' && pat === 'purpose') || (c.id === 'alone' && pat === 'team');
-      ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V(), 'fix') + '。' });
+      ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V()) + '。' });
     });
     ss.blocks.push({ t: 'card', title: '読むときの注意:' + P['BIAS-BARNUM'].title, text: pick('BIAS-BARNUM', V()), sub: '対策:' + pick('BIAS-BARNUM', V(), 'hedge') });
     ss.blocks.push({ t: 'label', text: '根拠:Big Five・今の状況とやる気についての回答' });

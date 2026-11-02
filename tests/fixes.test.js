@@ -135,3 +135,32 @@ test('8: 盲点の見出しと本文の言い方がそろっている', () => {
     assert.ok(body.includes('「' + label + '」'));
   }
 });
+
+test('冷めるきっかけ:人物像では言い直しをせず、アクセルとつなげた「なぜ」を1つにつき1文(最大2文)', () => {
+  const removed = ['やる気が冷めやすいのは、頭ごなしに否定されたとき', '大切に扱われていないと感じると、やる気が続きにくいタイプかもしれません'];
+  const poles = new Set();
+  for (const a of [0, 1, 2, 3, 4]) for (const cool of [['denied'], ['denied', 'purpose'], ['routine', 'alone'], ['disrespect', 'noresult'], ['offplan']]) {
+    const answers = Object.fromEntries(texts.questions.map((q, i) => [q.id, ((i * (a + 2)) % 7) + 1]));
+    const r = build({ answers, birth: { y: 1980 + a * 3, m: 4, d: 4, timeKnown: false }, extra: { cool, success: 'leap' } });
+    const accel = r.data.persona.accel.pole;
+    poles.add(accel);
+    const persona = r.sections.find((s) => s.id === 'persona');
+    const p = persona.blocks.find((b) => b.key === 'coolwhy');
+    assert.equal(p.text, cool.map((c, i) => (i ? 'また、' : '') + P['COOLWHY-' + c + '-' + accel].v[0]).join(''));
+    assert.equal(p.text.split('。').filter(Boolean).length, cool.length); // 1つにつき1文
+    const all = persona.blocks.map((b) => b.text || '').join('');
+    removed.forEach((x) => assert.ok(!all.includes(x)));
+    // 3章の対策は残る(選んだ答えはカードの見出しだけで、本文で言い直さない)
+    const cards = r.sections.find((s) => s.id === 'strategy').blocks.filter((b) => b.t === 'card' && b.title.startsWith('冷めるきっかけ:'));
+    assert.equal(cards.length, cool.length);
+    cards.forEach((c) => assert.ok(c.text.startsWith('対策:')));
+  }
+  assert.ok(poles.size >= 3);
+  // すべての組み合わせ(きっかけ7×アクセル9)がそろい、決めつけない言い方で終わる
+  for (const o of XQ.cool.options) for (const pole of Object.keys(texts.brakeLabels)) {
+    const v = P['COOLWHY-' + o.id + '-' + pole].v[0];
+    assert.match(v, /(かもしれません|ものです)。$/);
+    assert.equal(v.split('。').filter(Boolean).length, 1);
+  }
+  assert.ok(!Object.keys(P).some((id) => /^COOL-/.test(id) && P[id].fix));
+});

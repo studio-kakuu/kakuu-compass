@@ -20,11 +20,13 @@
       <div class="logo" aria-label="KAKUU LAB / COMPASS">
         <span class="logo-lab">KAKUU LAB</span><span class="logo-slash">/</span><span class="logo-name">COMPASS</span>
       </div>
-      <ol class="steps" aria-label="進み具合">
-        <li data-step="1" class="is-current"><span>1</span>入力</li>
-        <li data-step="2"><span>2</span>質問</li>
-        <li data-step="3"><span>3</span>レポート</li>
-      </ol>
+      <nav aria-label="進み具合">
+        <ol class="steps">
+          <li><button type="button" class="step-btn is-current" data-step="1" aria-current="step"><span>1</span>入力</button></li>
+          <li><button type="button" class="step-btn" data-step="2" disabled title="入力を終えると選べます"><span>2</span>質問</button></li>
+          <li><button type="button" class="step-btn" data-step="3" disabled title="レポートを作ると選べます"><span>3</span>レポート</button></li>
+        </ol>
+      </nav>
     </div>
   </header>
 
@@ -102,6 +104,10 @@
 
     <!-- STEP 3 -->
     <section id="step3" class="step" aria-labelledby="report-title" hidden>
+      <div id="staleNote" class="stale-note" role="status" hidden>
+        <p>入力や答えが、このレポートを作ったときから変わっています。下に表示しているのは、変更前の内容のレポートです。</p>
+        <button type="button" id="rebuildBtn" class="btn btn-primary">内容が変わったので、もう一度レポートを作る</button>
+      </div>
       <div id="report"></div>
       <section class="card share-box" aria-labelledby="share-title">
         <h2 id="share-title" class="ai-title">保存・共有する</h2>

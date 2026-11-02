@@ -347,47 +347,164 @@
 | SUCCESS-purpose[1] | うまくいったときは「納得できる目的があったとき」と答えた{name}さん。「何のために」が腹に落ちていると、粘り強く進めるようです。 |
 | SUCCESS-purpose[2] | 「納得できる目的があったとき」にうまくいった経験がある{name}さんは、目的を言葉にしてから動くことが力のもとになりやすいタイプです。 |
 
-### 1-12. 人物像・落とし穴:冷めるきっかけ
+### 1-12. 作戦3-3:冷めるきっかけへの対策
 
 | ID | 文 |
 | --- | --- |
 | COOL-denied(条件) | *頭ごなしに否定されたとき* |
-| COOL-denied[1] | やる気が冷めやすいのは、頭ごなしに否定されたとき。せっかくの意欲が、一言で止まってしまいやすいようです。 |
-| COOL-denied[2] | 頭ごなしに否定されると、一気に気持ちが離れやすいタイプかもしれません。 |
-| COOL-denied.fix[1] | 対策:意見をもらう前に「良い点と直す点を一つずつ聞かせて」と、聞き方を決めておく |
-| COOL-denied.fix[2] | 対策:否定的な言葉は「内容」と「言い方」に分けて受け取り、内容だけを次に活かす |
+| COOL-denied[1] | 意見をもらう前に「良い点と直す点を一つずつ聞かせて」と、聞き方を決めておく |
+| COOL-denied[2] | 否定的な言葉は「内容」と「言い方」に分けて受け取り、内容だけを次に活かす |
 | COOL-disrespect(条件) | *敬意を感じられないとき* |
-| COOL-disrespect[1] | 敬意を感じられない場面では、力を出す気持ちがしぼみやすいようです。 |
-| COOL-disrespect[2] | 大切に扱われていないと感じると、やる気が続きにくいタイプかもしれません。 |
-| COOL-disrespect.fix[1] | 対策:関わる相手や場を選ぶ基準を、自分の中で一つ決めておく |
-| COOL-disrespect.fix[2] | 対策:「ここでは大事にされている」と感じられる場に、時間を多めに配分する |
+| COOL-disrespect[1] | 関わる相手や場を選ぶ基準を、自分の中で一つ決めておく |
+| COOL-disrespect[2] | 「ここでは大事にされている」と感じられる場に、時間を多めに配分する |
 | COOL-purpose(条件) | *何のためにやっているのか見失ったとき* |
-| COOL-purpose[1] | 何のためにやっているのか見失うと、手が止まりやすいようです。 |
-| COOL-purpose[2] | 目的が見えなくなると、急に気持ちが続かなくなるタイプかもしれません。 |
-| COOL-purpose.fix[1] | 対策:着手する前に「何のためにやるか」を1行書いてから始める |
-| COOL-purpose.fix[2] | 対策:週に一度、「これは何のためだったか」を見直す時間をとる |
+| COOL-purpose[1] | 着手する前に「何のためにやるか」を1行書いてから始める |
+| COOL-purpose[2] | 週に一度、「これは何のためだったか」を見直す時間をとる |
 | COOL-noresult(条件) | *成果や手ごたえが見えないとき* |
-| COOL-noresult[1] | 成果や手ごたえが見えないと、やる気が下がりやすいようです。 |
-| COOL-noresult[2] | がんばりが形に見えないと、続ける気持ちが揺らぎやすいタイプかもしれません。 |
-| COOL-noresult.fix[1] | 対策:小さな進み具合を記録して、手ごたえを自分で見える形にする |
-| COOL-noresult.fix[2] | 対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける |
+| COOL-noresult[1] | 小さな進み具合を記録して、手ごたえを自分で見える形にする |
+| COOL-noresult[2] | 大きな目標を1週間で終わる大きさに分け、終わったら印をつける |
 | COOL-routine(条件) | *同じことの繰り返しが続くとき* |
-| COOL-routine[1] | 同じことの繰り返しが続くと、気持ちが冷めやすいようです。 |
-| COOL-routine[2] | 毎日が同じ流れになると、飽きがやる気を上回りやすいタイプかもしれません。 |
-| COOL-routine.fix[1] | 対策:いつもの作業に、やり方や場所を変える小さな工夫を一つ足す |
-| COOL-routine.fix[2] | 対策:繰り返しの作業は時間を決めて片づけ、空いた時間に新しいことを入れる |
+| COOL-routine[1] | いつもの作業に、やり方や場所を変える小さな工夫を一つ足す |
+| COOL-routine[2] | 繰り返しの作業は時間を決めて片づけ、空いた時間に新しいことを入れる |
 | COOL-offplan(条件) | *計画どおりに進まないとき* |
-| COOL-offplan[1] | 計画どおりに進まないと、やる気が落ちやすいようです。 |
-| COOL-offplan[2] | 予定が崩れると、気持ちまで崩れやすいタイプかもしれません。 |
-| COOL-offplan.fix[1] | 対策:計画に最初から2割の余白を入れておく |
-| COOL-offplan.fix[2] | 対策:予定がずれたときの「次の一手」を、あらかじめ一つ決めておく |
+| COOL-offplan[1] | 計画に最初から2割の余白を入れておく |
+| COOL-offplan[2] | 予定がずれたときの「次の一手」を、あらかじめ一つ決めておく |
 | COOL-alone(条件) | *一人で抱え込んでいるとき* |
-| COOL-alone[1] | 一人で抱え込んでいると、やる気が続きにくいようです。 |
-| COOL-alone[2] | 相談相手がいない状態が続くと、気持ちがすり減りやすいタイプかもしれません。 |
-| COOL-alone.fix[1] | 対策:困ったときに声をかける相手を、先に一人決めておく |
-| COOL-alone.fix[2] | 対策:途中経過を誰かに短く報告する習慣をつくる |
+| COOL-alone[1] | 困ったときに声をかける相手を、先に一人決めておく |
+| COOL-alone[2] | 途中経過を誰かに短く報告する習慣をつくる |
 
-### 1-13. 作戦:導入
+### 1-13. 人物像:冷めやすい理由(きっかけ×アクセル)
+
+| ID | 文 |
+| --- | --- |
+| COOLWHY-denied-drive(条件) | *頭ごなしに否定されたとき×アクセル=推進力* |
+| COOLWHY-denied-drive[1] | 動きながら形にしていく推進力の強い人ほど、走り出した直後の一言に勢いをそがれやすく、頭ごなしに否定されると一気に足が止まってしまうのかもしれません。 |
+| COOLWHY-denied-caution(条件) | *頭ごなしに否定されたとき×アクセル=慎重さ* |
+| COOLWHY-denied-caution[1] | 準備を重ねて慎重に出した考えほど思い入れが強いぶん、頭ごなしに否定されると、積み上げた時間ごと否定されたように感じやすいのかもしれません。 |
+| COOLWHY-denied-extro(条件) | *頭ごなしに否定されたとき×アクセル=外向* |
+| COOLWHY-denied-extro[1] | 人とのやりとりから元気をもらうタイプだからこそ、相手からの頭ごなしの否定は、エネルギーの源そのものを止めてしまいやすいのかもしれません。 |
+| COOLWHY-denied-intro(条件) | *頭ごなしに否定されたとき×アクセル=内向* |
+| COOLWHY-denied-intro[1] | ひとりでじっくり考えてから出した答えには深い思い入れがあるぶん、頭ごなしに否定されると、もう一度外に出すのをためらいやすいのかもしれません。 |
+| COOLWHY-denied-change(条件) | *頭ごなしに否定されたとき×アクセル=変化* |
+| COOLWHY-denied-change[1] | 新しいことを試したい気持ちが強いぶん、挑戦の芽を頭ごなしに否定されると、試す楽しさそのものがしぼみやすいのかもしれません。 |
+| COOLWHY-denied-stable(条件) | *頭ごなしに否定されたとき×アクセル=安定* |
+| COOLWHY-denied-stable[1] | 決めたことを着実に続けるタイプだからこそ、積み上げてきたやり方を頭ごなしに否定されると、足場ごと揺らぐように感じやすいのかもしれません。 |
+| COOLWHY-denied-empathy(条件) | *頭ごなしに否定されたとき×アクセル=共感* |
+| COOLWHY-denied-empathy[1] | 共感の力が強いぶん、言葉の温度や相手の敬意にも敏感なので、頭ごなしの否定で一気に気持ちが止まりやすいのかもしれません。 |
+| COOLWHY-denied-indep(条件) | *頭ごなしに否定されたとき×アクセル=独立* |
+| COOLWHY-denied-indep[1] | 自分の基準で考え抜いて決めるタイプだからこそ、理由を聞かれないまま頭ごなしに否定されると、納得できずに気持ちが離れやすいのかもしれません。 |
+| COOLWHY-denied-balance(条件) | *頭ごなしに否定されたとき×アクセル=バランス型* |
+| COOLWHY-denied-balance[1] | 場面に合わせて動き方を変えられるぶん、合わせようとしている最中の否定がこたえやすく、頭ごなしに言われると気持ちが止まりやすいのかもしれません。 |
+| COOLWHY-disrespect-drive(条件) | *敬意を感じられないとき×アクセル=推進力* |
+| COOLWHY-disrespect-drive[1] | 先頭に立って動く人ほど、その動きが当たり前のように扱われると報われなさを感じやすく、敬意のない場では力を出す理由を見失いやすいのかもしれません。 |
+| COOLWHY-disrespect-caution(条件) | *敬意を感じられないとき×アクセル=慎重さ* |
+| COOLWHY-disrespect-caution[1] | 見えないところで確認や準備を重ねるタイプだからこそ、その手間に敬意が払われないと、続ける意味を感じにくくなりやすいのかもしれません。 |
+| COOLWHY-disrespect-extro(条件) | *敬意を感じられないとき×アクセル=外向* |
+| COOLWHY-disrespect-extro[1] | 人と関わることが力の源になっているぶん、関わる相手から大切に扱われていないと感じると、エネルギーがすっと引いていきやすいのかもしれません。 |
+| COOLWHY-disrespect-intro(条件) | *敬意を感じられないとき×アクセル=内向* |
+| COOLWHY-disrespect-intro[1] | 少人数の深い信頼の中で力を出すタイプだからこそ、敬意を感じられない関係では、心を開ける場所がなくなりやすいのかもしれません。 |
+| COOLWHY-disrespect-change(条件) | *敬意を感じられないとき×アクセル=変化* |
+| COOLWHY-disrespect-change[1] | 新しいアイデアを持ち込むことが多いぶん、それが軽く扱われると、工夫する意欲そのものがしぼみやすいのかもしれません。 |
+| COOLWHY-disrespect-stable(条件) | *敬意を感じられないとき×アクセル=安定* |
+| COOLWHY-disrespect-stable[1] | コツコツと積み重ねる誠実さが強みだからこそ、その積み重ねが軽んじられると、続ける力の土台が揺らぎやすいのかもしれません。 |
+| COOLWHY-disrespect-empathy(条件) | *敬意を感じられないとき×アクセル=共感* |
+| COOLWHY-disrespect-empathy[1] | 相手を大切にする気持ちが強いぶん、自分が大切に扱われていないと感じたときの落差も大きく、やる気が続きにくいのかもしれません。 |
+| COOLWHY-disrespect-indep(条件) | *敬意を感じられないとき×アクセル=独立* |
+| COOLWHY-disrespect-indep[1] | 自分の判断に責任を持って動くタイプだからこそ、その判断が尊重されない場では、力を出す意味を見いだしにくいのかもしれません。 |
+| COOLWHY-disrespect-balance(条件) | *敬意を感じられないとき×アクセル=バランス型* |
+| COOLWHY-disrespect-balance[1] | 周りに合わせて役割を変えられるぶん、その柔軟さが当たり前のように扱われると、報われなさがたまりやすいのかもしれません。 |
+| COOLWHY-purpose-drive(条件) | *何のためにやっているのか見失ったとき×アクセル=推進力* |
+| COOLWHY-purpose-drive[1] | 前に進む力が強い人ほど、行き先が見えなくなると急にブレーキがかかりやすいものです。 |
+| COOLWHY-purpose-caution(条件) | *何のためにやっているのか見失ったとき×アクセル=慎重さ* |
+| COOLWHY-purpose-caution[1] | 先を見通してから動くタイプだからこそ、目的があいまいになると、確かめる基準がなくなって手が止まりやすいのかもしれません。 |
+| COOLWHY-purpose-extro(条件) | *何のためにやっているのか見失ったとき×アクセル=外向* |
+| COOLWHY-purpose-extro[1] | 人と一緒に盛り上がる中で動けるぶん、何のためかが共有されないまま進むと、熱が冷めるのも早くなりやすいのかもしれません。 |
+| COOLWHY-purpose-intro(条件) | *何のためにやっているのか見失ったとき×アクセル=内向* |
+| COOLWHY-purpose-intro[1] | 物事の意味を自分の言葉で深く考えるタイプだからこそ、何のためにやっているのかが腹に落ちないと、気持ちがついてきにくいのかもしれません。 |
+| COOLWHY-purpose-change(条件) | *何のためにやっているのか見失ったとき×アクセル=変化* |
+| COOLWHY-purpose-change[1] | 新しい方向に目が向きやすいぶん、今の取り組みの目的がぼやけると、関心が別のことへ移りやすいのかもしれません。 |
+| COOLWHY-purpose-stable(条件) | *何のためにやっているのか見失ったとき×アクセル=安定* |
+| COOLWHY-purpose-stable[1] | 決めたことを続ける力が強いぶん、続ける理由が見えなくなったときの迷いも大きく、手が止まりやすいのかもしれません。 |
+| COOLWHY-purpose-empathy(条件) | *何のためにやっているのか見失ったとき×アクセル=共感* |
+| COOLWHY-purpose-empathy[1] | 誰かのために動くときに力が出やすいタイプだからこそ、その「誰のため」が見えなくなると、やる気の行き場を失いやすいのかもしれません。 |
+| COOLWHY-purpose-indep(条件) | *何のためにやっているのか見失ったとき×アクセル=独立* |
+| COOLWHY-purpose-indep[1] | 自分で考えて決めたい気持ちが強いぶん、目的に納得できないまま進むことに、人一倍抵抗を感じやすいのかもしれません。 |
+| COOLWHY-purpose-balance(条件) | *何のためにやっているのか見失ったとき×アクセル=バランス型* |
+| COOLWHY-purpose-balance[1] | どの方向にも動けるバランス型だからこそ、目的という軸がないと、どこへ進めばよいか決めにくくなりやすいのかもしれません。 |
+| COOLWHY-noresult-drive(条件) | *成果や手ごたえが見えないとき×アクセル=推進力* |
+| COOLWHY-noresult-drive[1] | 動いた分だけ前に進んでいる実感がほしい推進力の強い人ほど、手ごたえが見えない時間が続くと、勢いを保ちにくいものです。 |
+| COOLWHY-noresult-caution(条件) | *成果や手ごたえが見えないとき×アクセル=慎重さ* |
+| COOLWHY-noresult-caution[1] | 準備に時間をかけるタイプだからこそ、その準備がどこにつながっているのか見えないと、続けてよいのか迷いやすいのかもしれません。 |
+| COOLWHY-noresult-extro(条件) | *成果や手ごたえが見えないとき×アクセル=外向* |
+| COOLWHY-noresult-extro[1] | 人からの反応を力に変えるタイプなので、まわりの手ごたえが返ってこない時期は、エネルギーが目減りしやすいのかもしれません。 |
+| COOLWHY-noresult-intro(条件) | *成果や手ごたえが見えないとき×アクセル=内向* |
+| COOLWHY-noresult-intro[1] | ひとりで黙々と取り組むことが多いぶん、進み具合を誰にも見せない時間が長くなり、手ごたえを感じにくくなりやすいのかもしれません。 |
+| COOLWHY-noresult-change(条件) | *成果や手ごたえが見えないとき×アクセル=変化* |
+| COOLWHY-noresult-change[1] | 変化を楽しむ人ほど、景色が変わらないように感じる時期が退屈に思えやすく、成果が見えないと別のことに目が移りやすいのかもしれません。 |
+| COOLWHY-noresult-stable(条件) | *成果や手ごたえが見えないとき×アクセル=安定* |
+| COOLWHY-noresult-stable[1] | 着実に積み上げるタイプだからこそ、積み上げた分が形として見えないと、続けてきた意味を見失いやすいのかもしれません。 |
+| COOLWHY-noresult-empathy(条件) | *成果や手ごたえが見えないとき×アクセル=共感* |
+| COOLWHY-noresult-empathy[1] | 誰かの役に立っている実感が力になるタイプなので、その実感が得られないと、やる気が続きにくいのかもしれません。 |
+| COOLWHY-noresult-indep(条件) | *成果や手ごたえが見えないとき×アクセル=独立* |
+| COOLWHY-noresult-indep[1] | 自分で決めた道を自分の力で進むタイプだからこそ、結果が見えない時期は、確かめる相手もいないまま不安を抱えやすいのかもしれません。 |
+| COOLWHY-noresult-balance(条件) | *成果や手ごたえが見えないとき×アクセル=バランス型* |
+| COOLWHY-noresult-balance[1] | いろいろなことをそつなくこなせるぶん、どれも手ごたえが薄く感じられて、やる気につながりにくいことがあるのかもしれません。 |
+| COOLWHY-routine-drive(条件) | *同じことの繰り返しが続くとき×アクセル=推進力* |
+| COOLWHY-routine-drive[1] | 新しい一歩を踏み出すときに力が出るタイプなので、同じことの繰り返しでは推進力の使い道がなく、気持ちが冷めやすいのかもしれません。 |
+| COOLWHY-routine-caution(条件) | *同じことの繰り返しが続くとき×アクセル=慎重さ* |
+| COOLWHY-routine-caution[1] | 丁寧に確かめながら進むタイプでも、確かめることがなくなるほど同じ作業が続くと、注意力の向け先を失って飽きやすいのかもしれません。 |
+| COOLWHY-routine-extro(条件) | *同じことの繰り返しが続くとき×アクセル=外向* |
+| COOLWHY-routine-extro[1] | 人や出来事との出会いから刺激を受けるタイプなので、毎日が同じ流れになると、元気の補給が途切れやすいのかもしれません。 |
+| COOLWHY-routine-intro(条件) | *同じことの繰り返しが続くとき×アクセル=内向* |
+| COOLWHY-routine-intro[1] | 深く考えることが好きなぶん、考える余地のない繰り返しの作業では、頭が退屈してやる気が落ちやすいのかもしれません。 |
+| COOLWHY-routine-change(条件) | *同じことの繰り返しが続くとき×アクセル=変化* |
+| COOLWHY-routine-change[1] | 変化を楽しむ力が強いぶん、同じことの繰り返しは人一倍退屈に感じやすく、気持ちが冷めるのも早いのかもしれません。 |
+| COOLWHY-routine-stable(条件) | *同じことの繰り返しが続くとき×アクセル=安定* |
+| COOLWHY-routine-stable[1] | 安定したリズムが得意なタイプでも、変化がまったくない状態が長く続くと、続ける理由が薄れてきやすいのかもしれません。 |
+| COOLWHY-routine-empathy(条件) | *同じことの繰り返しが続くとき×アクセル=共感* |
+| COOLWHY-routine-empathy[1] | 人の気持ちに触れることで力が出るタイプなので、人との関わりが少ない繰り返しの作業では、やる気がわきにくいのかもしれません。 |
+| COOLWHY-routine-indep(条件) | *同じことの繰り返しが続くとき×アクセル=独立* |
+| COOLWHY-routine-indep[1] | 自分で工夫して決めたいタイプだからこそ、やり方が決まりきった繰り返しの作業では、自分らしさを出す余地がなく冷めやすいのかもしれません。 |
+| COOLWHY-routine-balance(条件) | *同じことの繰り返しが続くとき×アクセル=バランス型* |
+| COOLWHY-routine-balance[1] | 何でも器用にこなせるぶん、慣れた作業はすぐに手ごたえがなくなり、繰り返しが続くと退屈を感じやすいのかもしれません。 |
+| COOLWHY-offplan-drive(条件) | *計画どおりに進まないとき×アクセル=推進力* |
+| COOLWHY-offplan-drive[1] | 勢いで前に進むタイプだからこそ、予定外の足止めに出会うと、その勢いが空回りしてやる気が落ちやすいのかもしれません。 |
+| COOLWHY-offplan-caution(条件) | *計画どおりに進まないとき×アクセル=慎重さ* |
+| COOLWHY-offplan-caution[1] | 慎重に段取りを組むタイプだからこそ、その段取りが崩れたときの落胆も大きく、立て直す前に気持ちが沈みやすいのかもしれません。 |
+| COOLWHY-offplan-extro(条件) | *計画どおりに進まないとき×アクセル=外向* |
+| COOLWHY-offplan-extro[1] | 人と予定を合わせて動くことが多いぶん、予定が崩れると周りへの気づかいも重なり、疲れからやる気が落ちやすいのかもしれません。 |
+| COOLWHY-offplan-intro(条件) | *計画どおりに進まないとき×アクセル=内向* |
+| COOLWHY-offplan-intro[1] | 頭の中でじっくり組み立ててから動くタイプなので、計画が崩れると、考え直す負担が一気にのしかかりやすいのかもしれません。 |
+| COOLWHY-offplan-change(条件) | *計画どおりに進まないとき×アクセル=変化* |
+| COOLWHY-offplan-change[1] | 変化には強いタイプでも、自分で選んだ変化ではなく思いどおりにいかないことが続くと、楽しさより疲れが先に立ちやすいのかもしれません。 |
+| COOLWHY-offplan-stable(条件) | *計画どおりに進まないとき×アクセル=安定* |
+| COOLWHY-offplan-stable[1] | 決めた流れを守ることで力を出すタイプだからこそ、計画どおりに進まないと、足場が崩れたように感じやすいのかもしれません。 |
+| COOLWHY-offplan-empathy(条件) | *計画どおりに進まないとき×アクセル=共感* |
+| COOLWHY-offplan-empathy[1] | 周りに合わせて予定を組むことが多いぶん、計画が崩れると、自分のせいだと感じて抱え込みやすいのかもしれません。 |
+| COOLWHY-offplan-indep(条件) | *計画どおりに進まないとき×アクセル=独立* |
+| COOLWHY-offplan-indep[1] | 自分で立てた計画に責任を持つタイプだからこそ、思いどおりに進まないと、ひとりで悔しさを抱えやすいのかもしれません。 |
+| COOLWHY-offplan-balance(条件) | *計画どおりに進まないとき×アクセル=バランス型* |
+| COOLWHY-offplan-balance[1] | どの場面にも対応できるぶん、予定外のことまで引き受けてしまい、計画が崩れると負担が一気に増えやすいのかもしれません。 |
+| COOLWHY-alone-drive(条件) | *一人で抱え込んでいるとき×アクセル=推進力* |
+| COOLWHY-alone-drive[1] | 自分で動いて解決しようとする力が強いぶん、人に頼る前にひとりで抱え込み、気づいたときには息切れしやすいのかもしれません。 |
+| COOLWHY-alone-caution(条件) | *一人で抱え込んでいるとき×アクセル=慎重さ* |
+| COOLWHY-alone-caution[1] | 最後まできちんとやり遂げようとするタイプだからこそ、人に任せる不安から物事を抱え込み、負担が重くなりやすいのかもしれません。 |
+| COOLWHY-alone-extro(条件) | *一人で抱え込んでいるとき×アクセル=外向* |
+| COOLWHY-alone-extro[1] | 人と関わることで力が出るタイプなので、ひとりで抱え込む状況は、元気の源から切り離されたように感じやすいのかもしれません。 |
+| COOLWHY-alone-intro(条件) | *一人で抱え込んでいるとき×アクセル=内向* |
+| COOLWHY-alone-intro[1] | ひとりで考える時間が心地よいぶん、困ったときも自分の中だけで解決しようとして、気づかないうちに抱え込みやすいのかもしれません。 |
+| COOLWHY-alone-change(条件) | *一人で抱え込んでいるとき×アクセル=変化* |
+| COOLWHY-alone-change[1] | 新しいことにどんどん手を伸ばすぶん、気づくと抱えるものが増えすぎて、ひとりで回しきれなくなりやすいのかもしれません。 |
+| COOLWHY-alone-stable(条件) | *一人で抱え込んでいるとき×アクセル=安定* |
+| COOLWHY-alone-stable[1] | 責任感をもって最後まで続けるタイプだからこそ、「自分がやらなければ」と抱え込み、やる気がすり減りやすいのかもしれません。 |
+| COOLWHY-alone-empathy(条件) | *一人で抱え込んでいるとき×アクセル=共感* |
+| COOLWHY-alone-empathy[1] | 相手の負担を思いやる気持ちが強いぶん、自分の困りごとは言い出しにくく、ひとりで抱え込みやすいのかもしれません。 |
+| COOLWHY-alone-indep(条件) | *一人で抱え込んでいるとき×アクセル=独立* |
+| COOLWHY-alone-indep[1] | 自分の力でやり切りたい気持ちが強いぶん、人に頼るのが後回しになり、ひとりで抱えるものが増えやすいのかもしれません。 |
+| COOLWHY-alone-balance(条件) | *一人で抱え込んでいるとき×アクセル=バランス型* |
+| COOLWHY-alone-balance[1] | 何でもひととおりこなせるぶん、周りから任されることが増えて、気づかないうちにひとりで抱え込みやすいのかもしれません。 |
+
+### 1-14. 作戦:導入
 
 | ID | 文 |
 | --- | --- |
@@ -396,7 +513,7 @@
 | STRAT-INTRO-overview[1] | ここからが、このレポートの中心です。テーマを一つに絞らず、{month}月の過ごし方全体の作戦を、流れの読み、勝ち筋、落とし穴、行動プランの順にまとめました。 |
 | STRAT-INTRO-overview[2] | 「まずは全体を見たい」{name}さんのための作戦です。{monthLabel}をどう過ごすかを、流れの読みから行動プランまで具体的にしていきます。 |
 
-### 1-14. 作戦3-1:今の状況の読み(質問1)
+### 1-15. 作戦3-1:今の状況の読み(質問1)
 
 | ID | 文 |
 | --- | --- |
@@ -446,7 +563,7 @@
 | READ-move-work[1] | 仕事での移動や出張が気になっている{name}さん。移動が多い時期は、予定の組み方しだいで疲れ方が大きく変わります。移動の時間を、準備や考えごとに使える時間として組み立てると、負担が軽くなりやすいでしょう。 |
 | READ-move-work[2] | {name}さんは、仕事での移動について考えています。移動はうまく使えば、新しい人や情報に出会う機会にもなります。前後の予定に余裕を持たせることが、移動を味方にする鍵になりそうです。 |
 
-### 1-15. 作戦3-1:今の状況の読み(質問2)
+### 1-16. 作戦3-1:今の状況の読み(質問2)
 
 | ID | 文 |
 | --- | --- |
@@ -496,7 +613,7 @@
 | VALUE-move-undecided[1] | 時期は「まだ決めていない」とのこと。まずは動きたい理由を整理すると、時期も自然と見えてきます。 |
 | VALUE-move-undecided[2] | 時期を「まだ決めていない」{name}さんには、期限を決める前に、動きたい理由をはっきりさせることが先決です。 |
 
-### 1-16. 作戦3-1:全体の流れの読み(まずは全体を見たい)
+### 1-17. 作戦3-1:全体の流れの読み(まずは全体を見たい)
 
 | ID | 文 |
 | --- | --- |
@@ -516,7 +633,7 @@
 | READ-overview-winter[1] | 全体を見ると、{monthLabel}は内側を整える「整備」の流れ。休む・学ぶ・見直すことに時間を使うと、次の動きが軽くなります。 |
 | READ-overview-winter[2] | {monthLabel}の{name}さんは、次の季節に備える「整備」の流れにあります。予定を詰めこまず、生活や仕事の土台を整えることを優先してみてください。 |
 
-### 1-17. 作戦3-1:人物像とのつながり(アクセル別)
+### 1-18. 作戦3-1:人物像とのつながり(アクセル別)
 
 | ID | 文 |
 | --- | --- |
@@ -548,7 +665,7 @@
 | READ-AXIS-balance[1] | 「{themeName}」のテーマでは、{name}さんのバランスの良さが、偏らない判断を支えてくれそうです。迷ったら、いちばん大事にしたいことを一つ決めてから選びましょう。 |
 | READ-AXIS-balance[2] | バランス型の{name}さんは、「{themeName}」でも、状況に合わせて動き方を変えられるのが強みです。 |
 
-### 1-18. 作戦3-1:人物像とのつながり(まずは全体を見たい・アクセル別)
+### 1-19. 作戦3-1:人物像とのつながり(まずは全体を見たい・アクセル別)
 
 | ID | 文 |
 | --- | --- |
@@ -580,7 +697,7 @@
 | READ-AXIS-ALL-balance[1] | 毎日の過ごし方でも、{name}さんのバランスの良さが、偏らない判断を支えてくれそうです。迷ったら、いちばん大事にしたいことを一つ決めてから選びましょう。 |
 | READ-AXIS-ALL-balance[2] | バランス型の{name}さんは、ふだんの暮らしの中でも、状況に合わせて動き方を変えられるのが強みです。 |
 
-### 1-19. 作戦3-2:〇月の流れ
+### 1-20. 作戦3-2:〇月の流れ
 
 | ID | 文 |
 | --- | --- |
@@ -595,7 +712,7 @@
 | TIM-MONTH-turning[1] | {monthLabel}は、本命星が盤の中央に入る「転換期」の流れ({monthPalace})。新しいことを増やすより、今あることの点検と整理に向いた時期とされます。 |
 | TIM-MONTH-turning[2] | {monthLabel}は、足元を固める「転換期」の流れ({monthPalace})です。予定を詰めこまず、見直しに時間を使ってみてください。 |
 
-### 1-20. 作戦3-2:性格による補足
+### 1-21. 作戦3-2:性格による補足
 
 | ID | 文 |
 | --- | --- |
@@ -608,7 +725,7 @@
 | TIM-BF-OHIGH[1] | 新しいことに惹かれやすい傾向もあるので、整える時期は「学ぶ」「調べる」形で好奇心を満たすのがおすすめです。 |
 | TIM-BF-OHIGH[2] | アイデアが次々に浮かびやすい時期かもしれません。今は実行より、メモにためておくのが向いています。 |
 
-### 1-21. 作戦3-2:勝ち筋(テーマ×戦略)
+### 1-22. 作戦3-2:勝ち筋(テーマ×戦略)
 
 | ID | 文 |
 | --- | --- |
@@ -667,7 +784,7 @@
 | WIN-overview-prepare[1] | 全体の勝ち筋は、整えることに時間を使うこと。片付けや見直し、学びの時間が、次の季節の動きやすさにつながります。 |
 | WIN-overview-prepare[2] | {month}月の勝ち筋は「休むことも作戦」。内側を整える時間を、ほかの予定より先に確保してみてください。 |
 
-### 1-22. 作戦3-3:判断のクセ(認知バイアス)
+### 1-23. 作戦3-3:判断のクセ(認知バイアス)
 
 | ID | 文 |
 | --- | --- |
@@ -727,14 +844,14 @@
 | BIAS-BARNUM.hedge[1] | 対策:「当たっている」と感じた部分ほど、「これは他の人にも当てはまるか?」と考えてみてください。レポートは答えではなく、考えるきっかけとして使うのがおすすめです。 |
 | BIAS-BARNUM.hedge[2] | 対策:このレポートで印象に残った部分は、身近な人に「自分ってこういうところある?」と聞いて確かめてみましょう。 |
 
-### 1-23. 作戦3-3:落とし穴
+### 1-24. 作戦3-3:落とし穴
 
 | ID | 文 |
 | --- | --- |
 | TRAP-INTRO[1] | 判断のときに出やすい心のクセと、やる気が冷めやすい場面を、対策とセットでまとめました。 |
 | TRAP-INTRO[2] | 落とし穴は、あらかじめ知っておくだけで避けやすくなります。{name}さんの回答から、特に気をつけたいものを選びました。 |
 
-### 1-24. 作戦3-3:落とし穴(ブレーキ別)
+### 1-25. 作戦3-3:落とし穴(ブレーキ別)
 
 | ID | 文 |
 | --- | --- |
@@ -766,7 +883,7 @@
 | TRAP-balance[1] | ブレーキで触れた「決め手の不足」は、迷い続ける落とし穴につながります。「いちばん大事にしたいこと」を一つ決めてから選びましょう。 |
 | TRAP-balance[2] | 迷いが長引くときは、比べる項目を3つに絞ると決めやすくなります。 |
 
-### 1-25. 作戦3-4:今週・〇月中の行動(まずは全体を見たい)
+### 1-26. 作戦3-4:今週・〇月中の行動(まずは全体を見たい)
 
 | ID | 文 |
 | --- | --- |
@@ -795,7 +912,7 @@
 | ACT-overview-prepare-4(条件) | *整える* |
 | ACT-overview-prepare-4[1] | 次の季節にやりたいことを、リストにしておく |
 
-### 1-26. 作戦3-4:〇月中の行動(状況1×戦略)
+### 1-27. 作戦3-4:〇月中の行動(状況1×戦略)
 
 | ID | 文 |
 | --- | --- |
@@ -890,7 +1007,7 @@
 | ACT-S1-move-work-prepare(条件) | *引越し・旅行・移動/仕事での移動・出張/整える* |
 | ACT-S1-move-work-prepare[1] | 移動の持ち物や手順をリスト化し、負担を減らす |
 
-### 1-27. 作戦3-4:今週の行動(状況2)
+### 1-28. 作戦3-4:今週の行動(状況2)
 
 | ID | 文 |
 | --- | --- |
@@ -925,21 +1042,21 @@
 | ACT-S2-move-undecided(条件) | *引越し・旅行・移動/まだ決めていない* |
 | ACT-S2-move-undecided[1] | 移動したい理由を3つ書き出し、いちばん大事な1つを選ぶ |
 
-### 1-28. 作戦3-4:お金の判断の注意書き
+### 1-29. 作戦3-4:お金の判断の注意書き
 
 | ID | 文 |
 | --- | --- |
 | MONEY-NOTE[1] | このレポートは、投資や金融商品についての助言ではありません。お金の判断のクセとタイミングを考えるための参考情報です。具体的な商品選びは、信頼できる専門家や公的な情報で確かめてください。 |
 | MONEY-NOTE[2] | 投資や金融商品の助言ではありません。お金の判断のクセとタイミングを振り返るための参考としてお使いください。具体的な商品については、専門家や公的な情報で確かめてください。 |
 
-### 1-29. 作戦3-4:行動プラン
+### 1-30. 作戦3-4:行動プラン
 
 | ID | 文 |
 | --- | --- |
 | PLAN-INTRO[1] | うまくいったときの型(「{pattern}」)に合わせて、今週・{month}月中・3か月の3段階で行動プランを組みました。 |
 | PLAN-INTRO[2] | {name}さんの「{pattern}」の進め方を活かして、今週・{month}月中・3か月先までの行動を並べました。 |
 
-### 1-30. 作戦3-4:今週(うまくいった型別)
+### 1-31. 作戦3-4:今週(うまくいった型別)
 
 | ID | 文 |
 | --- | --- |
@@ -959,7 +1076,7 @@
 | PLAN-WEEK-purpose[1] | 取りかかる前に「このテーマで本当に叶えたいこと」を一言で書いて、目につく場所に置く(目的が見えると粘れる、目的型の進め方) |
 | PLAN-WEEK-purpose[2] | 「なぜこれをやるのか」を3行で書き出してから、最初の一歩を決める(目的型の進め方) |
 
-### 1-31. 作戦3-4:〇月中(うまくいった型別)
+### 1-32. 作戦3-4:〇月中(うまくいった型別)
 
 | ID | 文 |
 | --- | --- |
@@ -979,7 +1096,7 @@
 | PLAN-MONTH-purpose[1] | 目的のメモを見返し、目的に関係の薄い予定を一つ減らす |
 | PLAN-MONTH-purpose[2] | 週に一度、やっていることが目的に合っているかを確かめる |
 
-### 1-32. 作戦3-4:3か月(テーマ×状況/戦略)
+### 1-33. 作戦3-4:3か月(テーマ×状況/戦略)
 
 | ID | 文 |
 | --- | --- |
@@ -1038,7 +1155,7 @@
 | PLAN-3M-overview-prepare[1] | 3か月かけて、身の回りと予定を整え、次の季節に動ける状態をつくる |
 | PLAN-3M-overview-prepare[2] | 3か月の間に、学びたいことを一つ決めて少しずつ進める |
 
-### 1-33. 作戦3-4:3か月の続け方(うまくいった型別)
+### 1-34. 作戦3-4:3か月の続け方(うまくいった型別)
 
 | ID | 文 |
 | --- | --- |
@@ -1058,7 +1175,7 @@
 | PLAN-KEEP-purpose[1] | 月に一度「何のためにやっているか」を見直し、合わなくなった予定を減らす |
 | PLAN-KEEP-purpose[2] | 目的が変わったら計画も変えてよい、と決めておく |
 
-### 1-34. 作戦3-5:ラッキーデー
+### 1-35. 作戦3-5:ラッキーデー
 
 | ID | 文 |
 | --- | --- |
@@ -1067,7 +1184,7 @@
 | LUCKY-NONE[1] | この期間({range})には、条件に合う日が見つかりませんでした。日にちより、自分の調子のよい日を大切にしてください。 |
 | LUCKY-NONE[2] | {range}の中には、条件に合う日がありませんでした。日にちにこだわらず、気持ちの整った日に動いてみてください。 |
 
-### 1-35. 作戦3-5:日の相性ラベル
+### 1-36. 作戦3-5:日の相性ラベル
 
 | ID | 文 |
 | --- | --- |
@@ -1075,7 +1192,7 @@
 | LABEL-REL-same[1] | 自分らしくいられる日 |
 | LABEL-REL-drains[1] | 人のために動くとよい日 |
 
-### 1-36. 作戦3-5:ラッキーデーに向いていること(タグ|文)
+### 1-37. 作戦3-5:ラッキーデーに向いていること(タグ|文)
 
 | ID | 文 |
 | --- | --- |
@@ -1122,7 +1239,7 @@
 | LUCKY-USE-overview[5] | 学ぶ\|気になっていたことを調べてみる |
 | LUCKY-USE-overview[6] | 感謝\|身近な人にありがとうを伝える |
 
-### 1-37. 作戦3-6:移動の規模
+### 1-38. 作戦3-6:移動の規模
 
 | ID | 文 |
 | --- | --- |
@@ -1133,7 +1250,7 @@
 | DIR-SCALE-prepare[1] | 移動の規模:整える流れなので、近場の散歩や日帰りなど、小さな移動で気分を切り替えるくらいがおすすめです。 |
 | DIR-SCALE-prepare[2] | 移動の規模:大きく動くより、近場で過ごす時間や住まいの片付けに力を使うほうが合っています。 |
 
-### 1-38. 作戦3-6・カード:その方角ですること
+### 1-39. 作戦3-6・カード:その方角ですること
 
 | ID | 文 |
 | --- | --- |
@@ -1156,7 +1273,7 @@
 | DIR-ACT-overview[2] | 気分転換のお出かけ |
 | DIR-ACT-overview[3] | 気になる場所めぐり |
 
-### 1-39. 作戦3-6:方角の使い方
+### 1-40. 作戦3-6:方角の使い方
 
 | ID | 文 |
 | --- | --- |
@@ -1167,7 +1284,7 @@
 | DIRLINE-LONG[1] | 引越しなど長く影響する移動は、年の盤も合わせて見るのが気学の考え方です。付録の「方位の全一覧」で確かめられます。 |
 | DIRLINE-LONG[2] | 住まいを移すような大きな移動は、月の盤だけでなく年の盤も目安にします。付録の「方位の全一覧」を参考にしてください。 |
 
-### 1-40. 4. 気をつけること
+### 1-41. 4. 気をつけること
 
 | ID | 文 |
 | --- | --- |
@@ -1196,7 +1313,7 @@
 | CAU-CENTER[1] | 本命星が{period}の盤の中央にあるため、気学では「注目を集めやすい反面、身動きがとりにくい」巡りとされます。新しく広げるより、今あるものの点検と整理を優先してみてください。 |
 | CAU-CENTER[2] | {period}は本命星が盤の中央に入る巡り。周りから見られやすい時期とされるので、約束や言葉づかいをいつもより丁寧に。 |
 
-### 1-41. カード・要約:方位の行動のヒント
+### 1-42. カード・要約:方位の行動のヒント
 
 | ID | 文 |
 | --- | --- |
@@ -1205,7 +1322,7 @@
 | ACT-DIR-NONE[1] | 遠出より、今の住まいの中で居心地のよい場所を1つ整える |
 | ACT-DIR-NONE[2] | 大きく動かず、近所で気分を切り替えられる場所を1つ見つける |
 
-### 1-42. カード:ひとこと注意の後半(まずは全体を見たい・月盤の中心の五行別)
+### 1-43. カード:ひとこと注意の後半(まずは全体を見たい・月盤の中心の五行別)
 
 | ID | 文 |
 | --- | --- |
@@ -1220,7 +1337,7 @@
 | CAU-SHORT-water[1] | その場の流れで約束しない |
 | CAU-SHORT-water[2] | 大事なことは夜に決めない |
 
-### 1-43. カード:ひとこと注意の前半(五行の関係別)
+### 1-44. カード:ひとこと注意の前半(五行の関係別)
 
 | ID | 文 |
 | --- | --- |
@@ -1249,7 +1366,7 @@
 | CAU-LEAD-center[2] | 足元を固める月は、 |
 | CAU-LEAD-center[3] | 立ち止まりたくなる月は、 |
 
-### 1-44. カード:ひとこと注意の後半(テーマ×状況別)
+### 1-45. カード:ひとこと注意の後半(テーマ×状況別)
 
 | ID | 文 |
 | --- | --- |
@@ -1299,7 +1416,7 @@
 | CAU-SIT-move-work[1] | 移動の前後に予定を入れすぎない |
 | CAU-SIT-move-work[2] | 出かける前の持ち物確認を習慣に |
 
-### 1-45. 5. 最後の問いかけ
+### 1-46. 5. 最後の問いかけ
 
 | ID | 文 |
 | --- | --- |
@@ -1322,20 +1439,20 @@
 | QUE-love[2] | 相手に「わかってほしい」と思っていることを、一言で言うとしたら何ですか? |
 | QUE-love[3] | 一緒にいて安心できる時間は、どんなときに生まれていますか? |
 
-### 1-46. 5. 最後の問いかけ(締め)
+### 1-47. 5. 最後の問いかけ(締め)
 
 | ID | 文 |
 | --- | --- |
 | OUTRO[1] | このレポートは「答え」ではなく「作戦会議の資料」です。しっくりきたところは活かし、違うと感じたところは遠慮なく捨ててください。決めるのは、いつも{name}さん自身です。 |
 | OUTRO[2] | 読んでみて違和感があった部分こそ、{name}さんらしさのヒントかもしれません。使えるところだけ持ち帰って、今日の小さな一歩に変えてみてください。 |
 
-### 1-47. AI相談用の文章
+### 1-48. AI相談用の文章
 
 | ID | 文 |
 | --- | --- |
 | AI-PROMPT[1] | 以下は、占い(西洋占星術・数秘術・九星気学)と性格の自己チェックを組み合わせた、私の自己分析レポートです。占いの結果を事実として扱ったり、未来を断定したりせず、ひとつの視点として参考にしてください。私の相談テーマは「{theme}」{situation}です。やる気が冷めやすいのは「{cool}」、うまくいったときに近いのは「{success}」と答えています。そのうえで、現実的な選択肢と、次の1か月でできる具体的な行動を一緒に考えてください。まず私に2〜3個質問をしてから、アドバイスをお願いします。 |
 
-### 1-48. 付録:根拠の詳細(天体の役割)
+### 1-49. 付録:根拠の詳細(天体の役割)
 
 | ID | 文 |
 | --- | --- |
@@ -1347,7 +1464,7 @@
 | PLANET-jupiter[1] | 伸ばしやすい分野・楽観 |
 | PLANET-saturn[1] | 課題・時間をかけて育つ力 |
 
-### 1-49. 付録:根拠の詳細(太陽星座)
+### 1-50. 付録:根拠の詳細(太陽星座)
 
 | ID | 文 |
 | --- | --- |
@@ -1388,7 +1505,7 @@
 | SIGN-pisces[1] | 人の気持ちや場の空気を感じとり、想像力を広げる傾向があります。柔軟で優しい一方、境界線があいまいになって疲れやすい面もあります。 |
 | SIGN-pisces[2] | 感受性と創造性が持ち味になりやすい星座です。相手に寄り添うのが得意な一方、現実的な期限や数字の管理は後回しになりがちです。 |
 
-### 1-50. 付録:根拠の詳細(月星座(気持ち))
+### 1-51. 付録:根拠の詳細(月星座(気持ち))
 
 | ID | 文 |
 | --- | --- |
@@ -1401,7 +1518,7 @@
 | MOON-water[1] | 気持ちの面では、気持ちをわかってくれる人がそばにいるときに安心しやすい傾向({moon})。周りの感情に影響されやすいかもしれません。 |
 | MOON-water[2] | 内側には、深いつながりを求める繊細さを持ちやすい({moon})。言葉にしない気持ちを抱えたまま、ひとりで考え込みがちです。 |
 
-### 1-51. 付録:根拠の詳細(ライフパスナンバー)
+### 1-52. 付録:根拠の詳細(ライフパスナンバー)
 
 | ID | 文 |
 | --- | --- |
@@ -1442,7 +1559,7 @@
 | LP-33[1] | 数秘術の33はマスターナンバーのひとつで、「無償の愛・奉仕」の数。人を励まし、支える役回りになりやすいとされます。 |
 | LP-33[2] | 33は特別な数(マスターナンバー)とされ、6の面倒見のよさも合わせ持ちます。与えすぎて自分が空っぽにならない工夫が大切な傾向です。 |
 
-### 1-52. 付録:根拠の詳細(バースデーナンバー)
+### 1-53. 付録:根拠の詳細(バースデーナンバー)
 
 | ID | 文 |
 | --- | --- |
@@ -1469,7 +1586,7 @@
 | BD-22[1] | 大きな仕組みをつくる力 |
 | BD-22[2] | 理想を形にする実行力 |
 
-### 1-53. 付録:根拠の詳細(本命星)
+### 1-54. 付録:根拠の詳細(本命星)
 
 | ID | 文 |
 | --- | --- |
@@ -1501,14 +1618,14 @@
 | STAR-9[1] | 九紫火星は「火」の星。直感や美的センスにすぐれ、物事の本質を照らし出す力があるとされます。 |
 | STAR-9[2] | 九紫火星は、華やかで頭の回転が速い星とされます。注目を集めやすい一方、熱しやすく冷めやすい傾向です。 |
 
-### 1-54. 付録:根拠の詳細(月命星)
+### 1-55. 付録:根拠の詳細(月命星)
 
 | ID | 文 |
 | --- | --- |
 | GETSU[1] | 月命星の{getsu}は、内面や身近な人の前で出やすい一面とされます。キーワードは「{getsuKw}」。 |
 | GETSU[2] | 気学では、生まれた月の星({getsu})が内側の性格を表すと考えます。{name}さんの内側には「{getsuKw}」という一面があるかもしれません。 |
 
-### 1-55. 付録:根拠の詳細(性格5因子)
+### 1-56. 付録:根拠の詳細(性格5因子)
 
 | ID | 文 |
 | --- | --- |
@@ -1543,7 +1660,7 @@
 | BF-O-low[1] | 実績のあるやり方を大事にする堅実型。 |
 | BF-O-low[2] | 慣れた環境で安定して力を出しやすいタイプ。 |
 
-### 1-56. 付録:年の流れ
+### 1-57. 付録:年の流れ
 
 | ID | 文 |
 | --- | --- |
@@ -1558,7 +1675,7 @@
 | TIM-YEAR-turning[1] | 今年の{name}さんは、本命星が盤の中央に入る「転換期(足元を固める)」の時期({yearPalace})にあたります。気学では「八方塞がり」とも呼ばれ、新しく広げるより、これまでのやり方を見直して足元を固めることが大切とされる巡りです。 |
 | TIM-YEAR-turning[2] | 今年は「転換期(足元を固める)」のフェーズ({yearPalace})。周りから見られやすい一方で、身動きはとりにくいとされる時期です。大きく動くより、暮らしや仕事の土台を点検し、次の流れに備えるのに向いています。 |
 
-### 1-57. 付録:方位
+### 1-58. 付録:方位
 
 | ID | 文 |
 | --- | --- |
@@ -1569,7 +1686,7 @@
 | DIR-MIXED-YEAR[1] | 反対に【{dirs}】は、今年の盤では吉方位ですが、{month}月の盤では注意したい方位です。引越しなど年単位の計画の候補にはなりますが、{month}月中の短い移動は別の方角を選ぶのも一つの方法です。 |
 | DIR-MIXED-YEAR[2] | 【{dirs}】は今年の盤では吉、{month}月の盤では注意の方位です。長い目で見た候補として残しつつ、{month}月の外出先には別の方角を選ぶのもよいでしょう。 |
 
-### 1-58. 付録:用語集
+### 1-59. 付録:用語集
 
 | ID | 文 |
 | --- | --- |
@@ -1736,11 +1853,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <sub>ブレーキの根拠:Big Five(開放性の高さ)・西洋占星術(太陽:水瓶座)</sub>
 
-何のためにやっているのか見失うと、手が止まりやすいようです。
+人と一緒に盛り上がる中で動けるぶん、何のためかが共有されないまま進むと、熱が冷めるのも早くなりやすいのかもしれません。また、人からの反応を力に変えるタイプなので、まわりの手ごたえが返ってこない時期は、エネルギーが目減りしやすいのかもしれません。
 
-成果や手ごたえが見えないと、やる気が下がりやすいようです。
-
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)</sub>
+<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(外向)</sub>
 
 強みと盲点はコインの表と裏です。どちらもアオイさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -1790,11 +1905,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:週に一度、「これは何のためだったか」を見直す時間をとる。
+対策:着手する前に「何のためにやるか」を1行書いてから始める。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
+対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
 
 **読むときの注意:バーナム効果**
 
@@ -1999,7 +2114,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-supports[2]` `CAU-SIT-career-indep[1]` `GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `ACT-S2-career-income[1]` `ACT-S1-career-indep-attack[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-extro[2]` `SUCCESS-leap[1]` `BRAKE-change[1]` `COOL-purpose[1]` `COOL-noresult[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-career-indep[1]` `VALUE-career-income[1]` `READ-AXIS-extro[2]` `TIM-MONTH-summer[2]` `WIN-career-attack[1]` `TRAP-INTRO[1]` `TRAP-change[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `COOL-purpose.fix[2]` `COOL-noresult.fix[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-leap[2]` `PLAN-MONTH-leap[2]` `PLAN-3M-career-indep[1]` `PLAN-KEEP-leap[1]` `DIR-ACT-career[1]` `DIR-ACT-career[2]` `LUCKY-USE-career[6]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-attack[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `QUE-career[1]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-YEAR[2]` `INTRO[1]` `AI-PROMPT[1]`
+`CAU-LEAD-supports[2]` `CAU-SIT-career-indep[1]` `GUIDE-NAME-summer[1]` `GUIDE-LEAD-attack[1]` `GUIDE-TAIL-career-indep[2]` `ACT-S2-career-income[1]` `ACT-S1-career-indep-attack[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-extro[2]` `SUCCESS-leap[1]` `BRAKE-change[1]` `COOLWHY-purpose-extro[1]` `COOLWHY-noresult-extro[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-career-indep[1]` `VALUE-career-income[1]` `READ-AXIS-extro[2]` `TIM-MONTH-summer[2]` `WIN-career-attack[1]` `TRAP-INTRO[1]` `TRAP-change[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-CONFORM[1]` `BIAS-CONFORM.hedge[2]` `COOL-purpose[1]` `COOL-noresult[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-leap[2]` `PLAN-MONTH-leap[2]` `PLAN-3M-career-indep[1]` `PLAN-KEEP-leap[1]` `DIR-ACT-career[1]` `DIR-ACT-career[2]` `LUCKY-USE-career[6]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-attack[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-supports[1]` `CAU-EL-earth[1]` `QUE-career[1]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-aquarius[2]` `MOON-water[2]` `LP-1[1]` `BD-3[1]` `STAR-7[1]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-high[2]` `BF-C-mid[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-YEAR[2]` `INTRO[1]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2125,11 +2240,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <sub>ブレーキの根拠:Big Five(外向性の低さ)・西洋占星術(太陽:蟹座)・九星気学(一白水星)</sub>
 
-頭ごなしに否定されると、一気に気持ちが離れやすいタイプかもしれません。
+共感の力が強いぶん、言葉の温度や相手の敬意にも敏感なので、頭ごなしの否定で一気に気持ちが止まりやすいのかもしれません。また、相手の負担を思いやる気持ちが強いぶん、自分の困りごとは言い出しにくく、ひとりで抱え込みやすいのかもしれません。
 
-相談相手がいない状態が続くと、気持ちがすり減りやすいタイプかもしれません。
-
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)</sub>
+<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(共感)</sub>
 
 強みと盲点はコインの表と裏です。どちらもハルさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -2181,11 +2294,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:頭ごなしに否定されたとき**
 
-対策:意見をもらう前に「良い点と直す点を一つずつ聞かせて」と、聞き方を決めておく。
+対策:否定的な言葉は「内容」と「言い方」に分けて受け取り、内容だけを次に活かす。
 
 **冷めるきっかけ:一人で抱え込んでいるとき**
 
-対策:困ったときに声をかける相手を、先に一人決めておく。
+対策:途中経過を誰かに短く報告する習慣をつくる。
 
 **読むときの注意:バーナム効果**
 
@@ -2394,7 +2507,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-pressures[1]` `CAU-SIT-love-crush[2]` `GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `ACT-S2-love-trust[1]` `ACT-S1-love-crush-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND-NOSAME[1]` `PERSONA-OPEN[2]` `ACCEL-empathy[2]` `SUCCESS-prepare[2]` `BRAKE-intro[1]` `COOL-denied[2]` `COOL-alone[2]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-love-crush[2]` `VALUE-love-trust[2]` `READ-AXIS-empathy[2]` `TIM-MONTH-autumn[1]` `WIN-love-balance[1]` `TIM-BF-NHIGH[1]` `TRAP-INTRO[1]` `TRAP-intro[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `COOL-denied.fix[1]` `COOL-alone.fix[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-prepare[1]` `PLAN-MONTH-prepare[1]` `PLAN-3M-love-crush[2]` `PLAN-KEEP-prepare[2]` `DIR-ACT-love[2]` `DIR-ACT-love[3]` `LUCKY-USE-love[2]` `LUCKY-USE-love[4]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `QUE-love[2]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `TIM-YEAR-turning[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-CENTER[2]` `INTRO[2]` `AI-PROMPT[1]`
+`CAU-LEAD-pressures[1]` `CAU-SIT-love-crush[2]` `GUIDE-NAME-autumn[2]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-love-crush[1]` `ACT-S2-love-trust[1]` `ACT-S1-love-crush-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND-NOSAME[1]` `PERSONA-OPEN[2]` `ACCEL-empathy[2]` `SUCCESS-prepare[2]` `BRAKE-intro[1]` `COOLWHY-denied-empathy[1]` `COOLWHY-alone-empathy[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-love-crush[2]` `VALUE-love-trust[2]` `READ-AXIS-empathy[2]` `TIM-MONTH-autumn[1]` `WIN-love-balance[1]` `TIM-BF-NHIGH[1]` `TRAP-INTRO[1]` `TRAP-intro[1]` `BIAS-SPOTLIGHT[1]` `BIAS-SPOTLIGHT.hedge[2]` `BIAS-NEGATIVE[2]` `BIAS-NEGATIVE.hedge[1]` `COOL-denied[2]` `COOL-alone[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-prepare[1]` `PLAN-MONTH-prepare[1]` `PLAN-3M-love-crush[2]` `PLAN-KEEP-prepare[2]` `DIR-ACT-love[2]` `DIR-ACT-love[3]` `LUCKY-USE-love[2]` `LUCKY-USE-love[4]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-REL-pressures[1]` `CAU-EL-earth[1]` `QUE-love[2]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-cancer[1]` `MOON-fire[1]` `LP-5[1]` `BD-6[2]` `STAR-1[1]` `GETSU[1]` `TIM-YEAR-turning[1]` `BF-E-low[2]` `BF-A-high[2]` `BF-C-high[2]` `BF-N-high[1]` `BF-O-mid[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `DIR-CENTER[2]` `INTRO[2]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2520,9 +2633,9 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <sub>ブレーキの根拠:Big Five(神経症傾向の低さ・外向性の高さ)・数秘術(ライフパス1)・九星気学(八白土星)</sub>
 
-同じことの繰り返しが続くと、気持ちが冷めやすいようです。
+変化を楽しむ力が強いぶん、同じことの繰り返しは人一倍退屈に感じやすく、気持ちが冷めるのも早いのかもしれません。
 
-<sub>根拠:あなたの回答(やる気が冷めやすいとき)</sub>
+<sub>根拠:あなたの回答(やる気が冷めやすいとき)・アクセル(変化)</sub>
 
 強みと盲点はコインの表と裏です。どちらもミナトさんの一部として、場面に合わせて使い分けてみてください。
 
@@ -2572,7 +2685,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:同じことの繰り返しが続くとき**
 
-対策:繰り返しの作業は時間を決めて片づけ、空いた時間に新しいことを入れる。
+対策:いつもの作業に、やり方や場所を変える小さな工夫を一つ足す。
 
 **読むときの注意:バーナム効果**
 
@@ -2779,7 +2892,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 <details><summary>このレポートで使われた文章パーツID</summary>
 
-`CAU-LEAD-center[1]` `CAU-SIT-move-relocate[1]` `GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `ACT-S2-move-later[1]` `ACT-S1-move-relocate-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-change[2]` `SUCCESS-purpose[1]` `BRAKE-drive[1]` `COOL-routine[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-move-relocate[1]` `VALUE-move-later[1]` `READ-AXIS-change[2]` `TIM-MONTH-turning[2]` `WIN-move-balance[2]` `TRAP-INTRO[1]` `TRAP-drive[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `COOL-routine.fix[2]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-purpose[2]` `PLAN-MONTH-purpose[2]` `PLAN-3M-move-relocate[1]` `PLAN-KEEP-purpose[1]` `DIR-ACT-move[3]` `DIR-ACT-move[1]` `LUCKY-USE-move[1]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `QUE-move[3]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `INTRO[3]` `AI-PROMPT[1]`
+`CAU-LEAD-center[1]` `CAU-SIT-move-relocate[1]` `GUIDE-NAME-turning[1]` `GUIDE-LEAD-balance[1]` `GUIDE-TAIL-move-relocate[2]` `ACT-S2-move-later[1]` `ACT-S1-move-relocate-balance[1]` `ACT-DIR[1]` `GUIDE-INTRO[2]` `GUIDE-SWITCH[2]` `COLOR-good[2]` `FRIEND[1]` `PERSONA-OPEN[2]` `ACCEL-change[2]` `SUCCESS-purpose[1]` `BRAKE-drive[1]` `COOLWHY-routine-change[1]` `PERSONA-CLOSE[2]` `STRAT-INTRO[2]` `READ-move-relocate[1]` `VALUE-move-later[1]` `READ-AXIS-change[2]` `TIM-MONTH-turning[2]` `WIN-move-balance[2]` `TRAP-INTRO[1]` `TRAP-drive[1]` `BIAS-PLANNING[2]` `BIAS-PLANNING.hedge[1]` `BIAS-STATUSQUO[2]` `BIAS-STATUSQUO.hedge[1]` `COOL-routine[1]` `BIAS-BARNUM[2]` `BIAS-BARNUM.hedge[1]` `PLAN-INTRO[1]` `PLAN-WEEK-purpose[2]` `PLAN-MONTH-purpose[2]` `PLAN-3M-move-relocate[1]` `PLAN-KEEP-purpose[1]` `DIR-ACT-move[3]` `DIR-ACT-move[1]` `LUCKY-USE-move[1]` `LUCKY-INTRO[2]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `LABEL-REL-supports[1]` `DIRLINE-INTRO[1]` `DIR-SCALE-balance[2]` `DIRLINE-LONG[1]` `CAU-INTRO[1]` `CAU-CENTER[2]` `CAU-EL-earth[1]` `QUE-move[3]` `OUTRO[2]` `PLANET-sun[1]` `PLANET-moon[1]` `PLANET-mercury[1]` `PLANET-venus[1]` `PLANET-mars[1]` `PLANET-jupiter[1]` `PLANET-saturn[1]` `SIGN-capricorn[2]` `MOON-water[2]` `LP-1[1]` `BD-22[2]` `STAR-8[2]` `GETSU[1]` `TIM-YEAR-spring[1]` `BF-E-high[2]` `BF-A-mid[2]` `BF-C-low[2]` `BF-N-mid[1]` `BF-O-high[2]` `DIR-MIXED-MONTH[1]` `DIR-MIXED-YEAR[2]` `INTRO[3]` `AI-PROMPT[1]`
 
 </details>
 
@@ -2787,7 +2900,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 同じ人(サンプル1のアオイさんの生年月日・性格の回答・追加の質問)で、相談テーマと状況の答えだけを変えたときの3章です。
 
-<details><summary>仕事・キャリア(転職したい・働き方・時間のゆとり) … 本文に占める3章の割合 54%</summary>
+<details><summary>仕事・キャリア(転職したい・働き方・時間のゆとり) … 本文に占める3章の割合 53%</summary>
 
 #### 3. テーマ別の作戦:仕事・キャリア
 
@@ -2835,11 +2948,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:着手する前に「何のためにやるか」を1行書いてから始める。
+対策:週に一度、「これは何のためだったか」を見直す時間をとる。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
+対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
 
 **読むときの注意:バーナム効果**
 
@@ -2897,7 +3010,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 </details>
 
-<details><summary>お金の判断(貯め方・家計を見直したい・迷って決められないことが多い) … 本文に占める3章の割合 56%</summary>
+<details><summary>お金の判断(貯め方・家計を見直したい・迷って決められないことが多い) … 本文に占める3章の割合 55%</summary>
 
 #### 3. テーマ別の作戦:お金の判断
 
@@ -2945,11 +3058,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:着手する前に「何のためにやるか」を1行書いてから始める。
+対策:週に一度、「これは何のためだったか」を見直す時間をとる。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
+対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
 
 **読むときの注意:バーナム効果**
 
@@ -3009,7 +3122,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 </details>
 
-<details><summary>恋愛・パートナー(パートナーがいる・将来のこと) … 本文に占める3章の割合 54%</summary>
+<details><summary>恋愛・パートナー(パートナーがいる・将来のこと) … 本文に占める3章の割合 53%</summary>
 
 #### 3. テーマ別の作戦:恋愛・パートナー
 
@@ -3057,11 +3170,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:週に一度、「これは何のためだったか」を見直す時間をとる。
+対策:着手する前に「何のためにやるか」を1行書いてから始める。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
+対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
 
 **読むときの注意:バーナム効果**
 
@@ -3119,7 +3232,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 </details>
 
-<details><summary>人間関係(家族・ぎくしゃくを直したい) … 本文に占める3章の割合 54%</summary>
+<details><summary>人間関係(家族・ぎくしゃくを直したい) … 本文に占める3章の割合 53%</summary>
 
 #### 3. テーマ別の作戦:人間関係
 
@@ -3167,11 +3280,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:週に一度、「これは何のためだったか」を見直す時間をとる。
+対策:着手する前に「何のためにやるか」を1行書いてから始める。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
+対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
 
 **読むときの注意:バーナム効果**
 
@@ -3229,7 +3342,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 </details>
 
-<details><summary>引越し・旅行・移動(旅行・お出かけ・1〜3か月以内) … 本文に占める3章の割合 54%</summary>
+<details><summary>引越し・旅行・移動(旅行・お出かけ・1〜3か月以内) … 本文に占める3章の割合 53%</summary>
 
 #### 3. テーマ別の作戦:引越し・旅行・移動
 
@@ -3277,11 +3390,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:週に一度、「これは何のためだったか」を見直す時間をとる。
+対策:着手する前に「何のためにやるか」を1行書いてから始める。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
+対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
 
 **読むときの注意:バーナム効果**
 
@@ -3339,7 +3452,7 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 </details>
 
-<details><summary>まずは全体を見たい … 本文に占める3章の割合 53%</summary>
+<details><summary>まずは全体を見たい … 本文に占める3章の割合 52%</summary>
 
 #### 3. 全体の作戦
 
@@ -3383,11 +3496,11 @@ https://studio-kakuu.github.io/kakuu-compass/
 
 **冷めるきっかけ:何のためにやっているのか見失ったとき**
 
-対策:週に一度、「これは何のためだったか」を見直す時間をとる。
+対策:着手する前に「何のためにやるか」を1行書いてから始める。
 
 **冷めるきっかけ:成果や手ごたえが見えないとき**
 
-対策:大きな目標を1週間で終わる大きさに分け、終わったら印をつける。
+対策:小さな進み具合を記録して、手ごたえを自分で見える形にする。
 
 **読むときの注意:バーナム効果**
 
@@ -3673,7 +3786,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 
 ### 3-13. テスト結果(このファイルの生成時に自動実行)
 
-**合計 90 件中 90 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
+**合計 91 件中 91 件成功 / 0 件失敗**(`npm test` で誰でも再実行できます)
 
 | 結果 | テスト内容 |
 | --- | --- |
@@ -3715,6 +3828,7 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | ✅ | 6: お金テーマの文章に投資・金融商品を連想させる言葉がない |
 | ✅ | 7: 人物像の軸は本文では数字を使わず、言葉+5段階の目盛り。数字は付録の計算表だけ |
 | ✅ | 8: 盲点の見出しと本文の言い方がそろっている |
+| ✅ | 冷めるきっかけ:人物像では言い直しをせず、アクセルとつなげた「なぜ」を1つにつき1文(最大2文) |
 | ✅ | 都道府県データは47件 |
 | ✅ | 東京都から見た方角と距離 |
 | ✅ | 性格スコア: 逆転項目の計算 |
@@ -3815,3 +3929,6 @@ astronomy-engine で計算した立春の日時(日本時間、秒まで):
 | 41 | 3-6「方角の使い方」と年の盤 | すすめる方角の行には〔最大吉方〕〔吉方位〕だけを付け、年の盤の凶のラベル(〔年の盤:暗剣殺〕など)は付けない。年の盤の情報は付録「方位の全一覧」と、3-6の「長く影響する移動は年の盤も」の一文だけ | — |
 | 42 | 人物像の軸の表示 | 本文は数字を使わず「慎重さ □■□□□ 推進力(やや慎重さ寄り)」のような言葉+5段階(しきい値 ±0.15・±0.6)。数字は付録の計算表だけ | しきい値は変更可能 |
 | 43 | 行動の文の期間の言葉 | 今週の枠の文(`ACT-S2`・`PLAN-WEEK`)、〇月中の枠の文(`ACT-S1`・`PLAN-MONTH`)、3か月の枠の文(`PLAN-3M`・`PLAN-KEEP`)は、その枠と食い違う期間の言葉を使わない。両方の枠に入る共通の文(`ACT-overview`)には期間の言葉を入れない。テストで全パーツを確認 | — |
+| 44 | 上のステップ表示での移動 | 「1 入力」「2 質問」「3 レポート」は本物のボタン。2は入力を一度終えたあと、3はレポートを一度作ったあとだけ押せる(押せないものは薄い点線の枠)。今いるステップに aria-current="step"。入力画面から「2 質問」を押したときは入力内容を確かめてから移動。入力や答えはそのまま残り(画面を開いている間のメモリだけ。localStorage・cookie は使わない)、移動先の画面の先頭へスクロール | — |
+| 45 | レポートを作ったあとに内容を変えた場合 | 「3 レポート」で戻ると、入力・答えの「指紋」を比べて、変わっていれば「内容が変わったので、もう一度レポートを作る」ボタンを出す(前のレポートはそのまま表示)。入力に不足があれば、そのボタンから該当する画面へ戻してエラーを表示 | — |
+| 46 | 「やる気が冷めやすいとき」の書き方 | 人物像では選んだ答えを言い直さず、「きっかけ×アクセル」(7×9=63通り、`COOLWHY-…`)の1文で「なぜそうなりやすいのか」を書く。2つ選んだ場合は「また、」でつないで2文まで。具体的な対策は3章「落とし穴と対策」(`COOL-…`)に残し、選んだ答えはカードの見出しだけに出す | — |

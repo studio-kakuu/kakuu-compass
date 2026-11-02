@@ -24,7 +24,7 @@ test('文章パーツに禁止ワードが入っていない', () => {
 
 test('文章の多い主なパーツは言い回しが2種類以上ある', () => {
   for (const [id, part] of Object.entries(texts.parts)) {
-    if (/^(PLANET|ACT-(?!DIR)|AI-PROMPT|LABEL-|GLOSS-)/.test(id)) continue;
+    if (/^(PLANET|ACT-(?!DIR)|AI-PROMPT|LABEL-|GLOSS-|COOLWHY-)/.test(id)) continue; // COOLWHY は組み合わせ(きっかけ×アクセル)ごとに1文
     assert.ok(part.v.length >= 2, id);
   }
 });
