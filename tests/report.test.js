@@ -24,7 +24,7 @@ test('文章パーツに禁止ワードが入っていない', () => {
 
 test('文章の多い主なパーツは言い回しが2種類以上ある', () => {
   for (const [id, part] of Object.entries(texts.parts)) {
-    if (/^(PLANET|DIR-BADNAME|ACT-(?!DIR)|AI-PROMPT|LABEL-)/.test(id)) continue;
+    if (/^(PLANET|ACT-(?!DIR)|AI-PROMPT|LABEL-|GLOSS-)/.test(id)) continue;
     assert.ok(part.v.length >= 2, id);
   }
 });
@@ -51,17 +51,19 @@ test('さまざまな入力でレポートが作れ、差し込み漏れ・禁�
     const qs = texts.situations[t.id];
     const combos = qs.length ? qs[0].options.map((o, i) => ({ S1: o.id, S2: qs[1].options[(i + n) % 3].id })) : [{}];
     for (const home of ['東京都', '沖縄県', '北海道']) for (const situation of combos) {
-      const rep = R.build({ nickname: 'テスト', birth: b, birthPref: null, homePref: home, theme: t.id, situation, answers: a }, texts, new Date(now));
+      const extra = { cool: [texts.extraQuestions.cool.options[n % 7].id], success: texts.extraQuestions.success.options[n % 5].id };
+      const rep = R.build({ nickname: 'テスト', birth: b, birthPref: null, homePref: home, theme: t.id, situation, answers: a, extra }, texts, new Date(now));
       const txt = R.clipboardText(rep);
       assert.ok(!/\{\w+\}/.test(txt), '差し込み漏れ: ' + txt.match(/\{\w+\}/));
       assert.ok(!txt.includes('undefined') && !txt.includes('NaN'), 'undefined/NaN');
       for (const w of FORBIDDEN) assert.ok(!txt.includes(w), w);
-      assert.equal(rep.sections.length, 9);
+      assert.equal(rep.sections.length, 6);
+      assert.equal(rep.appendix.length, 3);
       assert.ok(rep.card.guideName && rep.card.guideDesc);
       if (t.id === 'money') assert.ok(txt.includes('投資や金融商品'), 'money note');
       assert.ok(txt.includes('バーナム効果'));
       assert.ok(txt.includes(texts.disclaimer));
-      const actions = rep.sections.find((x) => x.id === 's6').blocks.find((x) => x.t === 'olist').items;
+      const actions = rep.card.actions;
       assert.equal(actions.length, 3);
       assert.equal(new Set(actions).size, 3);
       n++;

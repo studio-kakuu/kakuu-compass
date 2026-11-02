@@ -24,7 +24,12 @@ test('各テーマに選択式の質問が2問(各3択)あり、対応する文�
       assert.ok(texts.parts[`GUIDE-TAIL-${t.id}-${o.id}`]);
     }
     for (const o of qs[1].options) assert.ok(texts.parts[`ACT-S2-${t.id}-${o.id}`]);
-    assert.ok(texts.parts['DIR-THEME-' + t.id] && texts.parts['DIR-ACT-' + t.id] && texts.parts['QUE-' + t.id]);
+    for (const o of qs[0].options) {
+      assert.ok(texts.parts[`READ-${t.id}-${o.id}`] && texts.parts[`PLAN-3M-${t.id}-${o.id}`] && texts.parts[`CAU-SIT-${t.id}-${o.id}`], o.id);
+    }
+    for (const o of qs[1].options) assert.ok(texts.parts[`VALUE-${t.id}-${o.id}`], o.id);
+    for (const st of ['attack', 'balance', 'prepare']) assert.ok(texts.parts[`WIN-${t.id}-${st}`]);
+    assert.ok(texts.parts['DIR-ACT-' + t.id] && texts.parts['QUE-' + t.id] && texts.parts['LUCKY-USE-' + t.id]);
   }
 });
 
@@ -43,7 +48,8 @@ test('指針の名前は今月のフェーズ、説明の前半は戦略から�
   const r = R.build({ ...base, theme: 'overview' }, texts, NOW);
   assert.ok(texts.parts['GUIDE-NAME-' + r.data.monthPhase].v.includes(r.data.guide.name));
   assert.ok(texts.parts['GUIDE-LEAD-' + r.data.stance].v.some((v) => r.data.guide.desc.startsWith(v)));
-  assert.equal(r.sections[0].title, '11月の指針');
+  assert.equal(r.sections[0].id, 'summary');
+  assert.equal(r.sections[1].title, '1. 11月(11/7〜12/6)の指針');
   assert.equal(r.card.month, 11);
 });
 

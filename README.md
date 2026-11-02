@@ -35,7 +35,7 @@
 | `index.html` | 画面(入力 → 質問10問 → レポート) |
 | `css/` | デザイン(`style.css`)・フォント定義(`fonts.css`) |
 | `data/texts.js` | **レポートの文章パーツ・質問文**(文章だけ直すときはここ) |
-| `js/core/` | 計算(`astro.js` 西洋占星術 / `numerology.js` 数秘術 / `kyusei.js` 九星気学 / `geo.js` 都道府県と方位 / `bigfive.js` 性格 / `report.js` レポート組み立て) |
+| `js/core/` | 計算(`astro.js` 西洋占星術 / `numerology.js` 数秘術 / `kyusei.js` 九星気学 / `geo.js` 都道府県と方位 / `bigfive.js` 性格 / `persona.js` 人物像の4軸 / `report.js` レポート組み立て) |
 | `js/app.js` | 画面の動き(入力・質問・レポート表示・コピー/共有) |
 | `js/card.js` | 共有用カード画像(1080×1920)の描画 |
 | `vendor/`, `fonts/` | 同梱ライブラリ・フォント |

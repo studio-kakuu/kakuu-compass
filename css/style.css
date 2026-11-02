@@ -197,3 +197,65 @@ td:first-child { white-space: nowrap; font-weight: 700; }
 .card-preview { margin: 12px 0; }
 .card-preview canvas { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; border-radius: 10px; border: 1px solid var(--line); }
 @media (max-width: 360px) { .share-grid { grid-template-columns: 1fr; } }
+
+/* ---- 作り直し: 追加の質問 ---- */
+.extra-title { font-size: 20px; margin: 28px 0 4px; }
+.chips-col { flex-direction: column; align-items: stretch; }
+.chips-col .chip span { display: block; border-radius: 12px; }
+.q .hint { margin: -4px 0 10px; }
+
+/* ---- 作り直し: ページ内リンク・上に戻る ---- */
+html { scroll-behavior: smooth; }
+.r-section, .r-section h4, .r-details { scroll-margin-top: 84px; }
+.to-top { position: fixed; right: 16px; bottom: 20px; z-index: 20; min-width: 64px; min-height: 64px; border-radius: 999px; border: 2px solid var(--lime); background: rgba(11, 11, 11, 0.92); color: var(--lime); font: inherit; font-weight: 700; font-size: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; cursor: pointer; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+.to-top span { font-size: 22px; font-family: var(--font-en); }
+.to-top:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+
+/* ---- 作り直し: 要約・目次 ---- */
+.summary { margin: 0 0 18px; display: grid; grid-template-columns: 1fr; gap: 2px; }
+.summary dt { color: var(--lime); font-weight: 700; font-size: 15px; margin-top: 10px; }
+.summary dd { margin: 0; }
+.summary dd ol { margin: 4px 0 0; padding-left: 1.4em; }
+.toc { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--surface-2); }
+.toc-title { font-weight: 700; margin: 0 0 6px !important; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0; }
+.toc li.sub { padding-left: 1.2em; }
+.toc a { display: block; padding: 7px 0; color: var(--text); text-decoration: none; border-bottom: 1px dashed var(--line); }
+.toc li.sub a { color: var(--muted); font-size: 15px; }
+.toc a::before { content: '→ '; color: var(--lime); }
+.toc a:hover, .toc a:focus-visible { color: var(--lime); }
+
+/* ---- 作り直し: 根拠ラベル・人物像 ---- */
+.basis { font-size: 14px; color: var(--muted); margin: -6px 0 16px !important; }
+.basis::before { content: '◆ '; color: var(--lime-dim); }
+.pair-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 14px; }
+.pair-box p { margin: 0 !important; border-radius: 12px; padding: 12px; text-align: center; }
+.pair-box span { display: block; font-size: 14px; color: var(--muted); }
+.pair-box b { display: block; font-size: 20px; line-height: 1.4; }
+.pair-accel { border: 1px solid var(--lime-dim); }
+.pair-accel b { color: var(--lime); }
+.pair-brake { border: 1px solid #8a5a2c; }
+.pair-brake b { color: #F2A65A; }
+.axes { margin: 4px 0 14px; }
+.axis { margin: 0 0 12px; }
+.axis-ends { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; }
+.axis-track { position: relative; height: 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; margin-top: 4px; overflow: hidden; }
+.axis-fill { position: absolute; top: 0; bottom: 0; background: var(--lime); }
+.axis-fill.neg { background: #9fcc00; }
+.axis-mid { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: var(--muted); }
+
+/* ---- 作り直し: 行動プラン・用語集・付録 ---- */
+.plan { margin: 0 0 14px; }
+.plan-group { border-left: 4px solid var(--lime); background: var(--surface-2); border-radius: 0 10px 10px 0; padding: 10px 12px; margin: 0 0 10px; }
+.plan-label { font-weight: 700; color: var(--lime); margin: 0 0 4px !important; }
+.plan-group ul { margin: 0; padding-left: 1.2em; }
+.gloss dt { font-weight: 700; color: var(--lime); margin-top: 10px; }
+.gloss dd { margin: 0 0 4px; }
+.r-details { border: 1px solid var(--line); border-radius: 12px; padding: 0 14px; margin: 0 0 12px; background: var(--surface-2); }
+.r-details summary { cursor: pointer; font-weight: 700; padding: 14px 0; font-size: 17px; }
+.r-details summary::marker { color: var(--lime); }
+.r-details[open] { padding-bottom: 12px; }
+.ai-inline { width: 100%; margin-top: 8px; }
+@media (min-width: 640px) { .ai-inline { width: 100%; } }
+@media print { .to-top { display: none !important; } }

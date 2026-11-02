@@ -8,7 +8,7 @@
   var TX = window.COMPASS_TEXTS;
   var $ = function (id) { return document.getElementById(id); };
 
-  var state = { input: null, answers: {}, report: null };
+  var state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null };
 
   // ---------- 初期化 ----------
   function el(tag, cls, text) {
@@ -50,13 +50,16 @@
     });
 
     buildQuestions();
+    buildExtra();
+    $('toTop').addEventListener('click', function () { window.scrollTo(0, 0); var h = $('report-title'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } });
+    window.addEventListener('scroll', updateToTop, { passive: true });
 
     $('form1').addEventListener('submit', onSubmit1);
     $('form2').addEventListener('submit', onSubmit2);
     $('back1').addEventListener('click', function () { show(1); });
     $('back2').addEventListener('click', function () { show(2); });
     $('restart').addEventListener('click', restart);
-    $('copyBtn').addEventListener('click', function () { copyText(C.report.clipboardText(state.report, { hideBirth: !birthOn() }), 'コピーしました。AIチャットの入力欄に貼り付けてください。'); });
+    $('copyBtn').addEventListener('click', copyAi);
     $('copyAllBtn').addEventListener('click', function () { copyText(C.report.toText(state.report, false, { hideBirth: !birthOn() }), 'レポートの全文をコピーしました。'); });
     $('shareBtn').addEventListener('click', shareSummary);
     $('cardBtn').addEventListener('click', saveCard);
@@ -130,11 +133,68 @@
         state.answers[q.id] = v;
         wrap.classList.add('is-answered');
         sel.textContent = '選択中:' + v + '(' + TX.scaleLabels[v - 1] + ')';
-        $('answered').textContent = String(Object.keys(state.answers).length);
+        updateAnswered();
         $('error2').hidden = true;
       });
       box.appendChild(wrap);
     });
+  }
+
+  // ---------- 追加の質問(冷めるきっかけ・うまくいった型) ----------
+  function updateAnswered() {
+    var n = Object.keys(state.answers).length + (state.extra.cool.length ? 1 : 0) + (state.extra.success ? 1 : 0);
+    $('answered').textContent = String(n);
+  }
+  function buildExtra() {
+    var box = $('extraQs');
+    var XQ = TX.extraQuestions;
+    box.appendChild(el('h3', 'extra-title', 'あと2問(選択式)'));
+    [['cool', 'checkbox'], ['success', 'radio']].forEach(function (pair, qi) {
+      var q = XQ[pair[0]];
+      var wrap = el('div', 'q');
+      wrap.id = 'q-' + q.id;
+      wrap.setAttribute('role', 'group');
+      wrap.setAttribute('aria-labelledby', 'qt-' + q.id);
+      var lg = el('p', 'q-text');
+      lg.id = 'qt-' + q.id;
+      lg.appendChild(el('span', 'q-num', 'Q' + (11 + qi)));
+      lg.appendChild(document.createTextNode(q.text));
+      wrap.appendChild(lg);
+      wrap.appendChild(el('p', 'hint', q.note));
+      var chips = el('div', 'chips chips-col');
+      q.options.forEach(function (o) {
+        var lab = el('label', 'chip');
+        var inp = document.createElement('input');
+        inp.type = pair[1]; inp.name = 'x-' + q.id; inp.value = o.id;
+        lab.appendChild(inp);
+        lab.appendChild(el('span', null, o.label));
+        chips.appendChild(lab);
+      });
+      wrap.appendChild(chips);
+      var sel = el('p', 'selected-label');
+      sel.setAttribute('aria-live', 'polite');
+      wrap.appendChild(sel);
+      wrap.addEventListener('change', function (e) {
+        if (pair[0] === 'cool') {
+          var checked = Array.prototype.slice.call(wrap.querySelectorAll('input:checked'));
+          if (checked.length > q.max) { e.target.checked = false; sel.textContent = q.max + 'つまで選べます。ほかの選択を外してから選んでください。'; return; }
+          state.extra.cool = checked.map(function (x) { return x.value; });
+          sel.textContent = state.extra.cool.length ? '選択中:' + state.extra.cool.length + 'つ' : '';
+        } else {
+          state.extra.success = e.target.value;
+          sel.textContent = '選択中:' + q.options.filter(function (o) { return o.id === e.target.value; })[0].label;
+        }
+        wrap.classList.toggle('is-answered', pair[0] === 'cool' ? state.extra.cool.length > 0 : true);
+        updateAnswered();
+        $('error2').hidden = true;
+      });
+      box.appendChild(wrap);
+    });
+  }
+
+  function updateToTop() {
+    var on = !$('step3').hidden && window.scrollY > 600;
+    $('toTop').hidden = !on;
   }
 
   // ---------- 画面切り替え ----------
@@ -146,7 +206,8 @@
       lis[i].className = s === n ? 'is-current' : (s < n ? 'is-done' : '');
       if (s === n) lis[i].setAttribute('aria-current', 'step'); else lis[i].removeAttribute('aria-current');
     }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    updateToTop();
     var h = $('step' + n).querySelector('h1, h2');
     if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   }
@@ -203,9 +264,12 @@
       if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
+    if (!state.extra.cool.length) { showError('error2', '「' + TX.extraQuestions.cool.text + '」を1つ以上選んでください。'); $('q-X1').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    if (!state.extra.success) { showError('error2', '「' + TX.extraQuestions.success.text + '」を1つ選んでください。'); $('q-X2').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     var input = {};
     for (var k in state.input) input[k] = state.input[k];
     input.answers = state.answers;
+    input.extra = { cool: state.extra.cool.slice(), success: state.extra.success };
     try {
       state.report = C.report.build(input, TX, new Date());
     } catch (e) {
@@ -228,11 +292,35 @@
     root.appendChild(head);
 
     rep.sections.forEach(function (s) {
-      var sec = el('section', 'r-section');
+      var sec = el('section', 'r-section r-' + s.id);
+      sec.id = 'r-' + s.id;
       sec.appendChild(el('h3', null, s.title));
       s.blocks.forEach(function (b) { sec.appendChild(renderBlock(b)); });
+      if (s.id === 'question') {
+        var ai = el('button', 'btn btn-primary ai-inline', 'このレポートをAIに相談する(コピー)');
+        ai.type = 'button';
+        ai.addEventListener('click', copyAi);
+        sec.appendChild(ai);
+        sec.appendChild(el('p', 'hint', 'レポート全文に相談用の文章をつけてコピーします。お使いのAIチャットに貼り付けて相談できます(このページからは送信しません)。'));
+      }
       root.appendChild(sec);
     });
+
+    // 付録(折りたたみ)
+    var app = $('reportAppendix');
+    app.textContent = '';
+    var asec = el('section', 'r-section r-appendix');
+    asec.id = 'r-appendix';
+    asec.appendChild(el('h3', null, rep.appendixTitle));
+    asec.appendChild(el('p', 'hint', 'タップすると開きます。'));
+    rep.appendix.forEach(function (s) {
+      var d = el('details', 'r-details');
+      d.id = 'r-' + s.id;
+      d.appendChild(el('summary', null, s.title));
+      s.blocks.forEach(function (b) { d.appendChild(renderBlock(b)); });
+      asec.appendChild(d);
+    });
+    app.appendChild(asec);
   }
 
   function renderBlock(b) {
@@ -240,8 +328,78 @@
     switch (b.t) {
       case 'p': return el('p', null, b.text);
       case 'note': return el('p', 'note', '※' + b.text);
+      case 'label': return el('p', 'basis', b.text);
+      case 'pair':
+        e = el('div', 'pair-box');
+        var pa = el('p', 'pair-accel'); pa.appendChild(el('span', null, 'アクセル(強み)')); pa.appendChild(el('b', null, b.accel));
+        var pb = el('p', 'pair-brake'); pb.appendChild(el('span', null, 'ブレーキ(盲点)')); pb.appendChild(el('b', null, b.brake));
+        e.appendChild(pa); e.appendChild(pb);
+        return e;
+      case 'axes':
+        e = el('div', 'axes');
+        b.items.forEach(function (a) {
+          var row = el('div', 'axis');
+          var ends = el('div', 'axis-ends');
+          ends.appendChild(el('span', null, a.minusName));
+          ends.appendChild(el('span', null, a.plusName));
+          row.appendChild(ends);
+          var track = el('div', 'axis-track');
+          track.setAttribute('role', 'img');
+          var side = Math.abs(a.score) < 0.15 ? 'ほぼ中間' : (a.score > 0 ? a.plusName : a.minusName) + '寄り';
+          track.setAttribute('aria-label', a.label + ':' + side);
+          var fillEl = el('div', 'axis-fill' + (a.score < 0 ? ' neg' : ''));
+          var w = Math.min(50, Math.abs(a.score) * 50);
+          fillEl.style.width = w + '%';
+          fillEl.style.left = (a.score < 0 ? 50 - w : 50) + '%';
+          track.appendChild(fillEl);
+          track.appendChild(el('span', 'axis-mid'));
+          row.appendChild(track);
+          e.appendChild(row);
+        });
+        return e;
+      case 'plan':
+        e = el('div', 'plan');
+        b.groups.forEach(function (g) {
+          var gr = el('div', 'plan-group');
+          gr.appendChild(el('p', 'plan-label', g.label));
+          var ul = el('ul');
+          g.items.forEach(function (x) { ul.appendChild(el('li', null, x)); });
+          gr.appendChild(ul);
+          e.appendChild(gr);
+        });
+        return e;
+      case 'summary':
+        e = el('dl', 'summary');
+        b.items.forEach(function (it) {
+          e.appendChild(el('dt', null, it.label));
+          var dd = el('dd');
+          if (it.list) { var ol = el('ol'); it.list.forEach(function (x) { ol.appendChild(el('li', null, x)); }); dd.appendChild(ol); }
+          else dd.textContent = it.text;
+          e.appendChild(dd);
+        });
+        return e;
+      case 'toc':
+        e = el('nav', 'toc');
+        e.setAttribute('aria-label', '目次');
+        e.appendChild(el('p', 'toc-title', '目次'));
+        var ul2 = el('ul');
+        b.items.forEach(function (it) {
+          var li = el('li', it.sub ? 'sub' : null);
+          var a = el('a', null, it.text);
+          a.href = '#r-' + it.id;
+          if (it.id === 'appendix') a.addEventListener('click', function () { var d = document.querySelector('#r-appendix details'); if (d) d.open = true; });
+          li.appendChild(a);
+          ul2.appendChild(li);
+        });
+        e.appendChild(ul2);
+        return e;
+      case 'gloss':
+        e = el('dl', 'gloss');
+        b.items.forEach(function (it) { e.appendChild(el('dt', null, it.term)); e.appendChild(el('dd', null, it.text)); });
+        return e;
       case 'h':
         e = el('h4', null, b.text);
+        if (b.id) e.id = 'r-' + b.id;
         if (b.framework) e.appendChild(el('span', 'framework', b.framework));
         return e;
       case 'list':
@@ -318,6 +476,7 @@
 
   // ---------- コピー・共有・カード ----------
   function birthOn() { return $('includeBirth').checked; }
+  function copyAi() { copyText(C.report.clipboardText(state.report, { hideBirth: !birthOn() }), 'コピーしました。AIチャットの入力欄に貼り付けてください。'); }
   function msg(text) { $('copyMsg').textContent = text; }
 
   function copyText(text, okMsg) {
@@ -402,7 +561,8 @@
   }
 
   function restart() {
-    state = { input: null, answers: {}, report: null };
+    state = { input: null, answers: {}, extra: { cool: [], success: null }, report: null };
+    $('reportAppendix').textContent = '';
     $('form1').reset();
     $('form2').reset();
     $('birthtime').disabled = true;
