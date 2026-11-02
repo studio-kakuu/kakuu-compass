@@ -83,7 +83,7 @@ test('ラッキーデー: 期間・件数・ルール', () => {
     const r = k.luckyDays(jst('2026-11-02T12:00:00'), honmei, 3);
     assert.ok(r.days.length <= 3);
     assert.deepEqual([r.start.m, r.start.d], [11, 2]);
-    assert.deepEqual([r.end.m, r.end.d], [11, 30]);
+    assert.deepEqual([r.end.m, r.end.d], [12, 6]); // 11月の盤(11/7〜12/6)の終わりまで
     let last = -1;
     for (const d of r.days) {
       assert.ok(d.dn > last); last = d.dn;              // 日付順
@@ -105,14 +105,15 @@ test('ラッキーデー: 生気(力をもらえる日)が優先される', () =
   assert.ok(minPicked >= 2 || r.days.length < 3 || r.candidates <= 3);
 });
 
-test('ラッキーデー: 月末で残りが10日未満なら翌月末まで', () => {
-  const r = k.luckyDays(jst('2026-11-25T12:00:00'), 3, 3);
-  assert.equal(r.extended, true);
-  assert.deepEqual([r.end.y, r.end.m, r.end.d], [2026, 12, 31]);
-  const r2 = k.luckyDays(jst('2026-11-21T12:00:00'), 3, 3); // 残り10日
-  assert.equal(r2.extended, false);
-  const r3 = k.luckyDays(jst('2026-12-28T12:00:00'), 3, 3); // 年をまたぐ
-  assert.deepEqual([r3.end.y, r3.end.m, r3.end.d], [2027, 1, 31]);
+test('ラッキーデー: 期間は今日〜その気学の月の終わり。残りが10日未満なら次の気学の月の終わりまで', () => {
+  const end = (d) => { const r = k.luckyDays(jst(d + 'T12:00:00'), 3, 3); return [r.end.y, r.end.m, r.end.d, r.extended]; };
+  assert.deepEqual(end('2026-11-02'), [2026, 12, 6, false]);  // 節入り前でも11月の盤(11/7〜12/6)の終わりまで
+  assert.deepEqual(end('2026-11-20'), [2026, 12, 6, false]);
+  assert.deepEqual(end('2026-11-27'), [2026, 12, 6, false]);  // 残り10日
+  assert.deepEqual(end('2026-11-28'), [2027, 1, 4, true]);    // 残り9日 → 12月の盤(12/7〜1/4)の終わりまで
+  assert.deepEqual(end('2026-12-28'), [2027, 2, 3, true]);    // 年をまたぐ(丑月 1/5〜2/3)
+  assert.deepEqual(end('2027-01-03'), [2027, 2, 3, false]);   // 1月の節(小寒)前:1月の盤の終わり=立春の前日
+  assert.deepEqual(end('2027-02-01'), [2027, 3, 5, false]);   // 立春前:2月の盤(2/4〜3/5)
 });
 
 test('相性の星(相生・比和)', () => {

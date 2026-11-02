@@ -129,7 +129,7 @@
     var accelPole = pers.accel.pole, brakePole = pers.brake.pole;
     var PN = persona.POLE_NAMES;
     var accelName = accelPole === 'balance' ? 'バランス型' : PN[accelPole];
-    var brakeName = brakePole === 'balance' ? '決め手の不足' : PN[brakePole] + (pers.brake.overuse ? 'の使いすぎ' : 'の出すぎ');
+    var brakeName = texts.brakeLabels[brakePole]; // 見出しと本文(BRAKE-…・TRAP-…)で同じ言い方を使う
     var srcNames = { sun: pl.sun.sign.name, moon: pl.moon.sign.name, lp: 'ライフパス' + lp.value, star: ks.honmei.name };
 
     var name = input.nickname;
@@ -154,7 +154,6 @@
       return { palace: d.palace, bad: d.bad, rank: Math.min.apply(null, d.bad.map(function (b) { var i = BAD_PRIORITY.indexOf(b); return i === -1 ? 99 : i; })) };
     }).sort(function (a, b) { return a.rank - b.rank || kyusei.PALACES.indexOf(a.palace) - kyusei.PALACES.indexOf(b.palace); });
     var avoid = monthBad.slice(0, 2).map(function (x) { return x.palace; });
-    function yearDirOf(pid) { return cur.year.directions.filter(function (d) { return d.palace.id === pid; })[0]; }
     function regionNames(pid, n) { return regions[pid].slice(0, n).map(function (r) { return r.name.replace(/[都府県]$/, ''); }); }
 
     // ================= 〇月のひとこと注意(カードの「注意」と4章) =================
@@ -240,12 +239,12 @@
     } else {
       ss.blocks.push({ t: 'p', text: pick('READ-overview-' + monthPhase, V()) });
     }
-    ss.blocks.push({ t: 'p', text: pick('READ-AXIS-' + accelPole, V()) });
+    ss.blocks.push({ t: 'p', text: pick((th === 'overview' ? 'READ-AXIS-ALL-' : 'READ-AXIS-') + accelPole, V()) });
     ss.blocks.push({ t: 'label', text: '根拠:' + (hasSit ? '今の状況の回答・' : '九星気学(' + targetMonth + '月の盤)・') + '人物像' });
 
     // 3-2 〇月の勝ち筋
     ss.blocks.push({ t: 'h', id: 's32', text: fill(T.s32, { month: targetMonth }) });
-    ss.blocks.push({ t: 'p', text: yearLabel + 'は「' + PHASE_SHORT[yearPhase] + '」の流れ。その中で、' + name + 'さんの' + targetMonth + '月の戦略は「' + STANCE_NAMES[stance] + '」です。' + (capped ? '本命星が盤の中央に入る転換期にあたるため、「攻め」ではなく「中間」にしています。' : '') });
+    ss.blocks.push({ t: 'p', text: yearLabel + 'は「' + PHASE_SHORT[yearPhase] + '」の流れ。その中で、' + name + 'さんの' + targetMonth + '月の戦略は「' + STANCE_NAMES[stance] + '」です。' + (capped ? '本命星が盤の中央に入る時期なので、攻めすぎず、足元を固めながら進めるのがよさそうです。' : '') });
     if (th !== 'overview') {
       var mP = kyusei.palaceInfo(monthPalaceId);
       ss.blocks.push({ t: 'p', text: pick('TIM-MONTH-' + monthPhase, V({ monthPalace: monthPalaceId === 'C' ? '月の盤の中央' : '月の盤で本命星が' + mP.name + 'にある巡り' })) });
@@ -291,7 +290,7 @@
     cools.forEach(function (c) {
       // 対策が行動プラン(3-4)とほぼ同じになる組み合わせは、重ねて書かずに3-4を案内する
       var overlap = (c.id === 'purpose' && pat === 'purpose') || (c.id === 'alone' && pat === 'team');
-      ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? 'この対策は、3-4の行動プラン(' + success.type + 'の進め方)に組み込んでいます。' : '対策:' + pick('COOL-' + c.id, V(), 'fix') + '。' });
+      ss.blocks.push({ t: 'card', title: '冷めるきっかけ:' + c.label, text: overlap ? '対策:3-4の行動プランにある「' + success.type + 'の進め方」が、そのまま対策になります。' : '対策:' + pick('COOL-' + c.id, V(), 'fix') + '。' });
     });
     ss.blocks.push({ t: 'card', title: '読むときの注意:' + P['BIAS-BARNUM'].title, text: pick('BIAS-BARNUM', V()), sub: '対策:' + pick('BIAS-BARNUM', V(), 'hedge') });
     ss.blocks.push({ t: 'label', text: '根拠:Big Five・今の状況とやる気についての回答' });
@@ -362,8 +361,8 @@
       dirPairs.forEach(function (pr) {
         var d = pr.dir;
         var when = pr.day ? 'ラッキーデーの' + dayLabel(pr.day.date) : targetMonth + '月中(' + monthRange + ')';
-        var yd = yearDirOf(d.palace.id);
-        var tag = (d.good === 'best' ? '〔最大吉方〕' : '〔吉方位〕') + (yd && yd.bad.length ? '〔年の盤:' + yd.bad.map(function (b) { return BAD_NAMES[b]; }).join('・') + '〕' : '');
+        // 年の盤の情報は付録「方位の全一覧」だけに載せる(すすめる方角に凶のラベルを並べない)
+        var tag = d.good === 'best' ? '〔最大吉方〕' : '〔吉方位〕';
         dirLines.push(pr.where + 'へ。' + pr.act + 'の予定を' + when + 'に。' + tag);
       });
       ss.blocks.push({ t: 'list', items: dirLines });
@@ -550,6 +549,25 @@
     };
   }
 
+  // ================= 人物像の軸:数字を使わない表し方 =================
+  // 5段階: かなり左 / やや左 / ほぼ中間 / やや右 / かなり右(しきい値 0.15・0.6)
+  function axisStep(score) {
+    if (score <= -0.6) return 0;
+    if (score < -0.15) return 1;
+    if (score <= 0.15) return 2;
+    if (score < 0.6) return 3;
+    return 4;
+  }
+  function axisScale(score) {
+    var i = axisStep(score), out = '';
+    for (var k = 0; k < 5; k++) out += k === i ? '■' : '□';
+    return out;
+  }
+  function axisWord(a) {
+    var i = axisStep(a.score);
+    return ['かなり' + a.minusName + '寄り', 'やや' + a.minusName + '寄り', 'ほぼ中間', 'やや' + a.plusName + '寄り', 'かなり' + a.plusName + '寄り'][i];
+  }
+
   // ================= 書き出し =================
   // opts.hideBirth: 生年月日がわかる部分(数秘術の計算式・気学上の生まれ年など)を伏せる
   function blockToText(b, md, opts) {
@@ -567,10 +585,7 @@
       case 'guide': return (md ? '> ### 「' + b.name + '」\n>\n> ' : '「' + b.name + '」\n') + b.text;
       case 'color': return (md ? '**' + b.name + '**(' + b.hex + ')\n\n' : '') + b.text;
       case 'pair': return (md ? '**' : '') + 'アクセル(強み):' + b.accel + '/ブレーキ(盲点):' + b.brake + (md ? '**' : '');
-      case 'axes': return b.items.map(function (a) {
-        var side = Math.abs(a.score) < 0.15 ? 'ほぼ中間' : (a.score > 0 ? a.plusName : a.minusName) + '寄り';
-        return '- ' + a.label + ':' + side + '(' + (a.score >= 0 ? '+' : '') + a.score.toFixed(2) + ')';
-      }).join('\n');
+      case 'axes': return b.items.map(function (a) { return '- ' + a.minusName + ' ' + axisScale(a.score) + ' ' + a.plusName + '(' + axisWord(a) + ')'; }).join('\n');
       case 'plan': return b.groups.map(function (g) { return (md ? '**' + g.label + '**\n\n' : '【' + g.label + '】\n') + g.items.map(function (x) { return '- ' + x; }).join('\n'); }).join(md ? '\n\n' : '\n');
       case 'summary': return b.items.map(function (it) {
         return '- ' + (md ? '**' + it.label + '**' : it.label) + ':' + (it.list ? '\n' + it.list.map(function (x, i) { return '  ' + (i + 1) + '. ' + x; }).join('\n') : it.text);
@@ -666,5 +681,5 @@
   }
   function sectionChars(s) { return s.title.length + s.blocks.reduce(function (n, b) { return n + blockChars(b); }, 0); }
 
-  return { build: build, toText: toText, clipboardText: clipboardText, summaryText: summaryText, fill: fill, hash: hash, sectionChars: sectionChars, blockToText: blockToText };
+  return { axisStep: axisStep, axisScale: axisScale, axisWord: axisWord, build: build, toText: toText, clipboardText: clipboardText, summaryText: summaryText, fill: fill, hash: hash, sectionChars: sectionChars, blockToText: blockToText };
 });

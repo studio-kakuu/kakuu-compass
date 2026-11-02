@@ -329,21 +329,30 @@
 
   /**
    * ラッキーデー(本命星と相性のよい日)
-   * 期間: 今日〜今月末。今月の残りが10日未満なら来月末まで。
+   * 期間: 今日〜「〇月の指針」の気学の月の終わり(次の節入りの前日)。残りが10日未満なら、次の気学の月の終わりまで。
    * 候補: 日の九星が本命星と 相生(生気=日の星が自分を生む > 退気=自分が日の星を生む) または 比和。
    *       吉方位と同じ考え方で、五黄の日・本命星と同じ星の日(本命星が中宮)は除く。
    * 除外: その日の盤で本命星が「暗剣殺」または「日破」の位置に入る日。
    * 順位: 生気 > 比和 > 退気、同じ順位なら早い日。最大3日を日付順に返す。
    */
   var REL_RANK = { supports: 3, same: 2, drains: 1 };
+  /** 気学の次の月(丑月の次は翌年の寅月) */
+  function nextMonth(year, monthIndex) { return monthIndex === 12 ? { year: year + 1, monthIndex: 1 } : { year: year, monthIndex: monthIndex + 1 }; }
   function luckyDays(now, honmei, max) {
     max = max || 3;
     var start = dayNumberOfDate(now);
-    var p = jstParts(now);
-    var endOfMonth = dayNumber(p.y, p.m + 1, 1) - 1;
-    var end = endOfMonth;
+    // 期間: 今日 〜 「〇月の指針」の気学の月の終わり(次の節入りの前日)
+    var tm = targetMoment(now);
+    var per = periodAt(tm.date);
+    var nx = nextMonth(per.year, per.monthIndex);
+    var end = dayNumberOfDate(setsuDate(nx.year, nx.monthIndex)) - 1;
     var extended = false;
-    if (endOfMonth - start + 1 < 10) { end = dayNumber(p.y, p.m + 2, 1) - 1; extended = true; }
+    // 残りが10日未満なら、次の気学の月の終わりまで延ばす
+    if (end - start + 1 < 10) {
+      var nx2 = nextMonth(nx.year, nx.monthIndex);
+      end = dayNumberOfDate(setsuDate(nx2.year, nx2.monthIndex)) - 1;
+      extended = true;
+    }
     var selfEl = STARS[honmei].element;
     var cands = [];
     for (var dn = start; dn <= end; dn++) {

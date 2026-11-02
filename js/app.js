@@ -345,7 +345,7 @@
           row.appendChild(ends);
           var track = el('div', 'axis-track');
           track.setAttribute('role', 'img');
-          var side = Math.abs(a.score) < 0.15 ? 'ほぼ中間' : (a.score > 0 ? a.plusName : a.minusName) + '寄り';
+          var side = C.report.axisWord(a);
           track.setAttribute('aria-label', a.label + ':' + side);
           var fillEl = el('div', 'axis-fill' + (a.score < 0 ? ' neg' : ''));
           var w = Math.min(50, Math.abs(a.score) * 50);
@@ -354,6 +354,7 @@
           track.appendChild(fillEl);
           track.appendChild(el('span', 'axis-mid'));
           row.appendChild(track);
+          row.appendChild(el('p', 'axis-word', side));
           e.appendChild(row);
         });
         return e;

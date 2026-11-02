@@ -259,3 +259,4 @@ html { scroll-behavior: smooth; }
 .ai-inline { width: 100%; margin-top: 8px; }
 @media (min-width: 640px) { .ai-inline { width: 100%; } }
 @media print { .to-top { display: none !important; } }
+.axis-word { font-size: 14px; color: var(--muted); text-align: center; margin: 2px 0 0 !important; }
